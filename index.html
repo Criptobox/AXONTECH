@@ -7,23 +7,23 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --blue:#2563EB; --blue-dk:#1E3A8A; --blue-lt:#EFF6FF; --blue-bd:#BFDBFE;
-      --gray-50:#F9FAFB; --gray-100:#F3F4F6; --gray-200:#E5E7EB;
-      --gray-400:#9CA3AF; --gray-600:#4B5563; --gray-700:#374151; --gray-900:#111827;
+      --blue:#00b4d8; --blue-dk:#006d8a; --blue-lt:#e0f7fc; --blue-bd:#80ddf0;
+      --gray-50:#F8FAFC; --gray-100:#F1F5F9; --gray-200:#E2E8F0;
+      --gray-400:#94A3B8; --gray-600:#475569; --gray-700:#334155; --gray-900:#0F172A;
       --green:#10B981; --yellow:#F59E0B; --red:#EF4444; --orange:#F97316;
       --surface:#ffffff; --surface2:var(--gray-50); --border:var(--gray-200);
       --text:var(--gray-900); --text-muted:var(--gray-600); --input-bg:#ffffff;
     }
     /* ── DARK MODE ── */
     body.dark {
-      --blue-lt:#1e3a5f; --blue-bd:#2d5a8e; --blue-dk:#1a2d4a;
-      --gray-50:#0f172a; --gray-100:#1e293b; --gray-200:#334155;
-      --gray-400:#64748b; --gray-600:#94a3b8; --gray-700:#cbd5e1; --gray-900:#f1f5f9;
-      --surface:#1e293b; --surface2:#0f172a; --border:#334155;
-      --text:#f1f5f9; --text-muted:#94a3b8; --input-bg:#1e293b;
+      --blue:#00b4d8; --blue-lt:#062830; --blue-bd:#0a4a5c; --blue-dk:#084050;
+      --gray-50:#0a0f1a; --gray-100:#111827; --gray-200:#1f2937;
+      --gray-400:#4b5563; --gray-600:#9ca3af; --gray-700:#d1d5db; --gray-900:#f9fafb;
+      --surface:#111827; --surface2:#0a0f1a; --border:#1f2937;
+      --text:#f9fafb; --text-muted:#9ca3af; --input-bg:#111827;
     }
     body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; background:var(--gray-50); color:var(--gray-900); min-height:100vh; overflow:hidden; transition:background .2s,color .2s; }
-    body.dark header { background:#0d1b2e; }
+    body.dark header { background:#070d17; }
     body.dark .col-left, body.dark .col-right { background:var(--surface); }
     body.dark .col-mid { background:var(--surface2); }
     body.dark .card { background:var(--surface); border-color:var(--border); }
@@ -33,7 +33,7 @@
     body.dark .btn-ghost:hover { background:var(--gray-200); }
     body.dark .admin-nav { background:var(--surface); border-color:var(--border); }
     body.dark .anav-btn { color:var(--gray-400); }
-    body.dark .anav-btn.active { color:#60a5fa; border-color:#60a5fa; }
+    body.dark .anav-btn.active { color:#00b4d8; border-color:#00b4d8; }
     body.dark .vale-form-body { background:var(--surface); border-color:var(--border); }
     body.dark .vf-fixed { background:var(--gray-100); border-color:var(--border); color:var(--text-muted); }
     body.dark .vf-fixed b { color:var(--text); }
@@ -114,14 +114,6 @@
       #layoutGestor.has-gestor .col-mid { grid-column: 1 / -1; }
       #layoutGestor.has-gestor #mobileBackBar { display: flex; }
 
-      /* Mensajero layout mobile */
-      #layoutMensajero.active { grid-template-columns: 1fr !important; }
-      #layoutMensajero .col-left { height: auto; overflow: visible; border-right: none; border-bottom: 1px solid var(--gray-200); }
-      #layoutMensajero .col-mid { height: auto; overflow: visible; }
-      #layoutMensajero.has-mensajero .col-left { display: none !important; }
-      #layoutMensajero.has-mensajero .col-mid { grid-column: 1 / -1; }
-      #layoutMensajero.has-mensajero #mensajeroBackBar { display: flex; }
-
       /* Admin layout */
       #layoutAdmin.active { height: auto; overflow: visible; }
       .admin-nav { gap: 0; padding: 0 6px; overflow-x: auto; }
@@ -160,7 +152,7 @@
     }
 
     /* ── HEADER ── */
-    header { background:var(--blue-dk); color:white; padding:0 20px; height:54px; display:flex; align-items:center; gap:12px; position:sticky; top:0; z-index:100; box-shadow:0 2px 8px rgba(0,0,0,.22); }
+    header { background:#006d8a; color:white; padding:0 20px; height:54px; display:flex; align-items:center; gap:12px; position:sticky; top:0; z-index:100; box-shadow:0 2px 8px rgba(0,0,0,.28); }
     .brand { display:flex; align-items:center; gap:10px; flex-shrink:0; }
     .brand-icon { width:32px; height:32px; background:var(--blue); border-radius:8px; display:flex; align-items:center; justify-content:center; font-weight:900; font-size:12px; letter-spacing:1px; }
     .brand-name { font-size:16px; font-weight:800; letter-spacing:3px; }
@@ -180,13 +172,6 @@
     .layout { display:none; height:calc(100vh - 54px); overflow:hidden; }
     .layout.active { display:flex; flex-direction:column; }
     #layoutGestor.active { display:grid; grid-template-columns:210px 1fr; }
-    #layoutMensajero.active { display:grid; grid-template-columns:210px 1fr; }
-    #layoutMensajero.has-mensajero { grid-template-columns:190px 1fr; }
-    #layoutMensajero.has-mensajero .m-sel-item:not(.active) { display:none; }
-    #layoutMensajero.has-mensajero .g-change { display:flex !important; }
-    #mensajeroBackBar { display:none; align-items:center; gap:10px; background:rgba(5,150,105,.1); border:1px solid rgba(5,150,105,.3); border-radius:9px; padding:8px 12px; margin-bottom:10px; }
-    #mensajeroBackBar button { background:none; border:none; color:var(--green); font-size:13px; font-weight:700; cursor:pointer; padding:0; }
-
     .col { height:100%; overflow-y:auto; padding:14px; }
     .col-left  { background:white; border-right:1px solid var(--gray-200); }
     .col-mid   { background:var(--gray-50); }
@@ -210,7 +195,7 @@
     input:focus, select:focus, textarea:focus { border-color:var(--blue); box-shadow:0 0 0 3px var(--blue-lt); }
     .btn { border:none; border-radius:8px; padding:9px 16px; font-size:13px; font-weight:600; cursor:pointer; transition:all .15s; display:inline-flex; align-items:center; justify-content:center; gap:6px; font-family:inherit; }
     .btn-blue   { background:var(--blue); color:white; }
-    .btn-blue:hover { background:#1D4ED8; }
+    .btn-blue:hover { background:#009ab8; }
     .btn-green  { background:var(--green); color:white; }
     .btn-green:hover { background:#059669; }
     .btn-orange { background:var(--orange); color:white; }
@@ -249,15 +234,41 @@
     .prod-card.agotado .prod-name { color:var(--gray-600); }
 
     /* ── GESTOR LIST ── */
-    .g-item { display:flex; align-items:center; gap:10px; padding:10px 11px; border-radius:9px; cursor:pointer; margin-bottom:4px; border:1px solid transparent; transition:all .13s; }
+    .g-item { display:flex; flex-direction:column; align-items:center; gap:4px; padding:8px 4px; border-radius:9px; cursor:pointer; border:1px solid transparent; transition:all .13s; text-align:center; }
     .g-item:hover  { background:var(--gray-100); }
     .g-item.active { background:var(--blue-lt); border-color:var(--blue-bd); }
     .g-avatar { width:36px; height:36px; border-radius:50%; color:white; font-weight:700; font-size:12px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
-    .g-name  { font-size:13px; font-weight:600; flex:1; }
-    .g-badge { background:var(--blue); color:white; border-radius:20px; font-size:10px; font-weight:700; padding:2px 7px; }
+    .g-name  { font-size:10px; font-weight:600; line-height:1.2; word-break:break-word; }
+    .g-badge { background:var(--blue); color:white; border-radius:20px; font-size:9px; font-weight:700; padding:1px 5px; }
+    #gestoresList { display:grid; grid-template-columns:repeat(3,1fr); gap:6px; }
+    #gestoresList .es { grid-column:1/-1; }
+    .m-pend-dot { position:absolute; top:0; right:0; width:9px; height:9px; border-radius:50%; background:var(--orange); border:2px solid var(--surface); }
+    .g-avatar-wrap { position:relative; display:inline-flex; }
+    .m-chip { display:flex;align-items:center;gap:6px;padding:6px 8px;border:1.5px solid var(--gray-200);border-radius:10px;cursor:pointer;background:var(--surface);transition:all .13s;width:100%; }
+    .m-chip:hover { border-color:var(--gray-400); }
+    .m-chip.active { border-color:var(--blue);background:var(--blue-lt); }
+    .m-chip .g-avatar { width:28px;height:28px;font-size:10px;flex-shrink:0; }
+    .m-chip-name { font-size:11px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1;min-width:0; }
+    #adminMensajerosPanel { display:flex;flex-direction:column;overflow:hidden; }
+    #adminMensajerosPanel.has-sel .m-chip:not(.active) { display:none; }
+    #mensajeroTopBar { padding:10px 14px 0;border-bottom:1px solid var(--border);flex-shrink:0; }
+    #mensajeroValesWrap { flex:1;overflow-y:auto;padding:14px; }
+    /* Vale form hidden until gestor selected */
+    #valeFormWrapper { display:none; }
+    #layoutGestor.has-gestor #valeFormWrapper { display:block; }
+    /* Picker pills */
+    .picker-pill { display:flex; align-items:center; gap:8px; padding:6px 10px; border:1px solid var(--gray-200); border-radius:20px; background:var(--surface); transition:border-color .1s,background .1s; }
+    .picker-pill.selected { border-color:var(--blue); background:var(--blue-lt); }
+    .picker-pill-info { flex:1; min-width:0; }
+    .picker-pill-name { font-size:12px; font-weight:600; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .picker-pill-price { font-size:10px; color:var(--blue); font-weight:600; }
+    .picker-pill-qty { display:flex; align-items:center; gap:3px; flex-shrink:0; }
+    .picker-pill-qty button { width:22px; height:22px; border-radius:50%; border:1px solid var(--gray-300); background:var(--surface); cursor:pointer; font-size:14px; font-weight:700; display:flex; align-items:center; justify-content:center; padding:0; line-height:1; transition:background .1s; }
+    .picker-pill-qty button:active { background:var(--blue); color:white; border-color:var(--blue); }
+    .picker-pill-qty span { font-size:12px; font-weight:700; min-width:16px; text-align:center; color:var(--text); }
 
     /* ── VALE FORM ── */
-    .vale-form-header { background:linear-gradient(135deg,var(--blue-dk),var(--blue)); color:white; border-radius:10px 10px 0 0; padding:14px 16px; }
+    .vale-form-header { background:linear-gradient(135deg,#004f66,#00b4d8); color:white; border-radius:10px 10px 0 0; padding:14px 16px; }
     .vale-form-header h2 { font-size:15px; font-weight:800; letter-spacing:1px; }
     .vale-form-header p  { font-size:11px; color:rgba(255,255,255,.65); margin-top:2px; }
     .vale-form-body { background:white; border:1px solid var(--gray-200); border-top:none; border-radius:0 0 10px 10px; padding:12px 14px; margin-bottom:10px; }
@@ -410,7 +421,6 @@
     <div class="header-date" id="headerDate"></div>
     <button id="btnTheme" onclick="toggleTheme()" title="Cambiar tema">🌙</button>
     <button id="btnDemo" onclick="loadDemo()" title="Cargar datos de prueba" style="background:rgba(245,158,11,.18);border:1px solid rgba(245,158,11,.4);color:#FCD34D;border-radius:7px;padding:5px 10px;font-size:11px;font-weight:700;cursor:pointer;letter-spacing:.5px;">🎮 DEMO</button>
-    <button id="btnMensajeroAccess" onclick="switchMode('mensajero')" title="Panel mensajero" style="font-size:17px;background:none;border:none;cursor:pointer;padding:4px 6px;border-radius:7px;color:var(--green);">🛵</button>
     <button id="btnAdminAccess" onclick="switchMode('admin')" title="Acceso administrador">
       🔒 <span class="notif-badge" id="adminBadge">0</span>
     </button>
@@ -440,6 +450,7 @@
     <div id="gestorMyVales">
       <div class="es"><div class="es-icon">🧾</div><div class="es-text">Selecciona tu nombre</div></div>
     </div>
+    <button class="btn btn-ghost btn-full btn-sm" style="margin-top:14px;" onclick="openGestorCatalog()">📦 Ver Catálogo</button>
   </div>
 
   <!-- Col 2: Vale form -->
@@ -456,6 +467,7 @@
       </div>
     </div>
 
+    <div id="valeFormWrapper">
     <div class="vale-form-header">
       <h2>Bienvenido a "AXONTECH" 🔥</h2>
       <p>VALE DEL GESTOR — completa los campos y envía</p>
@@ -589,49 +601,20 @@
         <button class="btn btn-blue btn-full btn-sm" id="sendValeBtn" onclick="sendVale()" disabled>📤 Enviar</button>
       </div>
     </div>
+    </div><!-- /valeFormWrapper -->
   </div>
 </div><!-- /layoutGestor -->
-
-<!-- ══════════ MENSAJERO LAYOUT ══════════ -->
-<div class="layout" id="layoutMensajero">
-
-  <!-- Col 1: Selector -->
-  <div class="col col-left">
-    <div class="lbl">¿Qué mensajero eres?</div>
-    <div id="mensajeroSelectorList">
-      <div class="es"><div class="es-icon">🛵</div><div class="es-text">Sin mensajeros registrados</div></div>
-    </div>
-    <div class="g-change" onclick="changeMensajero()">← Cambiar mensajero</div>
-  </div>
-
-  <!-- Col 2: Entregas -->
-  <div class="col col-mid">
-    <div id="mensajeroBackBar">
-      <button onclick="changeMensajero()">← Volver</button>
-      <span id="mensajeroBackName" style="font-size:13px;font-weight:700;color:#059669;"></span>
-    </div>
-    <div class="card" id="mensajeroBanner" style="background:rgba(5,150,105,.08);border-color:rgba(5,150,105,.3);display:flex;align-items:center;gap:10px;margin-bottom:14px;">
-      <div class="g-avatar" id="mensajeroBannerAv" style="width:40px;height:40px;font-size:14px;background:var(--gray-300);">🛵</div>
-      <div>
-        <div style="font-size:10px;color:var(--gray-400);font-weight:700;letter-spacing:.5px;" id="mensajeroBannerLbl">PANEL MENSAJERO</div>
-        <div style="font-size:15px;font-weight:700;color:#059669;" id="mensajeroBannerName">Selecciona tu nombre →</div>
-      </div>
-    </div>
-    <div id="mensajeroValesList">
-      <div class="es"><div class="es-icon">🛵</div><div class="es-text">Selecciona tu nombre para ver tus entregas</div></div>
-    </div>
-  </div>
-</div><!-- /layoutMensajero -->
 
 <!-- ══════════ ADMIN LAYOUT ══════════ -->
 <div class="layout" id="layoutAdmin">
 
   <!-- Tab nav -->
   <div class="admin-nav">
-    <button class="anav-btn active" id="anav-vales"    onclick="adminTab('vales')">📋 Vales</button>
-    <button class="anav-btn"        id="anav-stock"    onclick="adminTab('stock')">📦 Stock</button>
-    <button class="anav-btn"        id="anav-gestores" onclick="adminTab('gestores')">👥 Gestores</button>
-    <button class="anav-btn"        id="anav-stats"    onclick="adminTab('stats')">📊 Estadísticas</button>
+    <button class="anav-btn active" id="anav-vales"      onclick="adminTab('vales')">📋 Vales</button>
+    <button class="anav-btn"        id="anav-mensajeros" onclick="adminTab('mensajeros')" style="position:relative;">🛵 Mensajeros<span id="mensajeroBadge" style="display:none;position:absolute;top:4px;right:4px;background:var(--green);color:white;border-radius:8px;font-size:8px;font-weight:700;min-width:14px;height:14px;line-height:14px;text-align:center;padding:0 3px;">0</span></button>
+    <button class="anav-btn"        id="anav-gestores"   onclick="adminTab('gestores')">👥 Gestores</button>
+    <button class="anav-btn"        id="anav-stats"      onclick="adminTab('stats')">📊 Estadísticas</button>
+    <button class="anav-btn"        id="anav-stock"      onclick="adminTab('stock')">📦 Stock</button>
   </div>
 
   <div class="admin-content">
@@ -677,8 +660,6 @@
         </div>
         <div class="lbl">Confirmados Hoy ✅</div>
         <div id="confirmadosList"><div class="es"><div class="es-icon">✅</div><div class="es-text">Sin confirmaciones</div></div></div>
-        <div class="lbl">Pendiente de Cobro ⏳</div>
-        <div id="pendienteList"><div class="es"><div class="es-icon">⏳</div><div class="es-text">Sin pendientes</div></div></div>
         <div class="lbl" style="margin-top:20px;">Configuración</div>
         <div class="card" style="padding:10px 14px;">
           <label class="field-lbl">📱 WhatsApp Admin (para compartir)</label>
@@ -758,6 +739,25 @@
       </div>
     </div>
 
+    <!-- ── MENSAJEROS PANEL ── -->
+    <div id="adminMensajerosPanel" class="admin-panel-full" style="display:none;">
+      <div id="mensajeroTopBar">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+          <div class="lbl" style="margin:0;">Mensajeros</div>
+          <button id="mensajeroChangeBtn" onclick="changeMensajero()" style="display:none;background:none;border:none;color:var(--blue);font-size:12px;font-weight:600;cursor:pointer;padding:2px 0;">← Cambiar</button>
+        </div>
+        <div id="mensajeroSelectorList" style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;padding-bottom:10px;">
+          <div class="es" style="grid-column:1/-1;padding:4px 0;"><div class="es-text" style="font-size:12px;">Sin mensajeros registrados</div></div>
+        </div>
+      </div>
+      <div id="mensajeroValesWrap">
+        <div id="pendingCobroSection"></div>
+        <div id="mensajeroValesList">
+          <div class="es"><div class="es-icon">🛵</div><div class="es-text">Selecciona un mensajero para ver sus entregas</div></div>
+        </div>
+      </div>
+    </div>
+
   </div><!-- /admin-content -->
 </div><!-- /layoutAdmin -->
 
@@ -831,8 +831,9 @@
         <select id="pm-cat"></select>
       </div>
       <div style="grid-column:1/-1;">
-        <label class="field-lbl">URL de foto</label>
-        <input type="url" id="pm-foto" placeholder="https://...">
+        <label class="field-lbl">Foto del producto</label>
+        <input type="file" id="pm-foto-file" accept="image/*" onchange="handleProductPhoto(this)" style="display:block;width:100%;padding:5px;border:1px solid var(--gray-200);border-radius:8px;font-size:12px;cursor:pointer;">
+        <input type="hidden" id="pm-foto">
         <div id="pm-fotoPreview" style="margin-top:6px;"></div>
       </div>
     </div>
@@ -849,13 +850,26 @@
     <div class="modal-title">📦 Catálogo de Productos</div>
     <input type="search" id="pickerSearch" placeholder="Buscar producto..." oninput="renderPickerProducts()" style="margin-bottom:10px;">
     <div id="pickerCatTabs" style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:10px;"></div>
-    <div id="pickerProductGrid" style="max-height:280px;overflow-y:auto;display:grid;grid-template-columns:1fr 1fr;gap:8px;"></div>
+    <div id="pickerProductGrid" style="max-height:280px;overflow-y:auto;display:flex;flex-wrap:wrap;gap:6px;padding:2px;"></div>
     <hr class="modal-sep">
     <div style="font-size:11px;font-weight:700;color:var(--gray-600);margin-bottom:6px;">Seleccionados:</div>
     <div id="pickerSelectedList" style="min-height:28px;"></div>
     <div class="modal-btns">
       <button class="btn btn-ghost btn-full" onclick="closeProductPicker()">Cancelar</button>
       <button class="btn btn-blue btn-full" onclick="confirmPickerSelection()">Agregar al vale ✓</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── MODAL: Catálogo Gestor (solo lectura) ── -->
+<div class="modal-bg" id="gestorCatalogModal">
+  <div class="modal" style="max-width:500px;width:94%;">
+    <div class="modal-title">📦 Catálogo de Productos</div>
+    <input type="search" id="catalogSearch" placeholder="Buscar producto..." oninput="renderGestorCatalog()" style="margin-bottom:8px;">
+    <div id="catalogCatTabs" style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:10px;"></div>
+    <div id="gestorCatalogList" style="max-height:360px;overflow-y:auto;"></div>
+    <div class="modal-btns" style="margin-top:10px;">
+      <button class="btn btn-blue btn-full" onclick="document.getElementById('gestorCatalogModal').classList.remove('show')">Cerrar</button>
     </div>
   </div>
 </div>
@@ -970,6 +984,8 @@ let stockCatFilter    = null;
 let editingProductId  = null;
 let pickerSelected    = {};   // {productId: qty}
 let pickerCatFilter   = null;
+let catalogCatFilter  = null;
+let expandedCatalogId = null;
 let selectedProductsUI= [];   // [{id,name,qty}] for current vale form
 let currentValeProductos = []; // saved on sendVale
 
@@ -1049,26 +1065,15 @@ function sendBrowserNotif(title,body) {
 function switchMode(mode) {
   if(mode==='admin'){if(!adminActive){openPassModal();return;}activateAdminMode();return;}
   const lg=document.getElementById('layoutGestor');
-  const lm=document.getElementById('layoutMensajero');
   const la=document.getElementById('layoutAdmin');
-  [lg,lm,la].forEach(el=>el.classList.remove('active'));
-  if(mode==='mensajero'){
-    lm.classList.add('active');
-    document.getElementById('btnMensajeroAccess').style.display='none';
-    document.getElementById('btnAdminAccess').style.display='flex';
-    renderMensajeroSelector();renderMensajeroVales();
-  } else {
-    lg.classList.add('active');
-    document.getElementById('btnAdminAccess').style.display='flex';
-    document.getElementById('btnMensajeroAccess').style.display='flex';
-  }
+  [lg,la].forEach(el=>el.classList.remove('active'));
+  lg.classList.add('active');
+  document.getElementById('btnAdminAccess').style.display='flex';
 }
 function activateAdminMode() {
   document.getElementById('layoutAdmin').classList.add('active');
   document.getElementById('layoutGestor').classList.remove('active');
-  document.getElementById('layoutMensajero').classList.remove('active');
   document.getElementById('btnAdminAccess').style.display='none';
-  document.getElementById('btnMensajeroAccess').style.display='flex';
   const cfg=getConfig();
   if(cfg.adminPhone)document.getElementById('adminPhoneInput').value=cfg.adminPhone;
   const today=new Date().toISOString().slice(0,10);
@@ -1090,7 +1095,7 @@ function logoutAdmin() {
 // ══════════════════════════════════════════
 function adminTab(tab) {
   currentAdminTab=tab;
-  ['vales','stock','gestores','stats'].forEach(t=>{
+  ['vales','stock','gestores','stats','mensajeros'].forEach(t=>{
     document.getElementById('anav-'+t).classList.toggle('active',t===tab);
     const pid='admin'+t.charAt(0).toUpperCase()+t.slice(1)+'Panel';
     const el=document.getElementById(pid);
@@ -1100,6 +1105,7 @@ function adminTab(tab) {
   if(tab==='stock'){renderStockCategorias();renderProductGrid();}
   if(tab==='gestores'){renderAdminGestoresList();}
   if(tab==='stats'){renderStats();}
+  if(tab==='mensajeros'){renderMensajeroSelector();renderPendingCobroSection();renderMensajeroVales();}
 }
 
 // ══════════════════════════════════════════
@@ -1184,41 +1190,38 @@ function changeGestor() {
 function renderMensajeroSelector() {
   const list=getMensajeros();
   const c=document.getElementById('mensajeroSelectorList');if(!c)return;
-  if(!list.length){c.innerHTML='<div class="es"><div class="es-icon">🛵</div><div class="es-text">Sin mensajeros registrados</div></div>';return;}
+  if(!list.length){c.innerHTML='<div style="color:var(--gray-400);font-size:12px;padding:4px 0;">Sin mensajeros registrados</div>';return;}
+  const vales=getVales();
   c.innerHTML=list.map(m=>{
     const act=m.id===activeMensajeroId;
     const ini=m.name.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
-    return `<div class="g-item m-sel-item ${act?'active':''}" onclick="selectMensajero(${m.id})">
-      <div class="g-avatar" style="background:#059669">${ini}</div>
-      <div class="g-name">${m.name}</div>
-      ${act?'<span class="g-badge">✓</span>':''}
+    const pend=vales.filter(v=>v.mensajeroId===m.id&&v.status==='pending_payment').length;
+    return `<div class="m-chip ${act?'active':''}" onclick="selectMensajero(${m.id})">
+      <div class="g-avatar-wrap">
+        <div class="g-avatar" style="background:#059669;width:28px;height:28px;font-size:10px;">${ini}</div>
+        ${pend>0?`<span class="m-pend-dot"></span>`:''}
+      </div>
+      <span class="m-chip-name">${m.name}</span>
+      ${pend>0?`<span style="background:var(--orange);color:white;border-radius:8px;font-size:9px;font-weight:700;padding:1px 5px;margin-left:2px;">${pend}</span>`:''}
     </div>`;
   }).join('');
 }
 function selectMensajero(id) {
   activeMensajeroId=id;
-  const m=mensajeroOf(id);if(!m)return;
-  const ini=m.name.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
-  document.getElementById('mensajeroBannerAv').textContent=ini;
-  document.getElementById('mensajeroBannerLbl').textContent='HOLA, ESTÁS EN TU ÁREA';
-  document.getElementById('mensajeroBannerName').textContent=m.name;
-  document.getElementById('mensajeroBackName').textContent=m.name;
-  document.getElementById('layoutMensajero').classList.add('has-mensajero');
+  document.getElementById('adminMensajerosPanel').classList.add('has-sel');
+  document.getElementById('mensajeroChangeBtn').style.display='block';
   renderMensajeroSelector();renderMensajeroVales();
 }
 function changeMensajero() {
   activeMensajeroId=null;
-  document.getElementById('layoutMensajero').classList.remove('has-mensajero');
-  document.getElementById('mensajeroBannerAv').textContent='🛵';
-  document.getElementById('mensajeroBannerLbl').textContent='PANEL MENSAJERO';
-  document.getElementById('mensajeroBannerName').textContent='Selecciona tu nombre →';
-  document.getElementById('mensajeroBackName').textContent='';
+  document.getElementById('adminMensajerosPanel').classList.remove('has-sel');
+  document.getElementById('mensajeroChangeBtn').style.display='none';
   renderMensajeroSelector();renderMensajeroVales();
 }
 function renderMensajeroVales() {
   const c=document.getElementById('mensajeroValesList');if(!c)return;
   if(!activeMensajeroId){
-    c.innerHTML='<div class="es"><div class="es-icon">🛵</div><div class="es-text">Selecciona tu nombre para ver tus entregas</div></div>';return;
+    c.innerHTML='<div class="es"><div class="es-icon">🛵</div><div class="es-text">Selecciona un mensajero para ver sus entregas</div></div>';return;
   }
   const porEntregar=getVales().filter(v=>v.mensajeroId===activeMensajeroId&&v.status==='assigned').reverse();
   const entregados=getVales().filter(v=>v.mensajeroId===activeMensajeroId&&v.status==='delivered').reverse();
@@ -1238,7 +1241,7 @@ function renderMensajeroVales() {
           <div style="font-size:12px;font-weight:700;margin-top:3px;">💰 ${v.total||'—'}${v.vuelto?` · Vuelto: ${v.vuelto}`:''}</div>
           ${g?`<div style="font-size:11px;color:var(--gray-400);">Gestor: ${g.name}</div>`:''}
           <div style="font-size:11px;color:var(--gray-600);margin-top:3px;">📦 ${v.articulo||'—'}</div>
-          <button class="btn btn-green btn-full btn-sm" style="margin-top:8px;" onclick="mensajeroEntrega(${v.id})">✅ Marcar como entregado</button>
+          <button class="btn btn-green btn-full btn-sm" style="margin-top:8px;" onclick="mensajeroEntrega(${v.id})">📦 Marcar como entregado</button>
         </div>`;
       }).join('');
     }
@@ -1255,12 +1258,12 @@ function renderMensajeroVales() {
       }).join('');
     }
     if(confirmadosHoy.length){
-      html+='<div class="lbl" style="margin-top:16px;">Completados hoy</div>';
+      html+='<div class="lbl" style="margin-top:16px;">Resumen hoy</div>';
       html+=confirmadosHoy.map(v=>{
         const g=gestorOf(v.gestorId);
         const isPend=v.status==='pending_payment';
-        return `<div class="mv-card st-${v.status}">
-          <div class="mv-head"><span class="mv-time">${timeStr(v.confirmedTs||v.ts)}</span><span style="color:${isPend?'var(--yellow)':'var(--green)'};font-size:10px;">${isPend?'⏳ Pend. cobro':'✅ Confirmado'}</span></div>
+        return `<div class="mv-card st-${isPend?'pending_payment':'confirmed'}">
+          <div class="mv-head"><span class="mv-time">${timeStr(v.confirmedTs||v.ts)}</span><span style="color:${isPend?'var(--orange)':'var(--green)'};font-size:10px;font-weight:700;">${isPend?'⏳ Pend. cobro':'✅ Confirmado'}</span></div>
           <div class="mv-info"><b>${v.cliente||'—'}</b> · ${v.total||'—'}</div>
           ${g?`<div style="font-size:11px;color:var(--gray-400);">Gestor: ${g.name}</div>`:''}
         </div>`;
@@ -1395,10 +1398,16 @@ function renderValeDetail() {
   const pts=(v.valeProductos||[]).reduce((sum,p)=>{const pr=productoOf(p.id);return sum+(pr?pr.puntos*p.qty:0);},0);
   let actHTML='';
   if(v.status==='pending'){
-    actHTML=`<button class="btn btn-blue btn-full" onclick="openShareModal(${v.id})">📤 Compartir con mensajero</button>`;
+    actHTML=`<button class="btn btn-blue btn-full" onclick="openShareModal(${v.id})" style="margin-bottom:8px;">📤 Compartir con mensajero</button>
+    <div style="font-size:10px;color:var(--gray-400);text-align:center;margin-bottom:6px;">— o confirmar directo —</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+      <button class="btn btn-green btn-sm btn-full" onclick="confirmSale(${v.id},'confirmed')">✅ Entregado</button>
+      <button class="btn btn-sm btn-full" style="background:var(--orange);color:white;" onclick="confirmSale(${v.id},'pending_payment')">⏳ Pendiente cobro</button>
+    </div>`;
   } else if(v.status==='assigned'){
     actHTML=`<div class="mensajero-row">🛵 <b>Mensajero:</b> ${m?m.name:'—'}</div>
       <div style="font-size:12px;color:var(--gray-400);margin:6px 0 10px;">Esperando que el mensajero confirme la entrega</div>
+      <button class="btn btn-ghost btn-full btn-sm" onclick="mensajeroEntrega(${v.id})" style="margin-bottom:6px;">📦 Marcar entregado (admin)</button>
       <button class="btn btn-ghost btn-full btn-sm" onclick="openShareModal(${v.id})">🔄 Reenviar vale</button>`;
   } else if(v.status==='delivered'){
     actHTML=`<div style="background:rgba(124,58,237,.08);border:1px solid rgba(124,58,237,.3);border-radius:8px;padding:12px;text-align:center;margin-bottom:10px;">
@@ -1406,7 +1415,7 @@ function renderValeDetail() {
       <div style="font-weight:700;color:#7C3AED;">Entregado por mensajero</div>
       ${m?`<div style="font-size:12px;color:var(--gray-400);">Mensajero: ${m.name}</div>`:''}
     </div>
-    <button class="btn btn-green btn-full" onclick="confirmSale(${v.id},'confirmed')" style="margin-bottom:8px;">✅ Confirmar venta + Ya pagó</button>
+    <button class="btn btn-green btn-full" onclick="confirmSale(${v.id},'confirmed')" style="margin-bottom:8px;">✅ Confirmar venta + Entregado</button>
     <button class="btn btn-orange btn-full" onclick="confirmSale(${v.id},'pending_payment')">⏳ Confirmar venta + Pendiente de cobro</button>`;
   } else if(v.status==='confirmed'){
     actHTML=`<div style="background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.25);border-radius:8px;padding:14px;text-align:center;">
@@ -1498,6 +1507,7 @@ function copyAndAssign() {
   closeShareModal();selectedValeId=shareTargetId;
   renderAdminGestores();renderInbox();renderValeDetail();renderMyVales();
   renderConfirmados();renderPendienteCobro();
+  updateMensajeroBadge();
   showToast(`Asignado a ${m?m.name:'mensajero'} y copiado ✓`);
 }
 
@@ -1509,7 +1519,7 @@ function mensajeroEntrega(id) {
   patchVale(id,{status:'delivered',deliveredTs:new Date().toISOString()});
   renderAdminGestores();renderInbox();renderValeDetail();renderMyVales();
   renderPendienteCobro();renderMensajeroVales();
-  updateAdminBadge();
+  updateAdminBadge();updateMensajeroBadge();
   showToast('Marcado como entregado 🛵');
 }
 // Admin confirma venta: descuenta stock + notifica gestor + fija estado de cobro
@@ -1527,15 +1537,15 @@ function confirmSale(id, paymentStatus) {
   patchVale(id,{status:paymentStatus,confirmedTs:new Date().toISOString()});
   playSound('confirm');
   renderAdminGestores();renderInbox();renderValeDetail();renderMyVales();
-  renderConfirmados();renderPendienteCobro();renderMensajeroVales();
-  if(adminActive&&currentAdminTab==='stock')renderProductGrid();
+  renderConfirmados();renderPendienteCobro();renderPendingCobroSection();renderMensajeroVales();
+  renderProductGrid();
   showToast(paymentStatus==='confirmed'?'Venta confirmada y cobrada ✅':'Venta confirmada — cobro pendiente ⏳');
 }
 // Admin registra cobro recibido — sin tocar stock (ya se descontó al confirmar)
 function markAsPaid(id) {
   patchVale(id,{status:'confirmed',confirmedTs:new Date().toISOString()});
   renderAdminGestores();renderInbox();renderValeDetail();renderMyVales();
-  renderConfirmados();renderPendienteCobro();renderMensajeroVales();
+  renderConfirmados();renderPendienteCobro();renderPendingCobroSection();renderMensajeroVales();renderMensajeroSelector();updateMensajeroBadge();
   showToast('Cobro registrado ✅');
 }
 
@@ -1575,13 +1585,39 @@ function renderConfirmados() {
   }).join('');
 }
 function renderPendienteCobro() {
-  const pend=getVales().filter(v=>v.status==='pending_payment').reverse();
   const c=document.getElementById('pendienteList');
+  if(!c)return;
+  const pend=getVales().filter(v=>v.status==='pending_payment').reverse();
   if(!pend.length){c.innerHTML='<div class="es"><div class="es-icon">⏳</div><div class="es-text">Sin pendientes</div></div>';return;}
   c.innerHTML=pend.map(v=>{
     const g=gestorOf(v.gestorId);const m=v.mensajeroId?mensajeroOf(v.mensajeroId):null;
     return `<div class="sc sc-pend"><div class="sc-head"><span class="sc-g">${g?g.name:'—'}</span><span class="sc-t">${timeStr(v.ts)}</span></div><div>${v.cliente||''} · ${v.total||''}</div><div class="sc-m">${m?'🛵 '+m.name:''}</div><button class="btn btn-green btn-full btn-sm" style="margin-top:7px;" onclick="markAsPaid(${v.id})">✅ Cobrado</button></div>`;
   }).join('');
+}
+let pendingCobroExpanded=false;
+function togglePendingCobro(){pendingCobroExpanded=!pendingCobroExpanded;renderPendingCobroSection();}
+function renderPendingCobroSection() {
+  const c=document.getElementById('pendingCobroSection');if(!c)return;
+  const pend=getVales().filter(v=>v.status==='pending_payment').reverse();
+  if(!pend.length){c.innerHTML='';return;}
+  const body=pendingCobroExpanded?`<div style="margin-top:8px;">${pend.map(v=>{
+    const g=gestorOf(v.gestorId);const m=v.mensajeroId?mensajeroOf(v.mensajeroId):null;
+    return `<div class="mv-card" style="border-left:3px solid var(--red);background:rgba(239,68,68,.05);margin-bottom:6px;">
+      <div class="mv-head"><span class="mv-time">${timeStr(v.confirmedTs||v.ts)}</span><span style="color:var(--red);font-size:9px;font-weight:700;padding:2px 6px;background:rgba(239,68,68,.12);border-radius:4px;">⏳ Pend. cobro</span></div>
+      <div class="mv-info"><b>${v.cliente||'—'}</b> · <span style="color:var(--red);font-weight:700;">${v.total||'—'}</span></div>
+      ${g?`<div style="font-size:11px;color:var(--gray-400);">Gestor: ${g.name}</div>`:''}
+      ${m?`<div style="font-size:11px;color:var(--gray-400);">🛵 ${m.name}</div>`:''}
+      <button class="btn btn-green btn-full btn-sm" style="margin-top:8px;" onclick="markAsPaid(${v.id})">💵 Registrar cobro</button>
+    </div>`;
+  }).join('')}</div>`:'' ;
+  c.innerHTML=`<div onclick="togglePendingCobro()" style="display:flex;align-items:center;justify-content:space-between;padding:10px 12px;background:rgba(239,68,68,.08);border:1.5px solid rgba(239,68,68,.3);border-radius:9px;cursor:pointer;margin-bottom:${pendingCobroExpanded?'0':'12px'};">
+    <div style="display:flex;align-items:center;gap:8px;">
+      <span style="font-size:16px;">⏳</span>
+      <span style="font-weight:700;font-size:13px;color:var(--red);">Pendientes de cobro</span>
+      <span style="background:var(--red);color:white;border-radius:10px;font-size:10px;font-weight:700;padding:1px 7px;">${pend.length}</span>
+    </div>
+    <span style="color:var(--red);font-size:14px;">${pendingCobroExpanded?'▲':'▼'}</span>
+  </div>${body}`;
 }
 
 // ══════════════════════════════════════════
@@ -1718,25 +1754,22 @@ function renderPickerCatTabs() {
 function setPickerCat(id){pickerCatFilter=id;renderPickerCatTabs();renderPickerProducts();}
 function renderPickerProducts() {
   const search=document.getElementById('pickerSearch').value.toLowerCase();
-  let prods=getProductos().filter(p=>(p.stock||0)>0); // solo con stock
+  let prods=getProductos().filter(p=>(p.stock||0)>0);
   if(pickerCatFilter!==null)prods=prods.filter(p=>p.catId===pickerCatFilter);
   if(search)prods=prods.filter(p=>p.name.toLowerCase().includes(search)||(p.description||'').toLowerCase().includes(search));
   const c=document.getElementById('pickerProductGrid');
-  if(!prods.length){c.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:20px;color:var(--gray-400);">Sin productos disponibles</div>';return;}
+  if(!prods.length){c.innerHTML='<div style="width:100%;text-align:center;padding:20px;color:var(--gray-400);">Sin productos disponibles</div>';return;}
   c.innerHTML=prods.map(p=>{
-    const qty=pickerSelected[p.id]||0;const stockOk=(p.stock||0)>0;
-    return `<div class="picker-card ${qty>0?'selected':''}">
-      ${p.photo?`<img src="${p.photo}" alt="" style="width:100%;height:70px;object-fit:cover;border-radius:6px;margin-bottom:6px;" onerror="this.style.display='none'">`:''}
-      <div style="font-size:12px;font-weight:700;margin-bottom:2px;">${p.name}</div>
-      ${p.precio?`<div style="font-size:11px;color:var(--blue);font-weight:600;">${p.precio}</div>`:''}
-      <div style="font-size:10px;color:var(--gray-400);">
-        Stock: <b style="color:${stockOk?'var(--green)':'var(--red)'};">${p.stock||0}</b>
-        ${p.puntos?` · ⭐ ${p.puntos} pts`:''}
+    const qty=pickerSelected[p.id]||0;
+    return `<div class="picker-pill ${qty>0?'selected':''}">
+      <div class="picker-pill-info">
+        <div class="picker-pill-name">${p.name}</div>
+        ${p.precio?`<div class="picker-pill-price">${p.precio}</div>`:''}
       </div>
-      <div style="display:flex;align-items:center;gap:6px;margin-top:6px;">
-        <button class="btn btn-ghost btn-sm" style="padding:3px 8px;" onclick="pickerAdj(${p.id},-1)">−</button>
-        <span style="font-size:13px;font-weight:700;min-width:20px;text-align:center;">${qty}</span>
-        <button class="btn btn-blue btn-sm" style="padding:3px 8px;" onclick="pickerAdj(${p.id},1)" ${!stockOk&&qty===0?'disabled':''}>+</button>
+      <div class="picker-pill-qty">
+        <button onclick="pickerAdj(${p.id},-1)">−</button>
+        <span>${qty}</span>
+        <button onclick="pickerAdj(${p.id},1)">+</button>
       </div>
     </div>`;
   }).join('');
@@ -1759,6 +1792,11 @@ function renderPickerSelected() {
     </span>`;
   }).join('');
 }
+function parsePrecioNum(str) {
+  if(!str)return 0;
+  const m=str.replace(/,/g,'').match(/\d+(\.\d+)?/);
+  return m?parseFloat(m[0]):0;
+}
 function confirmPickerSelection() {
   const items=Object.entries(pickerSelected).map(([id,qty])=>{
     const p=productoOf(parseInt(id));return{id:parseInt(id),name:p?p.name:id,qty};
@@ -1766,6 +1804,23 @@ function confirmPickerSelection() {
   selectedProductsUI=items;currentValeProductos=items;
   renderSelectedProductsUI();
   document.getElementById('vf-articulo').value=items.map(i=>`${i.name} x${i.qty}`).join(' / ');
+  // auto-sum prices
+  let total=0;let cur='USD';
+  items.forEach(({id,qty})=>{
+    const p=productoOf(id);if(!p||!p.precio)return;
+    total+=parsePrecioNum(p.precio)*qty;
+    if(p.precio.includes('CUP'))cur='CUP';
+  });
+  if(total>0){
+    const fmt=`$${total} ${cur}`;
+    document.getElementById('vf-precioUSD').value=fmt;
+    document.getElementById('vf-total').value=fmt;
+  }
+  // auto-fill garantia from first product that has one
+  if(!document.getElementById('vf-garantia').value){
+    const g=items.map(({id})=>productoOf(id)?.garantia).find(Boolean);
+    if(g)document.getElementById('vf-garantia').value=g;
+  }
   closeProductPicker();onFormInput();
 }
 function renderSelectedProductsUI() {
@@ -1820,13 +1875,23 @@ function buildProdCard(p, cats, isAgotado) {
   const stockOk=(p.stock||0)>0;
   const isLow=stockOk&&(p.stock||0)<=LOW_STOCK_THRESHOLD;
   return `<div class="prod-card${isAgotado?' agotado':''}">
-    ${p.photo?`<img src="${p.photo}" alt="" style="width:100%;height:80px;object-fit:cover;border-radius:8px;margin-bottom:8px;" onerror="this.style.display='none'">`:''}
-    ${cat?`<span class="prod-cat-tag">${cat.name}</span>`:''}
-    ${isAgotado?'<span class="agotado-badge" style="margin-left:4px;">❌ Agotado</span>':''}
-    ${isLow?`<span class="agotado-badge" style="background:#FFFBEB;color:var(--yellow);margin-left:4px;">⚠️ Bajo</span>`:''}
-    <div class="prod-name">${p.name}</div>
-    ${p.description?`<div class="prod-desc">${p.description}</div>`:''}
-    ${p.precio?`<div class="prod-price">${p.precio}</div>`:''}
+    <div style="display:flex;gap:10px;margin-bottom:8px;">
+      <div style="width:66px;height:66px;border-radius:8px;overflow:hidden;background:var(--gray-100);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+        ${p.photo
+          ?`<img src="${p.photo}" alt="" style="width:100%;height:100%;object-fit:cover;" onerror="this.parentElement.innerHTML='<span style=font-size:28px>📦</span>'">`
+          :`<span style="font-size:28px;">📦</span>`}
+      </div>
+      <div style="flex:1;min-width:0;">
+        <div style="margin-bottom:2px;">
+          ${cat?`<span class="prod-cat-tag">${cat.name}</span>`:''}
+          ${isAgotado?'<span class="agotado-badge" style="margin-left:4px;">❌ Agotado</span>':''}
+          ${isLow?`<span class="agotado-badge" style="background:#FFFBEB;color:var(--yellow);margin-left:4px;">⚠️ Bajo</span>`:''}
+        </div>
+        <div class="prod-name" style="margin-top:0;">${p.name}</div>
+        ${p.description?`<div class="prod-desc">${p.description.split('\n')[0]}</div>`:''}
+        ${p.precio?`<div class="prod-price">${p.precio}</div>`:''}
+      </div>
+    </div>
     <div class="prod-meta">
       <span class="stock-badge ${stockOk?isLow?'stock-low':'':'stock-low'}">Stock: ${p.stock||0}</span>
       ${p.puntos?`<span style="font-size:10px;color:var(--blue);">⭐ ${p.puntos} pts</span>`:''}
@@ -1881,9 +1946,9 @@ function openAddProductModal() {
   document.getElementById('productModalTitle').textContent='📦 Nuevo Producto';
   ['pm-name','pm-desc','pm-precio','pm-foto','pm-garantia','pm-comision'].forEach(id=>{document.getElementById(id).value='';});
   document.getElementById('pm-stock').value='0';document.getElementById('pm-puntos').value='0';
+  document.getElementById('pm-foto-file').value='';
   document.getElementById('pm-fotoPreview').innerHTML='';
   populateCatSelect(null);document.getElementById('productModal').classList.add('show');
-  document.getElementById('pm-foto').oninput=previewPhoto;
 }
 function openEditProductModal(id) {
   const p=productoOf(id);if(!p)return;
@@ -1897,14 +1962,20 @@ function openEditProductModal(id) {
   document.getElementById('pm-garantia').value=p.garantia||'';
   document.getElementById('pm-comision').value=p.comision||'';
   document.getElementById('pm-foto').value=p.photo||'';
+  document.getElementById('pm-foto-file').value='';
   populateCatSelect(p.catId);
   document.getElementById('pm-fotoPreview').innerHTML=p.photo?`<img src="${p.photo}" style="width:100%;height:80px;object-fit:cover;border-radius:6px;" onerror="this.style.display='none'">`:'';
   document.getElementById('productModal').classList.add('show');
-  document.getElementById('pm-foto').oninput=previewPhoto;
 }
-function previewPhoto() {
-  const url=this.value.trim();
-  document.getElementById('pm-fotoPreview').innerHTML=url?`<img src="${url}" style="width:100%;height:80px;object-fit:cover;border-radius:6px;" onerror="this.style.display='none'">`:'';}
+function handleProductPhoto(input) {
+  const file=input.files[0];if(!file)return;
+  const reader=new FileReader();
+  reader.onload=e=>{
+    document.getElementById('pm-foto').value=e.target.result;
+    document.getElementById('pm-fotoPreview').innerHTML=`<img src="${e.target.result}" style="width:100%;height:80px;object-fit:cover;border-radius:6px;">`;
+  };
+  reader.readAsDataURL(file);
+}
 function closeProductModal(){document.getElementById('productModal').classList.remove('show');editingProductId=null;}
 function saveProduct() {
   const name=document.getElementById('pm-name').value.trim();if(!name){showToast('El nombre es obligatorio');return;}
@@ -2069,12 +2140,9 @@ function loadDemo() {
   activeGestorId=null; activeMensajeroId=null; adminActive=false; selectedValeId=null;
   adminGestorFilter=null; inboxFilter='all'; selectedProductsUI=[]; currentValeProductos=[];
   document.getElementById('layoutAdmin').classList.remove('active');
-  document.getElementById('layoutMensajero').classList.remove('active');
-  document.getElementById('layoutMensajero').classList.remove('has-mensajero');
   document.getElementById('layoutGestor').classList.remove('has-gestor');
   document.getElementById('layoutGestor').classList.add('active');
   document.getElementById('btnAdminAccess').style.display='flex';
-  document.getElementById('btnMensajeroAccess').style.display='flex';
   document.getElementById('adminLabel').style.display='none';
   document.getElementById('btnLogout').style.display='none';
   document.getElementById('headerGestorName').textContent='';
@@ -2085,7 +2153,7 @@ function loadDemo() {
   resetForm();
   renderGestores();
   renderGestorNotifs();
-  updateAdminBadge();
+  updateAdminBadge();updateMensajeroBadge();
   showToast('🎮 Datos de demo cargados ✓ — contraseña admin: axon2024');
 }
 
@@ -2100,6 +2168,75 @@ function buildDemoVale(v) {
     `*Garantía: ${v.garantia}`,`*Fecha y hora de Venta: ${new Date(v.ts).toLocaleString('es-ES')}`,'',
     '🧭Dirección de la tienda:','* Amistad #313% San Rafael y San José, Centro Habana.','',
     '🚨ATENCIÓN🚨','•   Horarios de atención: 8:00am - 8:00pm.'].join('\n');
+}
+
+// ══════════════════════════════════════════
+//  MENSAJERO BADGE
+// ══════════════════════════════════════════
+function updateMensajeroBadge() {
+  const pend=getVales().filter(v=>v.status==='pending_payment').length;
+  const asgn=getVales().filter(v=>v.status==='assigned').length;
+  const b=document.getElementById('mensajeroBadge');
+  if(!b)return;
+  if(pend>0){
+    b.textContent=pend;b.style.display='inline-block';
+    b.style.background='var(--red)';
+  } else if(asgn>0){
+    b.textContent=asgn;b.style.display='inline-block';
+    b.style.background='var(--green)';
+  } else {
+    b.style.display='none';
+  }
+}
+
+// ══════════════════════════════════════════
+//  GESTOR CATALOG
+// ══════════════════════════════════════════
+function openGestorCatalog() {
+  const prods=getProductos().filter(p=>(p.stock||0)>0);
+  if(!prods.length){showToast('No hay productos disponibles');return;}
+  catalogCatFilter=null;expandedCatalogId=null;
+  document.getElementById('catalogSearch').value='';
+  renderCatalogCatTabs();renderGestorCatalog();
+  document.getElementById('gestorCatalogModal').classList.add('show');
+}
+function toggleCatalogItem(id){expandedCatalogId=expandedCatalogId===id?null:id;renderGestorCatalog();}
+function renderCatalogCatTabs() {
+  const cats=getCategorias();
+  document.getElementById('catalogCatTabs').innerHTML=
+    `<button class="pcat-tab ${catalogCatFilter===null?'active':''}" onclick="setCatalogCat(null)">Todos</button>`+
+    cats.map(c=>`<button class="pcat-tab ${catalogCatFilter===c.id?'active':''}" onclick="setCatalogCat(${c.id})">${c.name}</button>`).join('');
+}
+function setCatalogCat(id){catalogCatFilter=id;renderCatalogCatTabs();renderGestorCatalog();}
+function renderGestorCatalog() {
+  const search=document.getElementById('catalogSearch').value.toLowerCase();
+  let prods=getProductos().filter(p=>(p.stock||0)>0);
+  if(catalogCatFilter!==null)prods=prods.filter(p=>p.catId===catalogCatFilter);
+  if(search)prods=prods.filter(p=>p.name.toLowerCase().includes(search));
+  const c=document.getElementById('gestorCatalogList');
+  if(!prods.length){c.innerHTML='<div class="es"><div class="es-icon">📦</div><div class="es-text">Sin productos</div></div>';return;}
+  c.innerHTML=prods.map(p=>{
+    const exp=expandedCatalogId===p.id;
+    return `<div style="border:1px solid var(--${exp?'blue':'gray-200'});border-radius:8px;margin-bottom:6px;overflow:hidden;cursor:pointer;transition:border-color .15s;" onclick="toggleCatalogItem(${p.id})">
+      <div style="display:flex;align-items:center;gap:10px;padding:8px;">
+        ${p.photo?`<img src="${p.photo}" style="width:52px;height:52px;object-fit:cover;border-radius:6px;flex-shrink:0;" onerror="this.parentElement.querySelector('img').style.display='none'">`:`<div style="width:52px;height:52px;border-radius:6px;background:var(--gray-100);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;">📦</div>`}
+        <div style="flex:1;min-width:0;">
+          <div style="font-weight:700;font-size:13px;color:var(--text);">${p.name}</div>
+          ${p.precio?`<div style="color:var(--blue);font-weight:700;font-size:12px;margin-top:2px;">${p.precio}</div>`:''}
+        </div>
+        <div style="font-size:13px;color:var(--gray-400);flex-shrink:0;margin-left:4px;">${exp?'▲':'▼'}</div>
+      </div>
+      ${exp?`<div style="padding:8px 12px 12px;border-top:1px solid var(--gray-200);background:var(--gray-50);">
+        ${p.description?`<div style="font-size:12px;color:var(--text-muted);margin-bottom:10px;white-space:pre-line;line-height:1.5;">${p.description}</div>`:''}
+        <div style="display:flex;flex-wrap:wrap;gap:5px;font-size:11px;">
+          <span style="background:var(--blue-lt);color:var(--blue);padding:3px 9px;border-radius:10px;font-weight:700;">📦 Disponibles: ${p.stock}</span>
+          ${p.garantia?`<span style="background:var(--gray-100);color:var(--gray-600);padding:3px 9px;border-radius:10px;">🛡️ ${p.garantia}</span>`:''}
+          ${p.comision?`<span style="background:#f0fdf4;color:var(--green);padding:3px 9px;border-radius:10px;font-weight:600;">Comisión: ${p.comision}</span>`:''}
+          ${p.puntos?`<span style="background:var(--blue-lt);color:var(--blue);padding:3px 9px;border-radius:10px;">⭐ ${p.puntos} pts</span>`:''}
+        </div>
+      </div>`:''}
+    </div>`;
+  }).join('');
 }
 
 // ══════════════════════════════════════════
@@ -2126,7 +2263,7 @@ function init() {
   setInterval(()=>{updateAdminBadge();renderMyVales();renderGestorNotifs();},12000);
   renderGestores();
   renderGestorNotifs();
-  updateAdminBadge();
+  updateAdminBadge();updateMensajeroBadge();
   setFilter('all');
 }
 init();
