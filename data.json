@@ -466,54 +466,6 @@
       "catId": 100
     },
     {
-      "id": 1778601482845,
-      "name": "MANNOL 4 - TAKT MOTORBIKE 10W - 40 7812 1L",
-      "description": "[ACEITES Y LUBRICANTES]\nSpecifications\nSAE 10W-40\nAPI SP\nJASO MA/MA2",
-      "precio": "$10 USD",
-      "stock": 52,
-      "puntos": 1,
-      "garantia": "",
-      "comision": "",
-      "photo": "https://tiendamax.org/imagenes/img_1778601479670.webp",
-      "catId": 110
-    },
-    {
-      "id": 1778601740203,
-      "name": "20W50 S - 4T ACEITE DE MOTOR MINERAL FF6208 1L",
-      "description": "[ACEITES Y LUBRICANTES]\nSAE 20W–50\n\nAPI SN\n\nJASO MAS/MAS2",
-      "precio": "$10 USD",
-      "stock": 23,
-      "puntos": 1,
-      "garantia": "",
-      "comision": "",
-      "photo": "https://tiendamax.org/imagenes/img_1778601683067.webp",
-      "catId": 110
-    },
-    {
-      "id": 1778602314518,
-      "name": "FANFARO 2T 1L",
-      "description": "[ACEITES Y LUBRICANTES]\nESPECIFICACIONES TÉCNICAS:\n-Categoría: Aceite para\nMotores de 2 Tiempos\n-Viscosidad: SAE 20W(SAE 2T)\n-Clasificación de\nRendimiento: APITC\n-Especificaciones: JASO FB,\n- Aplicaciones Recomen-\ndadas: Cortacéspedesr\nART.\nMotosierras, Cortabordes,\nCiclomotores.",
-      "precio": "$8 USD",
-      "stock": 43,
-      "puntos": 1,
-      "garantia": "",
-      "comision": "",
-      "photo": "https://tiendamax.org/imagenes/img_1778602312238.webp",
-      "catId": 110
-    },
-    {
-      "id": 1778634719053,
-      "name": "CAPA PARA MOTO",
-      "description": "[PARTES Y PIEZAS]\nTalla XL ideal para estos tiempos de lluvia 😏",
-      "precio": "$12 USD",
-      "stock": 9,
-      "puntos": 1,
-      "garantia": "",
-      "comision": "$2 USD",
-      "photo": "https://tiendamax.org/imagenes/img_1778634712732.webp",
-      "catId": 110
-    },
-    {
       "id": 1778636088295,
       "name": "KIT DE 4 CÁMARAS ZOSI ( CON SU DISCO DURO )",
       "description": "[CÁMARAS]\nKit de 4 cámaras Zosi NUEVO EN CAJA‼️\n\n• DVR 8 Canales.\n• 5MP Lite DVR.\n• Soporta cámara analógica, HD-TVI, CVI y AHD.\n• Tecnología de compresión H.265+.\n• Salida de vídeo: HDMI / VGA / CVBS.\n• Detección de movimiento avanzada y personalizable.\n• Grabación continua o configurable a la detección de movimiento.\n• Reciclado automático de grabación.\n• Resistente al agua.\n• Para interior o exterior.\n\n🏠 Visualización local: No necesita red, simplemente conecte el sistema a un monitor a través del puerto HDMI/VGA y disfrute de varias vistas en una pantalla.\n💻 Visualización remota: Conecte Internet al DVR. Descargue la aplicación ZOSI Smart en su smartphone (iOS o Android), o descargue el cliente AVSS PC en PC.\n\n🚨VIENEN CON TODOS SUS ACCESORIOS (con el disco duro incluido)",
@@ -1090,5 +1042,5 @@
       "deliveredTs": "2026-06-15T20:44:09.650Z"
     }
   ],
-  "timestamp": "2026-06-16T00:41:17.997Z"
+  "timestamp": "2026-06-16T00:41:26.351Z"
 }
