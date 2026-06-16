@@ -2369,12 +2369,29 @@ function toggleTheme() {
 }
 
 // ══════════════════════════════════════════
+//  INITIAL DATA LOAD
+// ══════════════════════════════════════════
+async function loadInitialData() {
+  if (getGestores().length || getProductos().length) return; // already has data
+  try {
+    const res = await fetch('./data.json');
+    if (!res.ok) return;
+    const data = await res.json();
+    if (data.gestores  && data.gestores.length)  saveGestores(data.gestores);
+    if (data.mensajeros&& data.mensajeros.length) saveMensajeros(data.mensajeros);
+    if (data.productos && data.productos.length)  saveProductos(data.productos);
+    if (data.categorias&& data.categorias.length) saveCategorias(data.categorias);
+  } catch(e) {}
+}
+
+// ══════════════════════════════════════════
 //  INIT
 // ══════════════════════════════════════════
-function init() {
+async function init() {
   applyTheme(localStorage.getItem('axon_theme')==='dark');
   updateDate();
   setInterval(updateDate, 60000);
+  await loadInitialData();
   if (IS_ADMIN) {
     initAdminPage();
   } else {
