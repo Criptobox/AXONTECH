@@ -1,4 +1,9 @@
 // ══════════════════════════════════════════
+//  PAGE CONTEXT
+// ══════════════════════════════════════════
+const IS_ADMIN = document.body.dataset.page === 'admin';
+
+// ══════════════════════════════════════════
 //  DATA LAYER
 // ══════════════════════════════════════════
 const getGestores   = () => JSON.parse(localStorage.getItem('axon_gestores')   || '[]');
@@ -221,37 +226,49 @@ function sendBrowserNotif(title,body) {
 //  MODE
 // ══════════════════════════════════════════
 function switchMode(mode) {
-  if(mode==='admin'){if(!adminActive){openPassModal();return;}activateAdminMode();return;}
-  const lg=document.getElementById('layoutGestor');
-  const la=document.getElementById('layoutAdmin');
-  [lg,la].forEach(el=>el.classList.remove('active'));
-  lg.classList.add('active');
-  document.getElementById('btnAdminAccess').style.display='flex';
-  document.getElementById('btnCatalogo').style.display='inline-flex';
+  if (mode === 'admin') {
+    if (IS_ADMIN) return; // already on admin page
+    if (!adminActive) { openPassModal(); return; }
+    activateAdminMode();
+    return;
+  }
+  // gestor mode
+  if (IS_ADMIN) { window.location.href = './index.html'; return; }
+  const lg = document.getElementById('layoutGestor');
+  const la = document.getElementById('layoutAdmin');
+  if (lg && la) { [lg, la].forEach(el => el.classList.remove('active')); lg.classList.add('active'); }
+  const ba = document.getElementById('btnAdminAccess'); if (ba) ba.style.display = 'flex';
+  const bc = document.getElementById('btnCatalogo'); if (bc) bc.style.display = 'inline-flex';
 }
 function activateAdminMode() {
-  document.getElementById('layoutAdmin').classList.add('active');
-  document.getElementById('layoutGestor').classList.remove('active');
-  document.getElementById('btnAdminAccess').style.display='none';
-  document.getElementById('btnCatalogo').style.display='none';
-  const cfg=getConfig();
-  if(cfg.adminPhone)document.getElementById('adminPhoneInput').value=cfg.adminPhone;
-  const today=new Date().toISOString().slice(0,10);
-  document.getElementById('statsDateFrom').value=today;
-  document.getElementById('statsDateTo').value=today;
-  // Historial default: last 7 days
-  const hist7=new Date(Date.now()-7*24*60*60*1000).toISOString().slice(0,10);
-  const histFrom=document.getElementById('histDateFrom');const histTo=document.getElementById('histDateTo');
-  if(histFrom)histFrom.value=hist7;if(histTo)histTo.value=today;
+  if (!IS_ADMIN) {
+    const la = document.getElementById('layoutAdmin');
+    const lg = document.getElementById('layoutGestor');
+    if (la) la.classList.add('active');
+    if (lg) lg.classList.remove('active');
+    const ba = document.getElementById('btnAdminAccess'); if (ba) ba.style.display = 'none';
+    const bc = document.getElementById('btnCatalogo'); if (bc) bc.style.display = 'none';
+  }
+  const al = document.getElementById('adminLabel'); if (al) al.style.display = 'flex';
+  const bl = document.getElementById('btnLogout'); if (bl) bl.style.display = 'inline-flex';
+  const cfg = getConfig();
+  const ph = document.getElementById('adminPhoneInput'); if (ph && cfg.adminPhone) ph.value = cfg.adminPhone;
+  const today = new Date().toISOString().slice(0, 10);
+  const sf = document.getElementById('statsDateFrom'); if (sf) sf.value = today;
+  const st = document.getElementById('statsDateTo'); if (st) st.value = today;
+  const hist7 = new Date(Date.now()-7*24*60*60*1000).toISOString().slice(0, 10);
+  const histFrom = document.getElementById('histDateFrom'); if (histFrom) histFrom.value = hist7;
+  const histTo = document.getElementById('histDateTo'); if (histTo) histTo.value = today;
   adminTab('vales');
   updateAdminBadge();
 }
 function logoutAdmin() {
-  adminActive=false;
-  document.getElementById('adminLabel').style.display='none';
-  document.getElementById('btnLogout').style.display='none';
-  switchMode('gestor');
+  adminActive = false;
   showToast('Sesión admin cerrada');
+  if (IS_ADMIN) { window.location.href = './index.html'; return; }
+  const al = document.getElementById('adminLabel'); if (al) al.style.display = 'none';
+  const bl = document.getElementById('btnLogout'); if (bl) bl.style.display = 'none';
+  switchMode('gestor');
 }
 
 // ══════════════════════════════════════════
@@ -281,8 +298,8 @@ function updateAdminBadge() {
   const n=pendingCount();
   const b=document.getElementById('adminBadge');
   const ib=document.getElementById('inboxCountBadge');
-  if(n>0){b.textContent=n;b.classList.add('show');if(ib){ib.textContent=n;ib.style.display='inline-block';}}
-  else{b.classList.remove('show');if(ib)ib.style.display='none';}
+  if(n>0){if(b){b.textContent=n;b.classList.add('show');}if(ib){ib.textContent=n;ib.style.display='inline-block';}}
+  else{if(b)b.classList.remove('show');if(ib)ib.style.display='none';}
 }
 
 // ══════════════════════════════════════════
@@ -294,13 +311,16 @@ function openPassModal() {
   document.getElementById('passModal').classList.add('show');
   setTimeout(()=>document.getElementById('passInput').focus(),100);
 }
-function closePassModal(){document.getElementById('passModal').classList.remove('show');}
+function closePassModal() {
+  document.getElementById('passModal').classList.remove('show');
+  if (IS_ADMIN && !adminActive) { window.location.href = './index.html'; }
+}
 function submitPass() {
   const val=document.getElementById('passInput').value;
   if(checkPass(val)){
     closePassModal();adminActive=true;
-    document.getElementById('adminLabel').style.display='inline';
-    document.getElementById('btnLogout').style.display='inline-flex';
+    const al=document.getElementById('adminLabel'); if(al) al.style.display='flex';
+    const bl=document.getElementById('btnLogout'); if(bl) bl.style.display='inline-flex';
     playSound('login');requestNotifPermission();
     activateAdminMode();showToast('Bienvenido, Admin ✓');
   } else {
@@ -889,7 +909,7 @@ function addMensajero() {
   const list=getMensajeros();list.push({id:Date.now(),name});saveMensajeros(list);
   inp.value='';renderMensajeros();showToast('Mensajero agregado');
 }
-document.getElementById('newMensajeroInput').addEventListener('keydown',e=>{if(e.key==='Enter')addMensajero();});
+const _nmi=document.getElementById('newMensajeroInput');if(_nmi)_nmi.addEventListener('keydown',e=>{if(e.key==='Enter')addMensajero();});
 function removeMensajero(id) {
   if(getVales().some(v=>v.mensajeroId===id&&['assigned','pending_payment'].includes(v.status))){showToast('Tiene vales activos');return;}
   saveMensajeros(getMensajeros().filter(m=>m.id!==id));renderMensajeros();
@@ -1102,8 +1122,8 @@ function sendVale() {
   sendBrowserNotif('AXONTECH – Nuevo vale',`${g.name} envió un vale para ${vale.cliente}`);
   showToast('Vale enviado al administrador ✓');
   if(adminActive){
-    document.getElementById('notifBannerText').textContent=`${g.name} acaba de enviar un vale`;
-    document.getElementById('notifBanner').classList.add('show');
+    const _nbt=document.getElementById('notifBannerText'); if(_nbt)_nbt.textContent=`${g.name} acaba de enviar un vale`;
+    const _nb=document.getElementById('notifBanner'); if(_nb)_nb.classList.add('show');
     renderAdminGestores();renderInbox();
   }
 }
@@ -1620,17 +1640,15 @@ function loadDemo() {
   activeGestorId=null; activeMensajeroId=null; adminActive=false; selectedValeId=null;
   adminGestorFilter=null; inboxFilter='all'; selectedProductsUI=[]; currentValeProductos=[];
   rankingCache=null;gestoresTabDirty=true;statsTabDirty=true;
-  document.getElementById('layoutAdmin').classList.remove('active');
-  document.getElementById('layoutGestor').classList.remove('has-gestor');
-  document.getElementById('layoutGestor').classList.add('active');
-  document.getElementById('btnAdminAccess').style.display='flex';
-  document.getElementById('adminLabel').style.display='none';
-  document.getElementById('btnLogout').style.display='none';
-  document.getElementById('headerGestorName').textContent='';
-  document.getElementById('bannerAvatar').textContent='?';
-  document.getElementById('bannerAvatar').style.background='var(--gray-300)';
-  document.getElementById('bannerLbl').textContent='SELECCIONA TU NOMBRE';
-  document.getElementById('bannerName').textContent='Selecciona tu nombre →';
+  const _la=document.getElementById('layoutAdmin'); if(_la)_la.classList.remove('active');
+  const _lg=document.getElementById('layoutGestor'); if(_lg){_lg.classList.remove('has-gestor');_lg.classList.add('active');}
+  const _ba=document.getElementById('btnAdminAccess'); if(_ba)_ba.style.display='flex';
+  const _al=document.getElementById('adminLabel'); if(_al)_al.style.display='none';
+  const _bl=document.getElementById('btnLogout'); if(_bl)_bl.style.display='none';
+  const _hn=document.getElementById('headerGestorName'); if(_hn)_hn.textContent='';
+  const _bav=document.getElementById('bannerAvatar'); if(_bav){_bav.textContent='?';_bav.style.background='var(--gray-300)';}
+  const _blbl=document.getElementById('bannerLbl'); if(_blbl)_blbl.textContent='SELECCIONA TU NOMBRE';
+  const _bnm=document.getElementById('bannerName'); if(_bnm)_bnm.textContent='Selecciona tu nombre →';
   resetForm();
   renderGestores();
   renderGestorNotifs();
@@ -2350,16 +2368,42 @@ function toggleTheme() {
 function init() {
   applyTheme(localStorage.getItem('axon_theme')==='dark');
   updateDate();
-  setInterval(updateDate,60000);
-  setInterval(()=>{updateAdminBadge();renderMyVales();renderGestorNotifs();},12000);
+  setInterval(updateDate, 60000);
+  if (IS_ADMIN) {
+    initAdminPage();
+  } else {
+    initGestorPage();
+  }
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('./sw.js').catch(() => {});
+  }
+}
+function initGestorPage() {
+  setInterval(() => { updateAdminBadge(); renderMyVales(); renderGestorNotifs(); }, 12000);
   renderGestores();
   renderGestorNotifs();
   renderGestorRanking();
-  updateAdminBadge();updateMensajeroBadge();
+  const bc = document.getElementById('btnCatalogo');
+  if (bc) bc.style.display = 'inline-flex';
+  // Triple-tap on AX logo → go to admin page
+  let _taps = 0, _tapTimer;
+  const brandTap = document.getElementById('brandTap');
+  if (brandTap) {
+    brandTap.addEventListener('click', () => {
+      _taps++;
+      clearTimeout(_tapTimer);
+      _tapTimer = setTimeout(() => { _taps = 0; }, 800);
+      if (_taps >= 3) { _taps = 0; window.location.href = './admin.html'; }
+    });
+  }
+}
+function initAdminPage() {
+  updateAdminBadge(); updateMensajeroBadge();
   setFilter('all');
-  document.getElementById('btnCatalogo').style.display='inline-flex';
-  if('serviceWorker' in navigator){
-    navigator.serviceWorker.register('./sw.js').catch(()=>{});
+  if (adminActive) {
+    activateAdminMode();
+  } else {
+    openPassModal();
   }
 }
 init();
