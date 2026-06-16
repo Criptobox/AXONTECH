@@ -466,30 +466,6 @@
       "catId": 100
     },
     {
-      "id": 1778547461235,
-      "name": "MANNOL TS - 4 SHPD 15W - 40 7104. 5L",
-      "description": "[ACEITES Y LUBRICANTES]\nEspecificación\n\nSAE 15W-40\n\nAPI CI-4 Plus\n\nAPI CI-4/CH-4/SL\n\nACEA E7\n\nACEA A3/B4\n\nJASO DH-1\n\nGLOBAL DHD-1\n\nApproval\n\nRecomendación\n\nCATERPILLAR ECF-2\n\nCATERPILLAR ECF-1-a\n\nCUMMINS CES 20076\n\nCUMMINS CES 20077\n\nCUMMINS CES 20078\n\nDETROIT DIESEL 93K215\n\nMACK EO-N\n\nMACK EO-M Plus\n\nMAN M 3275-1\n\nMB 228.1\n\nMB 228.3\n\nMTU Type 2\n\nRENAULT RLD-2\n\nVOLVO VDS-3",
-      "precio": "$30 USD",
-      "stock": 53,
-      "puntos": 1,
-      "garantia": "",
-      "comision": "",
-      "photo": "https://tiendamax.org/imagenes/img_1778547461235_ext.webp",
-      "catId": 50
-    },
-    {
-      "id": 1778547753925,
-      "name": "MANNOL DEFENDER 10W - 40 7507. 5L",
-      "description": "[ACEITES Y LUBRICANTES]\nAceite de motor universal innovador con éster, de base hidrosintética, para motores de gasolina y diésel, tanto de marcas nuevas como antiguas, y con un alto kilometraje. Desarrollado según los requisitos de los fabricantes europeos.\nPara motores turboalimentados con inyección directa, una formulación de aceite única reduce a cero el efecto de la ignición prematura de la mezcla de combustible LSPI (Low Speed ​​Pre-Ignition).\nPropiedades del producto:\n- La tecnología de éster y la base hidrosintética de última generación con un rango extendido de propiedades de viscosidad-temperatura aseguran un funcionamiento eficiente del motor en todos los modos de funcionamiento: arranque en frío, modo urbano, modo autopista, así como bajo cargas elevadas (al conducir fuera de carretera, cuesta arriba, con remolque, carga máxima) y a altas temperaturas ambiente;\n- Perfecto para una conducción activa y no pierde sus propiedades al usar combustible de calidad variable (con un contenido de azufre de hasta 500 ppm) debido a una gran reserva del número base (TBN);\n- La base hidrosintética con éster, combinada con el paquete de aditivos más reciente, conserva los parámetros de potencia del motor durante todo el intervalo de cambio;\n- La exclusiva tecnología de reducción del desgaste, en combinación con componentes éster, proporciona excelentes propiedades antidesgaste y antifricción gracias a la excepcional resistencia de la película de aceite, que, junto con una buena bombeabilidad, aumenta significativamente la vida útil del motor incluso en modos de conducción Start-Stop y durante el arranque en frío.\n- Gracias a sus excelentes propiedades de dispersión de detergentes y a su máxima estabilidad termooxidativa, combate eficazmente todo tipo de depósitos y mantiene las piezas del motor limpias durante todo el intervalo de cambio.\n\nEstá diseñado para motores de gasolina y diésel de una amplia gama de vehículos (turismos, SUV ligeros, minibuses y camiones ligeros) de fabricantes europeos y de otras nacionalidades.\nSe recomienda su uso en motores de vehículos Daimler y VW que tengan requisitos adicionales para aceites de motor (según las especificaciones anteriores). ¡\nEste aceite no es apto para camiones pesados ​​ni vehículos similares!",
-      "precio": "$30 USD",
-      "stock": 23,
-      "puntos": 1,
-      "garantia": "",
-      "comision": "",
-      "photo": "https://tiendamax.org/imagenes/img_1778547753925_ext.webp",
-      "catId": 50
-    },
-    {
       "id": 1778601482845,
       "name": "MANNOL 4 - TAKT MOTORBIKE 10W - 40 7812 1L",
       "description": "[ACEITES Y LUBRICANTES]\nSpecifications\nSAE 10W-40\nAPI SP\nJASO MA/MA2",
@@ -1114,5 +1090,5 @@
       "deliveredTs": "2026-06-15T20:44:09.650Z"
     }
   ],
-  "timestamp": "2026-06-16T00:41:13.530Z"
+  "timestamp": "2026-06-16T00:41:17.997Z"
 }
