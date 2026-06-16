@@ -502,30 +502,6 @@
       "catId": 40
     },
     {
-      "id": 1778906455757,
-      "name": "CARGADOR DE BATERÍA DE LITIO BIEN 72V 5A (SALIDA 84V) | CONECTOR US PIN",
-      "description": "[PARTES Y PIEZAS]\nMantén tu moto eléctrica siempre lista para rodar con la máxima seguridad que te ofrece el cargador de baterías de litio de la marca BIEN. Este equipo está diseñado específicamente para sistemas de 72V, entregando un voltaje de corte preciso de 84.0V para asegurar que tus celdas de litio se carguen al 100% de su capacidad de manera óptima, cuidando y prolongando la vida útil de tu inversión.",
-      "precio": "$40 USD",
-      "stock": 3,
-      "puntos": 1,
-      "garantia": "",
-      "comision": "$2.8 USD",
-      "photo": "https://tiendamax.org/imagenes/img_1778906453441.webp",
-      "catId": 110
-    },
-    {
-      "id": 1778906733513,
-      "name": "ESPEJOS RETROVISORES DEPORTIVOS SHENAO STEALTH WINGLET",
-      "description": "[PARTES Y PIEZAS]\nTransforma radicalmente la estética de tu moto con los espejos retrovisores premium SHENAO de diseño aerodinámico Stealth. Diseñados para los motociclistas que exigen un balance perfecto entre estilo agresivo y funcionalidad, estos espejos se inspiran en la tecnología de alta competencia para ofrecer un accesorio 2 en 1: un alerón aerodinámico de perfil bajo cuando están cerrados y un sistema de visión trasera claro al desplegarlos.",
-      "precio": "$20 USD",
-      "stock": 5,
-      "puntos": 1,
-      "garantia": "",
-      "comision": "$1.8 USD",
-      "photo": "https://tiendamax.org/imagenes/img_1778906731600.webp",
-      "catId": 110
-    },
-    {
       "id": 1778906905279,
       "name": "ESPEJOS RETROVISORES DEPORTIVOS ALERÓN TIPO STEALTH | ACABADO FIBRA DE CARBÓN PREMIUM",
       "description": "[PARTES Y PIEZAS]\nLleva la estética de tu moto al nivel de las pistas de carreras con los espejos retrovisores tipo Alerón (Stealth) en acabado de Fibra de Carbón. Este accesorio es la definición perfecta de lujo y aerodinámica: un componente diseñado para transformar radicalmente el aspecto visual de tu moto, dándole una línea agresiva, moderna y puramente deportiva sin perder la funcionalidad en carretera.",
@@ -1018,5 +994,5 @@
       "deliveredTs": "2026-06-15T20:44:09.650Z"
     }
   ],
-  "timestamp": "2026-06-16T00:41:31.987Z"
+  "timestamp": "2026-06-16T00:41:35.034Z"
 }
