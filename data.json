@@ -286,42 +286,6 @@
       "catId": 20
     },
     {
-      "id": 1778212384991,
-      "name": "MANNOL ANTIFREEZE AG13+ ( - 40 °C) ADVANCED 4014. 5L",
-      "description": "[REFRIGERANTES]\nRefrigerante listo para usar es una solución híbrida (HOAT- Tecnología de ácido orgánico híbrido) de alta tecnología lista para usar protege el sistema de refrigeración del vehículo desde (-40 °С hasta +125°С).  Con excelentes características de funcionamiento pensada para todo el año uso en cualquier sistema de refrigeración moderno para el que se recomiende el uso de anticongelante a base de monoetilenglicol. Garantiza una protección fiable de cualquier sistema de refrigeración.\n\nPremezclado 50/50\n\nVida útil: 3 años o 150 000km\n\nColor: Amarillo\n\nEspecificación\n\nApproval\n\nRecomendación\n\nSAE J1034\n\nAFNOR FRANCE NF R15-601\n\nASTM USA D3306\n\nASTM USA D4340\n\nASTM USA D4985\n\nBSI GB BS 6580:2010\n\nNATO S-759\n\nBMW GS 94000\n\nCHRYSLER MS-7170\n\nFORD ESE-M978B4H-A\n\nFORD AF Plus\n\nGM 1825 M\n\nGM 1899 M\n\nGM SATURN\n\nJAGUAR\n\nJOHN DEERE\n\nMAN 324 NF\n\nMB 325.0\n\nMINI GS 94000\n\nMTU MTL 5048\n\nOPEL GME L1301\n\nOPEL GM QL130100\n\nVAUXHALL GME L1301",
-      "precio": "$15 USD",
-      "stock": 31,
-      "puntos": 1,
-      "garantia": "",
-      "comision": "",
-      "photo": "https://tiendamax.org/imagenes/img_1778212384991.webp",
-      "catId": 50
-    },
-    {
-      "id": 1778212462723,
-      "name": "MANNOL ANTIFREEZE AG13 ( - 40 °C) HIGHTEC 4013. 5L",
-      "description": "[REFRIGERANTES]\nRefrigerante listo para usar es una solución híbrida (HOAT- Tecnología de ácido orgánico híbrido) de alta tecnología lista para usar, protege el sistema de refrigeración del vehículo desde (-40 °С hasta +125°С). con excelentes características de funcionamiento pensada para todo el año uso en cualquier sistema de refrigeración moderno para el que se recomiende el uso de anticongelante a base de monoetilenglicol. Garantiza una protección fiable de cualquier sistema de refrigeración.\n\nPremezclado 50/50\n\nVida útil: 3 años o 150 000km.\n\nColor: Verde\n\nEspecificación\n\nApproval\n\nRecomendación\n\nSAE J1034\n\nAFNOR FRANCE NF R15-601\n\nASTM USA D3306\n\nASTM USA D4340\n\nASTM USA D4985\n\nBSI GB BS 6580:2010\n\nNATO S-759\n\nBMW GS 94000\n\nCHRYSLER MS-7170\n\nFORD ESE-M978B4H-A\n\nFORD AF Plus\n\nGM 1825 M\n\nGM 1899 M\n\nGM SATURN\n\nJAGUAR\n\nJOHN DEERE\n\nMAN 324 Typ NF\n\nMB 325.0\n\nMINI GS 94000\n\nMTU MTL 5048\n\nOPEL GME L1301\n\nOPEL GM QL130100\n\nVAUXHALL GME L1301",
-      "precio": "$15 USD",
-      "stock": 22,
-      "puntos": 1,
-      "garantia": "",
-      "comision": "",
-      "photo": "https://tiendamax.org/imagenes/img_1778212462723.webp",
-      "catId": 50
-    },
-    {
-      "id": 1778212537706,
-      "name": "MANNOL ANTIFREEZE AG11 ( - 40 °C) LONGTERM 4011. 5L",
-      "description": "[REFRIGERANTES]\nRefrigerante listo para usar a base de inhibidores minerales – IAT (Tecnología de ácidos inorgánicos) protege el sistema de refrigeración del vehículo desde (-40 °С hasta +125°С). Diseñado para uso durante todo el año en cualquier sistema de refrigeración moderno que contenga componentes de cobre, latón y aluminio para los que se recomienda el uso de un anticongelante a base de etilenglicol.\n\nPremezclado 50/50\n\nColor: azul.\n\nVida útil: 3 años o 150 000km.​\n\n\nEspecificación\n\nAFNOR FRANCE NF R15-601\n\nASTM USA D3306\n\nBSI GB BS 6580:2010\n\nVOLKSWAGEN TL 774 C\n\nBMW GS 94000\n\nCHRYSLER MS-7170\n\nMAN 324 Typ NF\n\nMINI GS 94000\n\nMTU MTL 5048\n\nOPEL GME L1301\n\nVAUXHALL GME L1301\n\nApproval\n\nRecomendación\n\nTESLA",
-      "precio": "$15 USD",
-      "stock": 25,
-      "puntos": 1,
-      "garantia": "",
-      "comision": "",
-      "photo": "https://tiendamax.org/imagenes/img_1778212537706.webp",
-      "catId": 50
-    },
-    {
       "id": 1778213413973,
       "name": "FORROS DE ASIENTOS DE LUJO PARA AUTOS",
       "description": "[ACCESORIOS]\nForros de asientos de lujo para autos:\n\n•Alta calidad y acabado exquisito.\n•Color: negro\n•Material de la superficie: Cuero napa de 0,6 mm.\n•Durabilidad: 3 veces más duraderas que el PU estándar, con resistencia a temperaturas elevadas de 45 grados.\n•Comodidad: 20-30% más suave y transpirable, adaptándose al cuerpo.\n•Relleno: Acolchonado y con apoyo lumbar ergonómico \n•Tipo: Ajuste universal  para 5 asientos, 2 delanteros y 3 traseros.",
@@ -1234,5 +1198,5 @@
       "deliveredTs": "2026-06-15T20:44:09.650Z"
     }
   ],
-  "timestamp": "2026-06-16T00:40:46.396Z"
+  "timestamp": "2026-06-16T00:40:50.546Z"
 }
