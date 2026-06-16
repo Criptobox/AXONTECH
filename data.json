@@ -502,30 +502,6 @@
       "catId": 40
     },
     {
-      "id": 1778906905279,
-      "name": "ESPEJOS RETROVISORES DEPORTIVOS ALERÓN TIPO STEALTH | ACABADO FIBRA DE CARBÓN PREMIUM",
-      "description": "[PARTES Y PIEZAS]\nLleva la estética de tu moto al nivel de las pistas de carreras con los espejos retrovisores tipo Alerón (Stealth) en acabado de Fibra de Carbón. Este accesorio es la definición perfecta de lujo y aerodinámica: un componente diseñado para transformar radicalmente el aspecto visual de tu moto, dándole una línea agresiva, moderna y puramente deportiva sin perder la funcionalidad en carretera.",
-      "precio": "$25 USD",
-      "stock": 6,
-      "puntos": 1,
-      "garantia": "",
-      "comision": "$1.8 USD",
-      "photo": "https://tiendamax.org/imagenes/img_1778906902845.webp",
-      "catId": 110
-    },
-    {
-      "id": 1778907072353,
-      "name": "ESPEJOS ALERÓN DEPORTIVOS STEALTH POLIGONALES | DISEÑO AERODINÁMICO PREMIUM",
-      "description": "[PARTES Y PIEZAS]\nDale a tu moto una presencia imponente en la carretera con los espejos retrovisores tipo Alerón de diseño Poligonal. Esta evolución del clásico espejo Stealth rompe los esquemas tradicionales con líneas angulares más marcadas y un reverso esculpido con relieves aerodinámicos. Es el accesorio de gama alta definitivo para quienes buscan un aspecto robusto, futurista y de pura competición.",
-      "precio": "$25 USD",
-      "stock": 6,
-      "puntos": 1,
-      "garantia": "",
-      "comision": "$1.8 USD",
-      "photo": "https://tiendamax.org/imagenes/img_1778907067761.webp",
-      "catId": 110
-    },
-    {
       "id": 1778907260915,
       "name": "CALENTADOR ELÉCTRICO",
       "description": "[ELECTRODOMÉSTICOS]\n♨️💦 CALENTADOR ELÉCTRICO – Agua caliente al instante 💦♨️\nConfort y seguridad para tu hogar con control digital de temperatura y flujo constante.\n\nIncluye todo lo necesario para instalar y usar de inmediato:\n- 🚿 Ducha de teléfono con soporte\n- ⚡ Breker con su caja protectora\n- 📟 Panel digital con indicador de litros/minuto y nivel de potencia\n- Otros accesorios.\n\nIdeal para baño y cocina. Compacto, eficiente y listo con todos sus accesorios para instalar.",
@@ -994,5 +970,5 @@
       "deliveredTs": "2026-06-15T20:44:09.650Z"
     }
   ],
-  "timestamp": "2026-06-16T00:41:35.034Z"
+  "timestamp": "2026-06-16T00:41:39.044Z"
 }
