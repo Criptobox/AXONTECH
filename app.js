@@ -241,10 +241,10 @@ function switchMode(mode) {
   const bc = document.getElementById('btnCatalogo'); if (bc) bc.style.display = 'inline-flex';
 }
 function activateAdminMode() {
+  const la = document.getElementById('layoutAdmin');
+  if (la) la.classList.add('active');
   if (!IS_ADMIN) {
-    const la = document.getElementById('layoutAdmin');
     const lg = document.getElementById('layoutGestor');
-    if (la) la.classList.add('active');
     if (lg) lg.classList.remove('active');
     const ba = document.getElementById('btnAdminAccess'); if (ba) ba.style.display = 'none';
     const bc = document.getElementById('btnCatalogo'); if (bc) bc.style.display = 'none';
