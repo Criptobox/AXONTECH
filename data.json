@@ -298,18 +298,6 @@
       "catId": 50
     },
     {
-      "id": 1778213940333,
-      "name": "MANNOL SAFARI 20W - 50 7404 5L",
-      "description": "[ACEITES Y LUBRICANTES]\nAceite de motor universal semisintético, con una mezcla de componentes sintéticos y una base mineral de alta pureza, para motores modernos de gasolina y diésel altamente acelerados con y sin turbocompresor utilizados en condiciones de funcionamiento difíciles y motores con un kilometraje muy alto utilizado en diversas operaciones. condiciones. Diseñado para la máxima protección de los motores modernos de gasolina y diésel de una amplia flota de automóviles (automóviles de pasajeros, SUV ligeros, minibuses y camiones ligeros) de fabricantes rusos, asiáticos, americanos, europeos, etc.\n\nSAE 20W-50\n\nApproval\n\nRecommendation\n\nAPI SN/CH-4",
-      "precio": "$25 USD",
-      "stock": 53,
-      "puntos": 1,
-      "garantia": "",
-      "comision": "",
-      "photo": "https://tiendamax.org/imagenes/img_1778213940333.webp",
-      "catId": 50
-    },
-    {
       "id": 1778214089400,
       "name": "MANNOL SPECIAL PLUS 10W - 30 7512. 5L",
       "description": "[ACEITES Y LUBRICANTES]\nAceite de motor universal de sintesis HC, diseñado para cumplir con los requisitos de Volkswagen, Mercedes Benz. Diseñado para motores de gasolina y diésel en una amplia flota de automóviles (automóviles, vehículos utilitarios ligeros, furgonetas y camiones ligeros) de fabricantes europeos, asiáticos.\nEspecificaciones\n\nSAE 10W-30\n\nApproval\n\nRecomendación\n\nAPI SN\n\nACEA A3/B4\n\nVOLKSWAGEN 505 00\n\nVOLKSWAGEN 501 01\n\nMB 229.1\n\nISUZU\n\nKIA\n\nHYUNDAI",
@@ -1198,5 +1186,5 @@
       "deliveredTs": "2026-06-15T20:44:09.650Z"
     }
   ],
-  "timestamp": "2026-06-16T00:40:50.546Z"
+  "timestamp": "2026-06-16T00:40:53.690Z"
 }
