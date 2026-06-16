@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AXONTECH · Test Suite</title>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',monospace;background:#0f172a;color:#e2e8f0;min-height:100vh;padding:20px;}
+    h1{font-size:22px;font-weight:800;letter-spacing:2px;color:#00b4d8;margin-bottom:4px;}
+    .subtitle{font-size:12px;color:#64748b;margin-bottom:24px;}
+    .suite{background:#1e293b;border-radius:12px;margin-bottom:16px;overflow:hidden;}
+    .suite-header{background:#0f172a;padding:12px 16px;font-size:12px;font-weight:700;letter-spacing:1px;color:#94a3b8;text-transform:uppercase;display:flex;align-items:center;gap:8px;}
+    .suite-icon{font-size:16px;}
+    .test-row{padding:9px 16px;font-size:12px;display:flex;align-items:flex-start;gap:10px;border-top:1px solid #1e293b;}
+    .test-row:first-child{border-top:none;}
+    .badge{flex-shrink:0;font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;margin-top:1px;}
+    .pass{background:#064e3b;color:#6ee7b7;}
+    .fail{background:#450a0a;color:#fca5a5;}
+    .warn{background:#422006;color:#fdba74;}
+    .info{background:#0c2340;color:#93c5fd;}
+    .test-msg{flex:1;line-height:1.5;}
+    .test-detail{font-size:10px;color:#64748b;margin-top:2px;}
+    .summary{margin-top:24px;background:#1e293b;border-radius:12px;padding:16px 20px;display:flex;gap:24px;align-items:center;flex-wrap:wrap;}
+    .sum-num{font-size:32px;font-weight:800;}
+    .sum-lbl{font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:.5px;}
+    .sum-pass{color:#6ee7b7;}
+    .sum-fail{color:#fca5a5;}
+    .sum-warn{color:#fdba74;}
+    .divider{width:1px;height:40px;background:#334155;}
+    .run-btn{margin-top:16px;background:#00b4d8;color:#0f172a;border:none;border-radius:8px;padding:10px 20px;font-size:13px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:6px;}
+    .run-btn:hover{background:#0284c7;}
+    .timestamp{font-size:10px;color:#475569;margin-top:12px;}
+    .section-sep{height:1px;background:#334155;margin:4px 0;}
+    .restore-banner{background:#064e3b;border:1px solid #065f46;border-radius:8px;padding:10px 14px;font-size:12px;color:#6ee7b7;margin-top:12px;display:none;}
+    pre{font-size:10px;color:#94a3b8;background:#0f172a;padding:6px 10px;border-radius:6px;margin-top:4px;overflow-x:auto;white-space:pre-wrap;word-break:break-all;}
+  </style>
+</head>
+<body>
+<h1>⚡ AXONTECH TEST SUITE</h1>
+<p class="subtitle">Prueba del flujo completo: Gestor → Admin → Mensajero → Cobro · localStorage simulation</p>
+
+<div id="results"></div>
+<div id="summary"></div>
+<div id="restoreBanner" class="restore-banner">✅ Datos originales restaurados — localStorage en estado original</div>
+<p class="timestamp" id="ts"></p>
+
+<button class="run-btn" onclick="runTests()">▶ Ejecutar Pruebas</button>
+<button class="run-btn" style="background:#334155;color:#e2e8f0;margin-left:8px;" onclick="restoreOriginal()">♻ Restaurar datos</button>
+
+<script>
+/* ══════════════════════════════════════════════════════
+   AXONTECH TEST SUITE
+   Simula el flujo completo sin depender de app.js
+   Usa los mismos localStorage keys y lógica de negocio
+══════════════════════════════════════════════════════ */
+
+const KEYS = {
+  gestores:  'axon_gestores',
+  vales:     'axon_vales',
+  mensajeros:'axon_mensajeros',
+  productos: 'axon_productos',
+  categorias:'axon_categorias',
+  config:    'axon_config',
+  notifs:    'axon_notifs',
+};
+
+const LOW_STOCK_THRESHOLD = 3;
+
+// ── Helpers that mirror app.js ──────────────────────
+const get  = key => JSON.parse(localStorage.getItem(key) || (key===KEYS.config?'{}':'[]'));
+const save = (key,val) => localStorage.setItem(key, JSON.stringify(val));
+const getGestores   = () => get(KEYS.gestores);
+const getVales      = () => get(KEYS.vales);
+const getMensajeros = () => get(KEYS.mensajeros);
+const getProductos  = () => get(KEYS.productos);
+const getConfig     = () => get(KEYS.config);
+const getNotifs     = () => get(KEYS.notifs);
+const saveGestores  = v => save(KEYS.gestores, v);
+const saveVales     = v => save(KEYS.vales, v);
+const saveMensajeros= v => save(KEYS.mensajeros, v);
+const saveProductos = v => save(KEYS.productos, v);
+const saveConfig    = v => save(KEYS.config, v);
+const saveNotifs    = v => save(KEYS.notifs, v);
+
+const productoOf = id => getProductos().find(p=>p.id===id);
+const gestorOf   = id => getGestores().find(g=>g.id===id);
+
+function patchVale(id, changes) {
+  const all=getVales(); const i=all.findIndex(v=>v.id===id);
+  if(i!==-1){all[i]={...all[i],...changes};saveVales(all);}
+}
+function patchProducto(id, changes) {
+  const all=getProductos(); const i=all.findIndex(p=>p.id===id);
+  if(i!==-1){all[i]={...all[i],...changes};saveProductos(all);}
+}
+function addNotif(type, productName, productId, extra, gestorId) {
+  const notifs=getNotifs();
+  notifs.unshift({id:Date.now(),type,productName,productId,ts:new Date().toISOString(),read:false,extra:extra||'',gestorId:gestorId||null});
+  if(notifs.length>50) notifs.splice(50);
+  saveNotifs(notifs);
+}
+function calcPts(gestorId) {
+  const vales=getVales().filter(v=>v.gestorId===gestorId&&['confirmed','pending_payment'].includes(v.status));
+  return vales.reduce((sum,v)=>sum+(v.valeProductos||[]).reduce((s,p)=>{const pr=productoOf(p.id);return s+(pr?pr.puntos*p.qty:0);},0),0);
+}
+function confirmSaleLogic(valeId, paymentStatus) {
+  const v=getVales().find(x=>x.id===valeId);
+  if(!v) return false;
+  (v.valeProductos||[]).forEach(({id:pid,qty})=>{
+    const prod=productoOf(pid);if(!prod)return;
+    const oldStock=prod.stock||0;
+    const newStock=Math.max(0,oldStock-qty);
+    patchProducto(pid,{stock:newStock});
+    addNotif('sale_product',prod.name,pid,`${qty}|${newStock}`,v.gestorId);
+    if(newStock===0&&oldStock>0) addNotif('out_of_stock',prod.name,pid,'stock agotado');
+    else if(newStock>0&&newStock<=LOW_STOCK_THRESHOLD&&oldStock>LOW_STOCK_THRESHOLD) addNotif('low_stock',prod.name,pid,`quedan ${newStock}`);
+  });
+  addNotif('vale_confirmed',v.cliente||'Cliente',null,`Total: ${v.total||''}`,v.gestorId);
+  patchVale(valeId,{status:paymentStatus,confirmedTs:new Date().toISOString()});
+  return true;
+}
+function revertSaleLogic(valeId) {
+  const v=getVales().find(x=>x.id===valeId);
+  if(!v) return false;
+  (v.valeProductos||[]).forEach(({id:pid,qty})=>{
+    const prod=productoOf(pid);if(!prod)return;
+    const restored=Math.max(0,(prod.stock||0)+qty);
+    patchProducto(pid,{stock:restored});
+  });
+  patchVale(valeId,{status:'delivered',confirmedTs:null,commissionPaid:false,commissionPaidTs:null});
+  return true;
+}
+function markAsPaidLogic(valeId) {
+  patchVale(valeId,{status:'confirmed',confirmedTs:new Date().toISOString()});
+}
+
+// ── Test harness ────────────────────────────────────
+let passed=0, failed=0, warned=0;
+const log=[];
+
+function test(label, result, detail='') {
+  const entry={label,result,detail};
+  log.push(entry);
+  if(result==='pass') passed++;
+  else if(result==='fail') failed++;
+  else if(result==='warn') warned++;
+  return result==='pass';
+}
+function assert(label, cond, detail='') {
+  return test(label, cond?'pass':'fail', detail);
+}
+function assertEq(label, actual, expected, detail='') {
+  const ok=actual===expected;
+  return test(label, ok?'pass':'fail', ok?detail:`Esperado: ${JSON.stringify(expected)} · Obtenido: ${JSON.stringify(actual)}${detail?' · '+detail:''}`);
+}
+function info(label, detail='') {
+  return test(label, 'info', detail);
+}
+function separator(label) {
+  return test(label, 'sep');
+}
+
+// ── Save & restore original data ────────────────────
+let originalData = {};
+function backupData() {
+  Object.values(KEYS).forEach(k=>originalData[k]=localStorage.getItem(k));
+}
+function restoreOriginal() {
+  Object.entries(originalData).forEach(([k,v])=>{
+    if(v===null) localStorage.removeItem(k); else localStorage.setItem(k,v);
+  });
+  document.getElementById('restoreBanner').style.display='block';
+  setTimeout(()=>document.getElementById('restoreBanner').style.display='none',4000);
+}
+
+// ── Test Data ────────────────────────────────────────
+const T = {};  // will hold test IDs
+
+function setupTestData() {
+  T.g1Id = Date.now();
+  T.g2Id = Date.now()+1;
+  T.m1Id = Date.now()+2;
+  T.p1Id = Date.now()+3;  // 10 puntos, stock:5
+  T.p2Id = Date.now()+4;  // 5  puntos, stock:3
+  T.p3Id = Date.now()+5;  // 2  puntos, stock:2 (will hit 0)
+
+  saveGestores([
+    {id:T.g1Id,name:'Test Gestor Uno',initials:'TG',color:'#0070F3',password:''},
+    {id:T.g2Id,name:'Test Gestor Dos',initials:'GD',color:'#7C3AED',password:''},
+  ]);
+  saveMensajeros([
+    {id:T.m1Id,name:'Test Mensajero'},
+  ]);
+  saveProductos([
+    {id:T.p1Id,name:'Producto Alpha',description:'Test',precio:'$100 USD',stock:5,puntos:10,garantia:'6m',comision:'$5 USD',photo:'',catId:null},
+    {id:T.p2Id,name:'Producto Beta', description:'Test',precio:'$50 USD', stock:3,puntos:5, garantia:'3m',comision:'$2 USD',photo:'',catId:null},
+    {id:T.p3Id,name:'Producto Gamma',description:'Test',precio:'$20 USD', stock:2,puntos:2, garantia:'',  comision:'',      photo:'',catId:null},
+  ]);
+  saveConfig({nextValeNum:1,adminPhone:'',metaPuntos:25});
+  saveNotifs([]);
+  saveVales([]);
+}
+
+// ════════════════════════════════════════════════════
+// MAIN TEST RUNNER
+// ════════════════════════════════════════════════════
+function runTests() {
+  passed=0;failed=0;warned=0;
+  log.length=0;
+
+  backupData();
+  setupTestData();
+
+  /* ─────────────────────────────────────────────────
+     SUITE 1: Setup de datos
+  ───────────────────────────────────────────────── */
+  separator('SUITE 1 · Inicialización de datos de prueba');
+  assertEq('Gestores de prueba creados',    getGestores().length, 2);
+  assertEq('Mensajero de prueba creado',    getMensajeros().length, 1);
+  assertEq('Productos de prueba creados',   getProductos().length, 3);
+  assert('Producto Alpha tiene stock=5',    productoOf(T.p1Id)?.stock===5);
+  assert('Producto Beta tiene stock=3',     productoOf(T.p2Id)?.stock===3);
+  assert('Producto Gamma tiene stock=2',    productoOf(T.p3Id)?.stock===2);
+  assertEq('Meta configurada en 25 pts',    getConfig().metaPuntos, 25);
+  assertEq('Vales iniciales = 0',           getVales().length, 0);
+  assertEq('Notificaciones iniciales = 0',  getNotifs().length, 0);
+
+  /* ─────────────────────────────────────────────────
+     SUITE 2: Gestor envía un vale
+  ───────────────────────────────────────────────── */
+  separator('SUITE 2 · Gestor envía vale (pending)');
+
+  T.v1Id = Date.now()+10;
+  const vale1 = {
+    id:T.v1Id, valeNum:1, gestorId:T.g1Id, ts:new Date().toISOString(),
+    cliente:'Cliente Test', telefono:'55551234', direccion:'Calle Falsa 123',
+    mensajeria:'Gratis', articulo:'Producto Alpha x2, Producto Beta x1',
+    precioUSD:'$250 USD', precioCUP:'', vuelto:'', total:'$250 USD',
+    garantia:'6 meses',
+    valeProductos:[
+      {id:T.p1Id, name:'Producto Alpha', qty:2},
+      {id:T.p2Id, name:'Producto Beta',  qty:1},
+    ],
+    valeText:'[VALE DE PRUEBA]',
+    status:'pending', mensajeroId:null, confirmedTs:null, isNew:true, adminNotes:'',
+  };
+  const all=getVales(); all.push(vale1); saveVales(all);
+
+  assertEq('Vale creado con status pending', getVales().find(v=>v.id===T.v1Id)?.status, 'pending');
+  assertEq('Vale tiene 2 productos',         getVales().find(v=>v.id===T.v1Id)?.valeProductos?.length, 2);
+  assert('Stock NO se descuenta al enviar',  productoOf(T.p1Id)?.stock===5, 'Stock debe quedar en 5');
+  assert('Stock Beta NO cambia al enviar',   productoOf(T.p2Id)?.stock===3);
+
+  /* ─────────────────────────────────────────────────
+     SUITE 3: Admin asigna mensajero
+  ───────────────────────────────────────────────── */
+  separator('SUITE 3 · Admin asigna mensajero (assigned)');
+
+  patchVale(T.v1Id,{status:'assigned',mensajeroId:T.m1Id});
+  const vAsig=getVales().find(v=>v.id===T.v1Id);
+  addNotif('vale_assigned','Cliente Test',null,'Test Mensajero',T.g1Id);
+
+  assertEq('Vale status = assigned',         vAsig?.status, 'assigned');
+  assertEq('mensajeroId asignado',           vAsig?.mensajeroId, T.m1Id);
+  assert('Stock NO cambia al asignar',       productoOf(T.p1Id)?.stock===5);
+  assert('Notif vale_assigned creada',       getNotifs().some(n=>n.type==='vale_assigned'));
+
+  /* ─────────────────────────────────────────────────
+     SUITE 4: Mensajero marca como entregado
+  ───────────────────────────────────────────────── */
+  separator('SUITE 4 · Mensajero entrega (delivered)');
+
+  patchVale(T.v1Id,{status:'delivered',deliveredTs:new Date().toISOString()});
+  const vDel=getVales().find(v=>v.id===T.v1Id);
+
+  assertEq('Vale status = delivered',        vDel?.status, 'delivered');
+  assert('deliveredTs registrado',           !!vDel?.deliveredTs);
+  assert('Stock NO cambia al entregar',      productoOf(T.p1Id)?.stock===5, 'Stock solo baja al confirmar');
+  assert('mensajeroId conservado',           vDel?.mensajeroId===T.m1Id);
+
+  /* ─────────────────────────────────────────────────
+     SUITE 5: Admin confirma venta (cobrada)
+  ───────────────────────────────────────────────── */
+  separator('SUITE 5 · Admin confirma venta cobrada (confirmed)');
+
+  const notifsBeforeConfirm = getNotifs().length;
+  confirmSaleLogic(T.v1Id,'confirmed');
+  const vConf=getVales().find(v=>v.id===T.v1Id);
+
+  assertEq('Vale status = confirmed',        vConf?.status, 'confirmed');
+  assert('confirmedTs registrado',           !!vConf?.confirmedTs);
+
+  // Stock deduction
+  const stockAlphaAfter = productoOf(T.p1Id)?.stock;
+  const stockBetaAfter  = productoOf(T.p2Id)?.stock;
+  assertEq('Stock Alpha descontado: 5-2=3',  stockAlphaAfter, 3, `qty=2`);
+  assertEq('Stock Beta descontado: 3-1=2',   stockBetaAfter, 2, `qty=1`);
+
+  // Notifications
+  const notifsAfter = getNotifs();
+  const newNotifCount = notifsAfter.length - notifsBeforeConfirm;
+  assert('Al menos 3 notificaciones creadas',newNotifCount>=3,
+    `sale_product x2 + vale_confirmed x1 esperado. Creadas: ${newNotifCount}`);
+  assert('Notif sale_product creada (Alpha)', notifsAfter.some(n=>n.type==='sale_product'&&n.productId===T.p1Id));
+  assert('Notif sale_product creada (Beta)',  notifsAfter.some(n=>n.type==='sale_product'&&n.productId===T.p2Id));
+  assert('Notif vale_confirmed creada',       notifsAfter.some(n=>n.type==='vale_confirmed'));
+
+  // Sale product notif format: "qty|remainingStock"
+  const alphaNotif = notifsAfter.find(n=>n.type==='sale_product'&&n.productId===T.p1Id);
+  assertEq('Notif Alpha extra = "2|3"',      alphaNotif?.extra, '2|3', 'qty|stockRestante');
+
+  // Points
+  const pts1 = calcPts(T.g1Id);
+  assertEq('Puntos Gestor1: 2*10 + 1*5 = 25', pts1, 25);
+
+  // Low stock check (Beta: stock=2, threshold=3, was 3 before)
+  assert('Notif low_stock para Beta (stock cayó a 2 ≤ 3)',
+    notifsAfter.some(n=>n.type==='low_stock'&&n.productId===T.p2Id));
+
+  /* ─────────────────────────────────────────────────
+     SUITE 6: checkGoalReached lógica
+  ───────────────────────────────────────────────── */
+  separator('SUITE 6 · Meta de puntos (checkGoalReached)');
+
+  const meta = getConfig().metaPuntos;
+  const pts1Final = calcPts(T.g1Id);
+  assert('Puntos Gestor1 alcanzaron la meta (25 >= 25)', pts1Final >= meta,
+    `${pts1Final} pts, meta=${meta}`);
+
+  // Prev pts (without current vale) = 0, so goal was just crossed → should celebrate
+  const prevPts = 0;
+  assert('Meta cruzada en este vale (prev=0 < meta=25)', prevPts < meta,
+    'launchConfetti() debería haberse disparado');
+
+  // Gestor2 has 0 pts, should NOT have reached goal
+  const pts2 = calcPts(T.g2Id);
+  assertEq('Gestor2 tiene 0 puntos', pts2, 0);
+  assert('Gestor2 no alcanzó meta',  pts2 < meta);
+
+  /* ─────────────────────────────────────────────────
+     SUITE 7: Segundo vale — cobro pendiente
+  ───────────────────────────────────────────────── */
+  separator('SUITE 7 · Segundo vale con cobro pendiente (pending_payment)');
+
+  T.v2Id = Date.now()+100;
+  const vale2 = {
+    id:T.v2Id, valeNum:2, gestorId:T.g1Id, ts:new Date().toISOString(),
+    cliente:'Cliente Dos', telefono:'55559999', direccion:'Av. Central 7',
+    mensajeria:'$2 USD', articulo:'Producto Alpha x1',
+    precioUSD:'$100 USD', precioCUP:'', vuelto:'', total:'$102 USD',
+    garantia:'6 meses',
+    valeProductos:[{id:T.p1Id,name:'Producto Alpha',qty:1}],
+    valeText:'[VALE 2 DE PRUEBA]',
+    status:'pending',mensajeroId:null,confirmedTs:null,isNew:true,adminNotes:'',
+  };
+  const vales2=getVales(); vales2.push(vale2); saveVales(vales2);
+
+  // Admin confirms as pending_payment (cobro pendiente)
+  confirmSaleLogic(T.v2Id,'pending_payment');
+  const vPend=getVales().find(v=>v.id===T.v2Id);
+
+  assertEq('Vale2 status = pending_payment', vPend?.status, 'pending_payment');
+  assert('confirmedTs registrado',           !!vPend?.confirmedTs);
+
+  // Stock should still be deducted when confirming as pending_payment
+  const stockAlphaV2 = productoOf(T.p1Id)?.stock;
+  assertEq('Stock Alpha descontado: 3-1=2',  stockAlphaV2, 2,
+    'Stock baja aunque cobro esté pendiente');
+
+  // Points count pending_payment too
+  const pts1V2 = calcPts(T.g1Id);
+  assertEq('Puntos incluyen vales pending_payment', pts1V2, 35,
+    '25 (vale1) + 10 (vale2: 1*10) = 35');
+
+  /* ─────────────────────────────────────────────────
+     SUITE 8: Registrar cobro (pending_payment → confirmed)
+  ───────────────────────────────────────────────── */
+  separator('SUITE 8 · Registrar cobro pendiente (confirmed)');
+
+  const stockBeforePaid = productoOf(T.p1Id)?.stock;
+  markAsPaidLogic(T.v2Id);
+  const vPaid=getVales().find(v=>v.id===T.v2Id);
+
+  assertEq('Vale2 status = confirmed tras pago', vPaid?.status, 'confirmed');
+  assert('confirmedTs actualizado al registrar cobro', !!vPaid?.confirmedTs);
+  assertEq('Stock NO se descuenta de nuevo al marcar pagado',
+    productoOf(T.p1Id)?.stock, stockBeforePaid,
+    `Era ${stockBeforePaid}, debe seguir en ${stockBeforePaid}`);
+
+  /* ─────────────────────────────────────────────────
+     SUITE 9: Revertir venta confirmada
+  ───────────────────────────────────────────────── */
+  separator('SUITE 9 · Revertir venta confirmada (stock restaurado)');
+
+  const stockAlphaBeforeRevert = productoOf(T.p1Id)?.stock; // 2
+  const stockBetaBeforeRevert  = productoOf(T.p2Id)?.stock; // 2
+  revertSaleLogic(T.v1Id);
+  const vRevert = getVales().find(v=>v.id===T.v1Id);
+
+  assertEq('Vale1 status = delivered tras revertir', vRevert?.status, 'delivered');
+  assert('confirmedTs limpiado',                     vRevert?.confirmedTs===null||vRevert?.confirmedTs===undefined);
+
+  // Stock should be restored: Alpha 2+2=4, Beta 2+1=3
+  assertEq(`Stock Alpha restaurado: ${stockAlphaBeforeRevert}+2=${stockAlphaBeforeRevert+2}`,
+    productoOf(T.p1Id)?.stock, stockAlphaBeforeRevert+2);
+  assertEq(`Stock Beta restaurado: ${stockBetaBeforeRevert}+1=${stockBetaBeforeRevert+1}`,
+    productoOf(T.p2Id)?.stock, stockBetaBeforeRevert+1);
+
+  // Points should drop (vale1 no longer confirmed)
+  const pts1AfterRevert = calcPts(T.g1Id);
+  assertEq('Puntos Gestor1 bajan tras revertir vale1', pts1AfterRevert, 10,
+    'Solo vale2 sigue confirmed: 1*10=10');
+
+  /* ─────────────────────────────────────────────────
+     SUITE 10: Edge cases
+  ───────────────────────────────────────────────── */
+  separator('SUITE 10 · Casos extremos (edge cases)');
+
+  // Edge case: stock can't go below 0
+  T.v3Id = Date.now()+200;
+  const vale3 = {
+    id:T.v3Id, valeNum:3, gestorId:T.g2Id, ts:new Date().toISOString(),
+    cliente:'Cliente Tres', telefono:'', direccion:'',
+    mensajeria:'', articulo:'Producto Gamma x5',
+    precioUSD:'$40 USD', precioCUP:'', vuelto:'', total:'$40 USD',
+    garantia:'',
+    valeProductos:[{id:T.p3Id,name:'Producto Gamma',qty:5}],  // stock=2, selling 5
+    valeText:'', status:'pending',mensajeroId:null,confirmedTs:null,isNew:true,adminNotes:'',
+  };
+  const vales3=getVales(); vales3.push(vale3); saveVales(vales3);
+  confirmSaleLogic(T.v3Id,'confirmed');
+  assertEq('Stock no baja de 0 (2-5 → 0)',   productoOf(T.p3Id)?.stock, 0,
+    'Math.max(0, stock-qty)');
+  assert('Notif out_of_stock creada (Gamma)', getNotifs().some(n=>n.type==='out_of_stock'&&n.productId===T.p3Id));
+
+  // Edge case: vale without valeProductos
+  T.v4Id = Date.now()+300;
+  const vale4 = {
+    id:T.v4Id, valeNum:4, gestorId:T.g2Id, ts:new Date().toISOString(),
+    cliente:'Cliente Texto', telefono:'', direccion:'',
+    mensajeria:'', articulo:'Servicio técnico',
+    precioUSD:'$30 USD', precioCUP:'', vuelto:'', total:'$30 USD',
+    garantia:'',
+    valeProductos:[],   // sin productos del catálogo
+    valeText:'', status:'pending',mensajeroId:null,confirmedTs:null,isNew:true,adminNotes:'',
+  };
+  const vales4=getVales(); vales4.push(vale4); saveVales(vales4);
+  const stockAlphaBeforeEmpty = productoOf(T.p1Id)?.stock;
+  confirmSaleLogic(T.v4Id,'confirmed');
+  assertEq('Stock no cambia con vale sin productos', productoOf(T.p1Id)?.stock, stockAlphaBeforeEmpty);
+
+  // Edge case: notifications capped at 50
+  const manyNotifs = Array.from({length:60},(_,i)=>({
+    id:i,type:'test',productName:'X',productId:null,
+    ts:new Date().toISOString(),read:false,extra:'',gestorId:null
+  }));
+  saveNotifs(manyNotifs);
+  addNotif('test','overflow',null,'','');
+  assert('Notificaciones capeadas en 50', getNotifs().length<=50);
+
+  // Edge case: patchVale con id inexistente no rompe nada
+  let threw = false;
+  try { patchVale(999999, {status:'confirmed'}); } catch(e) { threw=true; }
+  assert('patchVale con ID inválido no lanza excepción', !threw);
+
+  // Edge case: patchProducto con id inexistente
+  threw = false;
+  try { patchProducto(999999, {stock:0}); } catch(e) { threw=true; }
+  assert('patchProducto con ID inválido no lanza excepción', !threw);
+
+  /* ─────────────────────────────────────────────────
+     SUITE 11: Integridad de datos finales
+  ───────────────────────────────────────────────── */
+  separator('SUITE 11 · Integridad de datos finales');
+
+  const finalVales = getVales();
+  const finalProds = getProductos();
+
+  assert('Todos los vales tienen id único',
+    new Set(finalVales.map(v=>v.id)).size === finalVales.length);
+  assert('Todos los vales tienen gestorId',
+    finalVales.every(v=>v.gestorId!==undefined&&v.gestorId!==null));
+  assert('Todos los vales tienen status válido',
+    finalVales.every(v=>['pending','assigned','delivered','confirmed','pending_payment'].includes(v.status)));
+  assert('Stock siempre ≥ 0 en todos los productos',
+    finalProds.every(p=>(p.stock||0)>=0));
+  assert('Gestores de prueba siguen en localStorage',
+    getGestores().some(g=>g.id===T.g1Id));
+
+  info('Vales en localStorage', `${finalVales.length} vales · ${finalVales.filter(v=>v.status==='confirmed').length} confirmed · ${finalVales.filter(v=>v.status==='pending_payment').length} pending_payment · ${finalVales.filter(v=>v.status==='delivered').length} delivered`);
+  info('Stock final', `Alpha=${productoOf(T.p1Id)?.stock} · Beta=${productoOf(T.p2Id)?.stock} · Gamma=${productoOf(T.p3Id)?.stock}`);
+  info('Puntos finales', `Gestor1=${calcPts(T.g1Id)} · Gestor2=${calcPts(T.g2Id)}`);
+  info('Notificaciones', `${getNotifs().length} notificaciones en localStorage`);
+
+  // Render results
+  renderResults();
+  restoreOriginal();
+}
+
+// ── Render ─────────────────────────────────────────
+function renderResults() {
+  const el = document.getElementById('results');
+  const suites = {};
+  let currentSuite = 'General';
+  log.forEach(entry => {
+    if(entry.result==='sep') { currentSuite=entry.label; if(!suites[currentSuite]) suites[currentSuite]=[]; return; }
+    if(!suites[currentSuite]) suites[currentSuite]=[];
+    suites[currentSuite].push(entry);
+  });
+
+  el.innerHTML = Object.entries(suites).map(([sName,tests])=>{
+    const sp=tests.filter(t=>t.result==='pass').length;
+    const sf=tests.filter(t=>t.result==='fail').length;
+    const icon=sf>0?'❌':(sp>0?'✅':'ℹ️');
+    const rows=tests.map(t=>{
+      const cls=t.result==='pass'?'pass':t.result==='fail'?'fail':t.result==='warn'?'warn':'info';
+      const lbl=t.result==='pass'?'PASS':t.result==='fail'?'FAIL':t.result==='warn'?'WARN':'INFO';
+      return `<div class="test-row">
+        <span class="badge ${cls}">${lbl}</span>
+        <div class="test-msg">${t.label}${t.detail?`<div class="test-detail">${t.detail}</div>`:''}</div>
+      </div>`;
+    }).join('');
+    return `<div class="suite">
+      <div class="suite-header"><span class="suite-icon">${icon}</span>${sName} <span style="margin-left:auto;font-size:10px;color:${sf>0?'#fca5a5':'#6ee7b7'}">${sp}✓ ${sf>0?sf+'✗':''}</span></div>
+      ${rows}
+    </div>`;
+  }).join('');
+
+  const total=passed+failed+warned;
+  document.getElementById('summary').innerHTML=`
+    <div class="summary">
+      <div><div class="sum-num sum-pass">${passed}</div><div class="sum-lbl">Pasaron</div></div>
+      <div class="divider"></div>
+      <div><div class="sum-num sum-fail">${failed}</div><div class="sum-lbl">Fallaron</div></div>
+      ${warned>0?`<div class="divider"></div><div><div class="sum-num sum-warn">${warned}</div><div class="sum-lbl">Avisos</div></div>`:''}
+      <div class="divider"></div>
+      <div><div class="sum-num" style="color:#94a3b8">${total}</div><div class="sum-lbl">Total</div></div>
+      <div style="margin-left:auto;font-size:13px;font-weight:700;color:${failed===0?'#6ee7b7':'#fca5a5'}">
+        ${failed===0?'✅ TODOS LOS TESTS PASARON':'❌ '+failed+' TEST(S) FALLARON'}
+      </div>
+    </div>`;
+
+  document.getElementById('ts').textContent='Ejecutado: '+new Date().toLocaleString('es-ES');
+}
+
+// Auto-run on load
+window.onload = () => {
+  // Small delay to let page render
+  setTimeout(runTests, 100);
+};
+</script>
+</body>
+</html>
