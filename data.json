@@ -740,14 +740,6 @@
       "name": "Carros"
     },
     {
-      "id": 60,
-      "name": "Ropa"
-    },
-    {
-      "id": 70,
-      "name": "Lenceria"
-    },
-    {
       "id": 80,
       "name": "Seguridad"
     },
@@ -758,14 +750,6 @@
     {
       "id": 100,
       "name": "Juegos"
-    },
-    {
-      "id": 110,
-      "name": "Motos"
-    },
-    {
-      "id": 120,
-      "name": "Pc y laptops"
     },
     {
       "id": 130,
@@ -934,5 +918,5 @@
       "deliveredTs": "2026-06-15T20:44:09.650Z"
     }
   ],
-  "timestamp": "2026-06-16T00:42:24.970Z"
+  "timestamp": "2026-06-16T00:43:34.755Z"
 }
