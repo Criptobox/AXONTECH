@@ -1616,7 +1616,6 @@ function loadDemo() {
   // Vales en todos los estados
   const now   = new Date();
   const h     = (n) => new Date(now.getTime() - n*60*60*1000).toISOString();
-  const vt    = (v) => buildDemoVale(v);
 
   saveVales([
     { id:2001, gestorId:1, ts:h(0.5),  cliente:'Roberto Silva',   telefono:'55551234', direccion:'Calle 23 #456, Vedado',       mensajeria:'$2 USD',  articulo:'iPhone 15 Pro x1',    precioUSD:'$950 USD', precioCUP:'',        vuelto:'',      total:'$950 USD',  garantia:'6 meses', valeProductos:[{id:100,name:'iPhone 15 Pro',qty:1}],    valeText:'', status:'pending',         mensajeroId:null, confirmedTs:null,  isNew:true  },
@@ -1982,7 +1981,7 @@ async function syncFromTiendaMax() {
     const productos = tmProds.map(p => {
       const precio = p.precioActual || 0;
       const com    = p.comision    || 0;
-      const catId  = catMap[p.categoria] || 10;
+      const catId  = catMap[p.categoria] || null;
       const subcat = p.subcategoria || '';
       let desc = p.descripcion || '';
       if (subcat && !desc.includes(subcat)) desc = `[${subcat}]\n${desc}`;
@@ -2274,14 +2273,21 @@ function revertConfirmSale(id, skipConfirm) {
     showConfirmAction('¿Revertir venta confirmada?',`${v.cliente||''} volverá a "Entregado"`,'Revertir','btn-orange',()=>revertConfirmSale(id,true));
     return;
   }
+  const v=getVales().find(x=>x.id===id);if(!v)return;
+  // Restore stock for each product that was decremented when the sale was confirmed
+  (v.valeProductos||[]).forEach(({id:pid,qty})=>{
+    const prod=productoOf(pid);if(!prod)return;
+    const restored=Math.max(0,(prod.stock||0)+qty);
+    patchProducto(pid,{stock:restored});
+  });
   patchVale(id,{status:'delivered',confirmedTs:null,commissionPaid:false,commissionPaidTs:null});
   gestoresTabDirty=true;statsTabDirty=true;rankingCache=null;
   renderAdminGestores();renderInbox();renderValeDetail();
   renderConfirmados();renderPendienteCobro();
-  renderGestorRanking();
+  renderGestorRanking();renderProductGrid();
   if(currentAdminTab==='gestores'){renderComisiones();}
   maybeAutoSync();
-  showToast('Venta revertida a "Entregado"');
+  showToast('Venta revertida a "Entregado" — stock restaurado');
 }
 
 // ══════════════════════════════════════════
@@ -2346,7 +2352,7 @@ function renderHistorial() {
 function selectValeFromHistorial(id) {
   selectedValeId=id;
   adminTab('vales');
-  setTimeout(()=>{renderInbox();renderValeDetail();},50);
+  setTimeout(()=>{renderValeDetail();},50);
 }
 
 // ══════════════════════════════════════════
