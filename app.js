@@ -241,10 +241,10 @@ function switchMode(mode) {
   const bc = document.getElementById('btnCatalogo'); if (bc) bc.style.display = 'inline-flex';
 }
 function activateAdminMode() {
+  const la = document.getElementById('layoutAdmin');
+  if (la) la.classList.add('active');
   if (!IS_ADMIN) {
-    const la = document.getElementById('layoutAdmin');
     const lg = document.getElementById('layoutGestor');
-    if (la) la.classList.add('active');
     if (lg) lg.classList.remove('active');
     const ba = document.getElementById('btnAdminAccess'); if (ba) ba.style.display = 'none';
     const bc = document.getElementById('btnCatalogo'); if (bc) bc.style.display = 'none';
@@ -878,7 +878,7 @@ function confirmSale(id, paymentStatus, skipConfirm) {
   renderConfirmados();renderPendienteCobro();renderPendingCobroSection();renderMensajeroVales();
   renderProductGrid();renderGestorRanking();
   if(currentAdminTab==='gestores'){renderComisiones();}
-  checkGoalReached(v.gestorId);
+  checkGoalReached(v.gestorId, id);
   maybeAutoSync();
   showToast(paymentStatus==='confirmed'?'Venta confirmada y cobrada ✅':'Venta confirmada — cobro pendiente ⏳');
 }
@@ -895,7 +895,7 @@ function markAsPaid(id, skipConfirm) {
   renderConfirmados();renderPendienteCobro();renderPendingCobroSection();renderMensajeroVales();renderMensajeroSelector();updateMensajeroBadge();
   renderGestorRanking();
   if(currentAdminTab==='gestores'){renderComisiones();}
-  checkGoalReached(getVales().find(x=>x.id===id)?.gestorId);
+  checkGoalReached(getVales().find(x=>x.id===id)?.gestorId, id);
   maybeAutoSync();
   showToast('Cobro registrado ✅');
 }
@@ -1616,7 +1616,6 @@ function loadDemo() {
   // Vales en todos los estados
   const now   = new Date();
   const h     = (n) => new Date(now.getTime() - n*60*60*1000).toISOString();
-  const vt    = (v) => buildDemoVale(v);
 
   saveVales([
     { id:2001, gestorId:1, ts:h(0.5),  cliente:'Roberto Silva',   telefono:'55551234', direccion:'Calle 23 #456, Vedado',       mensajeria:'$2 USD',  articulo:'iPhone 15 Pro x1',    precioUSD:'$950 USD', precioCUP:'',        vuelto:'',      total:'$950 USD',  garantia:'6 meses', valeProductos:[{id:100,name:'iPhone 15 Pro',qty:1}],    valeText:'', status:'pending',         mensajeroId:null, confirmedTs:null,  isNew:true  },
@@ -1982,7 +1981,7 @@ async function syncFromTiendaMax() {
     const productos = tmProds.map(p => {
       const precio = p.precioActual || 0;
       const com    = p.comision    || 0;
-      const catId  = catMap[p.categoria] || 10;
+      const catId  = catMap[p.categoria] || null;
       const subcat = p.subcategoria || '';
       let desc = p.descripcion || '';
       if (subcat && !desc.includes(subcat)) desc = `[${subcat}]\n${desc}`;
@@ -2235,14 +2234,14 @@ function dismissGoalBanner(){
   el.classList.add('hide');setTimeout(()=>el.remove(),370);
 }
 
-function checkGoalReached(gestorId) {
+function checkGoalReached(gestorId, currentValeId) {
   const meta=getConfig().metaPuntos;if(!meta||!gestorId)return;
   const g=gestorOf(gestorId);if(!g)return;
   const vales=getVales().filter(v=>v.gestorId===gestorId&&['confirmed','pending_payment'].includes(v.status));
   const pts=vales.reduce((sum,v)=>sum+(v.valeProductos||[]).reduce((s,p)=>{const pr=productoOf(p.id);return s+(pr?pr.puntos*p.qty:0);},0),0);
   if(pts>=meta){
-    // Only celebrate if this is the sale that crossed the threshold
-    const prev=vales.slice(0,-1).reduce((sum,v)=>sum+(v.valeProductos||[]).reduce((s,p)=>{const pr=productoOf(p.id);return s+(pr?pr.puntos*p.qty:0);},0),0);
+    // Celebrate only if THIS sale crossed the threshold (exclude current vale from prev total)
+    const prev=vales.filter(v=>v.id!==currentValeId).reduce((sum,v)=>sum+(v.valeProductos||[]).reduce((s,p)=>{const pr=productoOf(p.id);return s+(pr?pr.puntos*p.qty:0);},0),0);
     if(prev<meta){launchConfetti();showGoalBanner(g,pts);}
   }
 }
@@ -2274,14 +2273,21 @@ function revertConfirmSale(id, skipConfirm) {
     showConfirmAction('¿Revertir venta confirmada?',`${v.cliente||''} volverá a "Entregado"`,'Revertir','btn-orange',()=>revertConfirmSale(id,true));
     return;
   }
+  const v=getVales().find(x=>x.id===id);if(!v)return;
+  // Restore stock for each product that was decremented when the sale was confirmed
+  (v.valeProductos||[]).forEach(({id:pid,qty})=>{
+    const prod=productoOf(pid);if(!prod)return;
+    const restored=Math.max(0,(prod.stock||0)+qty);
+    patchProducto(pid,{stock:restored});
+  });
   patchVale(id,{status:'delivered',confirmedTs:null,commissionPaid:false,commissionPaidTs:null});
   gestoresTabDirty=true;statsTabDirty=true;rankingCache=null;
   renderAdminGestores();renderInbox();renderValeDetail();
   renderConfirmados();renderPendienteCobro();
-  renderGestorRanking();
+  renderGestorRanking();renderProductGrid();
   if(currentAdminTab==='gestores'){renderComisiones();}
   maybeAutoSync();
-  showToast('Venta revertida a "Entregado"');
+  showToast('Venta revertida a "Entregado" — stock restaurado');
 }
 
 // ══════════════════════════════════════════
@@ -2346,7 +2352,7 @@ function renderHistorial() {
 function selectValeFromHistorial(id) {
   selectedValeId=id;
   adminTab('vales');
-  setTimeout(()=>{renderInbox();renderValeDetail();},50);
+  setTimeout(()=>{renderValeDetail();},50);
 }
 
 // ══════════════════════════════════════════
@@ -2363,12 +2369,29 @@ function toggleTheme() {
 }
 
 // ══════════════════════════════════════════
+//  INITIAL DATA LOAD
+// ══════════════════════════════════════════
+async function loadInitialData() {
+  if (getGestores().length || getProductos().length) return; // already has data
+  try {
+    const res = await fetch('./data.json');
+    if (!res.ok) return;
+    const data = await res.json();
+    if (data.gestores  && data.gestores.length)  saveGestores(data.gestores);
+    if (data.mensajeros&& data.mensajeros.length) saveMensajeros(data.mensajeros);
+    if (data.productos && data.productos.length)  saveProductos(data.productos);
+    if (data.categorias&& data.categorias.length) saveCategorias(data.categorias);
+  } catch(e) {}
+}
+
+// ══════════════════════════════════════════
 //  INIT
 // ══════════════════════════════════════════
-function init() {
+async function init() {
   applyTheme(localStorage.getItem('axon_theme')==='dark');
   updateDate();
   setInterval(updateDate, 60000);
+  await loadInitialData();
   if (IS_ADMIN) {
     initAdminPage();
   } else {
