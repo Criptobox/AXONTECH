@@ -286,18 +286,6 @@
       "catId": 20
     },
     {
-      "id": 1778212195565,
-      "name": "MANNOL 5W30 5L",
-      "description": "[ACEITES Y LUBRICANTES]\nIdeal para carros modernos \nCategoría Norma / Especificación\nGrado de Viscosidad SAE 5W-30\nEstándar API SN / CH-4\nEstándar ACEA A3 / B4",
-      "precio": "$35 USD",
-      "stock": 23,
-      "puntos": 1,
-      "garantia": "",
-      "comision": "",
-      "photo": "https://tiendamax.org/imagenes/img_1778212195565.webp",
-      "catId": 50
-    },
-    {
       "id": 1778212384991,
       "name": "MANNOL ANTIFREEZE AG13+ ( - 40 °C) ADVANCED 4014. 5L",
       "description": "[REFRIGERANTES]\nRefrigerante listo para usar es una solución híbrida (HOAT- Tecnología de ácido orgánico híbrido) de alta tecnología lista para usar protege el sistema de refrigeración del vehículo desde (-40 °С hasta +125°С).  Con excelentes características de funcionamiento pensada para todo el año uso en cualquier sistema de refrigeración moderno para el que se recomiende el uso de anticongelante a base de monoetilenglicol. Garantiza una protección fiable de cualquier sistema de refrigeración.\n\nPremezclado 50/50\n\nVida útil: 3 años o 150 000km\n\nColor: Amarillo\n\nEspecificación\n\nApproval\n\nRecomendación\n\nSAE J1034\n\nAFNOR FRANCE NF R15-601\n\nASTM USA D3306\n\nASTM USA D4340\n\nASTM USA D4985\n\nBSI GB BS 6580:2010\n\nNATO S-759\n\nBMW GS 94000\n\nCHRYSLER MS-7170\n\nFORD ESE-M978B4H-A\n\nFORD AF Plus\n\nGM 1825 M\n\nGM 1899 M\n\nGM SATURN\n\nJAGUAR\n\nJOHN DEERE\n\nMAN 324 NF\n\nMB 325.0\n\nMINI GS 94000\n\nMTU MTL 5048\n\nOPEL GME L1301\n\nOPEL GM QL130100\n\nVAUXHALL GME L1301",
@@ -1246,5 +1234,5 @@
       "deliveredTs": "2026-06-15T20:44:09.650Z"
     }
   ],
-  "timestamp": "2026-06-16T00:39:44.451Z"
+  "timestamp": "2026-06-16T00:40:46.396Z"
 }
