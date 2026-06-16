@@ -454,42 +454,6 @@
       "catId": 80
     },
     {
-      "id": 1778546731028,
-      "name": "JUEGO DE LLANTAS R14",
-      "description": "[LLANTAS]\nJuego de llantas R14 centro 4x100 y 4x114.3\n\nSe dan con las válvulas y los clanes",
-      "precio": "$550 USD",
-      "stock": 24,
-      "puntos": 2,
-      "garantia": "",
-      "comision": "$10 USD",
-      "photo": "https://tiendamax.org/imagenes/img_1778546731028_ext.webp",
-      "catId": 50
-    },
-    {
-      "id": 1778546857180,
-      "name": "JUEGO DE LLANTAS R15",
-      "description": "[LLANTAS]\nJuego de llantas R15 centro 4x100 y 4x114.3 \n\nSe dan con las válvulas y los clanes",
-      "precio": "$600 USD",
-      "stock": 12,
-      "puntos": 2,
-      "garantia": "",
-      "comision": "$10 USD",
-      "photo": "https://tiendamax.org/imagenes/img_1778546857180_ext.webp",
-      "catId": 50
-    },
-    {
-      "id": 1778546922840,
-      "name": "JUEGO DE LLANTAS R15",
-      "description": "[LLANTAS]\nJuego de llantas R15  centro 4x100 y 4x114.3 \n\n\nSe dan con las válvulas y los clanes",
-      "precio": "$500 USD",
-      "stock": 16,
-      "puntos": 2,
-      "garantia": "",
-      "comision": "$10 USD",
-      "photo": "https://tiendamax.org/imagenes/img_1778546922840_ext.webp",
-      "catId": 50
-    },
-    {
       "id": 1778547214210,
       "name": "GAMESIR X5 LITE",
       "description": "[MANDOS]\n🎮 GameSir X5 Lite – Mando de Juego para Móvil \n✔️ Compatible con teléfonos iOS y Android\n✔️ Palancas de efecto Hall para mayor precisión y durabilidad, ideal para juegos FPS y MOBA\n✔️ Ultra ligero (solo 135 g) para jugar cómodamente por horas\n✔️ Botones Turbo para una respuesta más rápida y mejor rendimiento\n✔️ Carga pasante, juega mientras cargas tu dispositivo\n✔️ Diseño ergonómico y fácil de instalar\nPerfecto para gamers que buscan mejor control, comodidad y ventaja en cada partida.",
@@ -1150,5 +1114,5 @@
       "deliveredTs": "2026-06-15T20:44:09.650Z"
     }
   ],
-  "timestamp": "2026-06-16T00:41:09.529Z"
+  "timestamp": "2026-06-16T00:41:13.530Z"
 }
