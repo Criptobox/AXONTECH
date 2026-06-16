@@ -74,7 +74,7 @@
     #btnTheme:hover { background:rgba(255,255,255,.16); color:white; }
 
     /* ── GESTOR CHOSEN STATE (desktop: narrow left col) ── */
-    #layoutGestor.has-gestor { grid-template-columns: 190px 1fr; }
+    #layoutGestor.has-gestor { grid-template-columns: 200px 1fr; }
     #layoutGestor.has-gestor .g-item:not(.active) { display:none; }
     #layoutGestor.has-gestor .g-change { display:flex !important; }
     #layoutGestor.has-gestor #gestorRankingSection { display:none !important; }
@@ -173,11 +173,19 @@
     /* ── LAYOUTS ── */
     .layout { display:none; height:calc(100vh - 54px); overflow:hidden; }
     .layout.active { display:flex; flex-direction:column; }
-    #layoutGestor.active { display:grid; grid-template-columns:210px 1fr; }
+    #layoutGestor.active { display:grid; grid-template-columns:240px 1fr; }
     .col { height:100%; overflow-y:auto; padding:14px; }
     /* Desktop: ranking centrado verticalmente cuando no hay gestor */
-    #layoutGestor:not(.has-gestor) .col-mid { display:flex; flex-direction:column; justify-content:center; padding:28px 20px; }
-    #layoutGestor.has-gestor .col-mid { display:block; }
+    #layoutGestor:not(.has-gestor) .col-mid { display:flex; flex-direction:column; justify-content:center; align-items:center; padding:28px 24px; gap:0; }
+    #layoutGestor:not(.has-gestor) .col-mid > * { max-width:740px; width:100%; }
+    #layoutGestor.has-gestor .col-mid { display:block; padding:16px 20px; }
+    /* Wide screens: constrain form width for readability */
+    @media (min-width:1200px) {
+      #layoutGestor.active { grid-template-columns:260px 1fr; }
+      #layoutGestor.has-gestor .col-mid { padding:16px max(20px,calc((100% - 800px)/2)); }
+      #layoutGestor:not(.has-gestor) .col-mid { padding:40px 32px; }
+      #layoutGestor:not(.has-gestor) .col-mid > * { max-width:760px; }
+    }
     .col-left  { background:white; border-right:1px solid var(--gray-200); }
     .col-mid   { background:var(--gray-50); }
     .col-right { background:white; border-left:1px solid var(--gray-200); }

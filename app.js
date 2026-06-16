@@ -319,7 +319,7 @@ function closePassModal() {
 function submitPass() {
   const val=document.getElementById('passInput').value;
   if(checkPass(val)){
-    closePassModal();adminActive=true;
+    adminActive=true;closePassModal();
     const al=document.getElementById('adminLabel'); if(al) al.style.display='flex';
     const bl=document.getElementById('btnLogout'); if(bl) bl.style.display='inline-flex';
     playSound('login');requestNotifPermission();
