@@ -878,7 +878,7 @@ function confirmSale(id, paymentStatus, skipConfirm) {
   renderConfirmados();renderPendienteCobro();renderPendingCobroSection();renderMensajeroVales();
   renderProductGrid();renderGestorRanking();
   if(currentAdminTab==='gestores'){renderComisiones();}
-  checkGoalReached(v.gestorId);
+  checkGoalReached(v.gestorId, id);
   maybeAutoSync();
   showToast(paymentStatus==='confirmed'?'Venta confirmada y cobrada ✅':'Venta confirmada — cobro pendiente ⏳');
 }
@@ -895,7 +895,7 @@ function markAsPaid(id, skipConfirm) {
   renderConfirmados();renderPendienteCobro();renderPendingCobroSection();renderMensajeroVales();renderMensajeroSelector();updateMensajeroBadge();
   renderGestorRanking();
   if(currentAdminTab==='gestores'){renderComisiones();}
-  checkGoalReached(getVales().find(x=>x.id===id)?.gestorId);
+  checkGoalReached(getVales().find(x=>x.id===id)?.gestorId, id);
   maybeAutoSync();
   showToast('Cobro registrado ✅');
 }
@@ -2234,14 +2234,14 @@ function dismissGoalBanner(){
   el.classList.add('hide');setTimeout(()=>el.remove(),370);
 }
 
-function checkGoalReached(gestorId) {
+function checkGoalReached(gestorId, currentValeId) {
   const meta=getConfig().metaPuntos;if(!meta||!gestorId)return;
   const g=gestorOf(gestorId);if(!g)return;
   const vales=getVales().filter(v=>v.gestorId===gestorId&&['confirmed','pending_payment'].includes(v.status));
   const pts=vales.reduce((sum,v)=>sum+(v.valeProductos||[]).reduce((s,p)=>{const pr=productoOf(p.id);return s+(pr?pr.puntos*p.qty:0);},0),0);
   if(pts>=meta){
-    // Only celebrate if this is the sale that crossed the threshold
-    const prev=vales.slice(0,-1).reduce((sum,v)=>sum+(v.valeProductos||[]).reduce((s,p)=>{const pr=productoOf(p.id);return s+(pr?pr.puntos*p.qty:0);},0),0);
+    // Celebrate only if THIS sale crossed the threshold (exclude current vale from prev total)
+    const prev=vales.filter(v=>v.id!==currentValeId).reduce((sum,v)=>sum+(v.valeProductos||[]).reduce((s,p)=>{const pr=productoOf(p.id);return s+(pr?pr.puntos*p.qty:0);},0),0);
     if(prev<meta){launchConfetti();showGoalBanner(g,pts);}
   }
 }
