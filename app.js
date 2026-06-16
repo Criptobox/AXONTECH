@@ -6,19 +6,37 @@ const IS_ADMIN = document.body.dataset.page === 'admin';
 // ══════════════════════════════════════════
 //  DATA LAYER
 // ══════════════════════════════════════════
-const getGestores   = () => JSON.parse(localStorage.getItem('axon_gestores')   || '[]');
+function safeJson(key, fallback) {
+  try {
+    const raw = localStorage.getItem(key);
+    return raw ? JSON.parse(raw) : fallback;
+  } catch (e) {
+    console.warn(`Datos locales inválidos en ${key}; usando fallback temporal`);
+    return fallback;
+  }
+}
+function escapeHTML(value) {
+  return String(value ?? '').replace(/[&<>'"]/g, ch => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    "'": '&#39;',
+    '"': '&quot;',
+  }[ch]));
+}
+const getGestores   = () => safeJson('axon_gestores', []);
 const saveGestores  = v  => localStorage.setItem('axon_gestores',  JSON.stringify(v));
-const getVales      = () => JSON.parse(localStorage.getItem('axon_vales')      || '[]');
+const getVales      = () => safeJson('axon_vales', []);
 const saveVales     = v  => localStorage.setItem('axon_vales',     JSON.stringify(v));
-const getMensajeros = () => JSON.parse(localStorage.getItem('axon_mensajeros') || '[]');
+const getMensajeros = () => safeJson('axon_mensajeros', []);
 const saveMensajeros= v  => localStorage.setItem('axon_mensajeros',JSON.stringify(v));
-const getProductos  = () => JSON.parse(localStorage.getItem('axon_productos')  || '[]');
+const getProductos  = () => safeJson('axon_productos', []);
 const saveProductos = v  => localStorage.setItem('axon_productos', JSON.stringify(v));
-const getCategorias = () => JSON.parse(localStorage.getItem('axon_categorias') || '[]');
+const getCategorias = () => safeJson('axon_categorias', []);
 const saveCategorias= v  => localStorage.setItem('axon_categorias',JSON.stringify(v));
-const getConfig     = () => JSON.parse(localStorage.getItem('axon_config')     || '{}');
+const getConfig     = () => safeJson('axon_config', {});
 const saveConfig    = v  => localStorage.setItem('axon_config',    JSON.stringify(v));
-const getNotifs     = () => JSON.parse(localStorage.getItem('axon_notifs')     || '[]');
+const getNotifs     = () => safeJson('axon_notifs', []);
 const saveNotifs    = v  => localStorage.setItem('axon_notifs',    JSON.stringify(v));
 
 function patchVale(id, changes) {
@@ -338,10 +356,13 @@ function renderGestores() {
   const c=document.getElementById('gestoresList');
   if(!gestores.length){c.innerHTML='<div class="es"><div class="es-icon">👤</div><div class="es-text">El admin aún no ha configurado gestores</div></div>';return;}
   c.innerHTML=gestores.map(g=>{
+    const gName=escapeHTML(g.name);
+    const gInitials=escapeHTML(g.initials);
+    const gColor=escapeHTML(g.color);
     const act=g.id===activeGestorId;
     return `<div class="g-item ${act?'active':''}" onclick="selectGestor(${g.id})">
-      <div class="g-avatar" style="background:${g.color}">${g.initials}</div>
-      <div class="g-name">${g.name}</div>
+      <div class="g-avatar" style="background:${gColor}">${gInitials}</div>
+      <div class="g-name">${gName}</div>
       ${act?'<span class="g-badge">✓</span>':''}
     </div>`;
   }).join('');
@@ -532,14 +553,17 @@ function renderAdminGestoresList() {
   const c=document.getElementById('adminGestoresPanel-list');
   if(!list.length){c.innerHTML='<div class="es"><div class="es-icon">👥</div><div class="es-text">Sin gestores. Agrega uno arriba.</div></div>';return;}
   c.innerHTML=list.map(g=>{
+    const gName=escapeHTML(g.name);
+    const gInitials=escapeHTML(g.initials);
+    const gColor=escapeHTML(g.color);
     const vales=getVales().filter(v=>v.gestorId===g.id);
     const today=vales.filter(v=>new Date(v.ts).toDateString()===todayStr()).length;
     const pts=vales.filter(v=>['confirmed','pending_payment'].includes(v.status))
       .reduce((s,v)=>s+(v.valeProductos||[]).reduce((ss,p)=>{const pr=productoOf(p.id);return ss+(pr?pr.puntos*p.qty:0);},0),0);
     return `<div class="gp-card">
-      <div class="g-avatar" style="background:${g.color};width:40px;height:40px;font-size:13px;flex-shrink:0;">${g.initials}</div>
+      <div class="g-avatar" style="background:${gColor};width:40px;height:40px;font-size:13px;flex-shrink:0;">${gInitials}</div>
       <div style="flex:1;min-width:140px;">
-        <div style="font-weight:700;font-size:14px;color:var(--text);">${g.name}</div>
+        <div style="font-weight:700;font-size:14px;color:var(--text);">${gName}</div>
         <div style="font-size:11px;color:var(--text-muted);margin-top:1px;">${vales.length} vales · ${today} hoy · ⭐ ${pts} pts</div>
         <div style="display:flex;align-items:center;flex-wrap:wrap;gap:6px;margin-top:6px;">
           <span style="background:var(--gray-200);border-radius:6px;padding:3px 9px;font-family:monospace;font-weight:700;font-size:12px;letter-spacing:1.5px;color:var(--text);">🔑 ${g.password||'—'}</span>
@@ -861,6 +885,15 @@ function confirmSale(id, paymentStatus, skipConfirm) {
     return;
   }
   const v=getVales().find(x=>x.id===id);if(!v)return;
+  const stockError=(v.valeProductos||[]).map(({id:pid,qty})=>{
+    const prod=productoOf(pid);
+    if(!prod)return null;
+    return (prod.stock||0)<qty ? `${prod.name}: quedan ${prod.stock||0}, necesitas ${qty}` : null;
+  }).find(Boolean);
+  if(stockError){
+    showToast(`Stock insuficiente: ${stockError}`);
+    return;
+  }
   (v.valeProductos||[]).forEach(({id:pid,qty})=>{
     const prod=productoOf(pid);if(!prod)return;
     const oldStock=prod.stock||0;
@@ -1108,6 +1141,15 @@ function sendVale() {
   if(!activeGestorId){showToast('Selecciona tu nombre primero');return;}
   if(REQUIRED.some(id=>!fVal(id))){showToast('Completa los campos obligatorios (*)');return;}
   const g=gestorOf(activeGestorId);
+  const stockError=(currentValeProductos||[]).map(({id,qty})=>{
+    const prod=productoOf(id);
+    if(!prod)return null;
+    return (prod.stock||0)<qty ? `${prod.name}: quedan ${prod.stock||0}, pediste ${qty}` : null;
+  }).find(Boolean);
+  if(stockError){
+    showToast(`Stock insuficiente: ${stockError}`);
+    return;
+  }
   const vale={
     id:Date.now(),valeNum:getNextValeNum(),gestorId:activeGestorId,ts:new Date().toISOString(),
     cliente:fVal('vf-cliente'),telefono:fVal('vf-telefono'),direccion:fVal('vf-direccion'),
@@ -1159,10 +1201,12 @@ function renderPickerProducts() {
   c.innerHTML=prods.map(p=>{
     const qty=pickerSelected[p.id]||0;
     const oos=(p.stock||0)===0;
+    const pName=escapeHTML(p.name);
+    const pPrecio=escapeHTML(p.precio);
     return `<div class="picker-pill ${qty>0?'selected':''} ${oos?'out-of-stock':''}" style="${oos?'pointer-events:none;':''}" ${oos?'title="Producto agotado"':''}>
       <div class="picker-pill-info">
-        <div class="picker-pill-name">${p.name}${oos?` <span class="oos-badge">AGOTADO</span>`:''}</div>
-        ${p.precio?`<div class="picker-pill-price">${p.precio}</div>`:''}
+        <div class="picker-pill-name">${pName}${oos?` <span class="oos-badge">AGOTADO</span>`:''}</div>
+        ${p.precio?`<div class="picker-pill-price">${pPrecio}</div>`:''}
       </div>
       <div class="picker-pill-qty" style="${oos?'pointer-events:none;':''}">
         <button ${oos?'disabled':''} onclick="pickerAdj(${p.id},-1)">−</button>
@@ -1225,7 +1269,7 @@ function renderSelectedProductsUI() {
   const c=document.getElementById('selectedProductsList');
   if(!selectedProductsUI.length){c.style.display='none';return;}
   c.style.display='block';
-  c.innerHTML=selectedProductsUI.map(i=>`<span class="tag-chip">${i.name} ×${i.qty}</span>`).join('')+
+  c.innerHTML=selectedProductsUI.map(i=>`<span class="tag-chip">${escapeHTML(i.name)} ×${i.qty}</span>`).join('')+
     `<button class="btn btn-ghost btn-sm" style="font-size:10px;padding:2px 8px;margin-left:4px;" onclick="openProductPicker()">✏️ Editar</button>`;
 }
 
@@ -1437,6 +1481,10 @@ function saveProduct() {
   closeProductModal();renderProductGrid();renderStockCategorias();maybeAutoSync();
 }
 function removeProducto(id) {
+  if(getVales().some(v=>(v.valeProductos||[]).some(p=>p.id===id))){
+    showToast('No se puede eliminar: producto usado en vales históricos');
+    return;
+  }
   if(!confirm('¿Eliminar este producto?'))return;
   saveProductos(getProductos().filter(p=>p.id!==id));
   renderProductGrid();renderStockCategorias();showToast('Producto eliminado');maybeAutoSync();
@@ -1717,21 +1765,27 @@ function renderGestorCatalog() {
   if(!prods.length){c.innerHTML='<div class="es"><div class="es-icon">📦</div><div class="es-text">Sin productos</div></div>';return;}
   c.innerHTML=prods.map(p=>{
     const exp=expandedCatalogId===p.id;
+    const pName=escapeHTML(p.name);
+    const pDescription=escapeHTML(p.description);
+    const pPrecio=escapeHTML(p.precio);
+    const pGarantia=escapeHTML(p.garantia);
+    const pComision=escapeHTML(p.comision);
+    const pPhoto=escapeHTML(p.photo);
     return `<div style="border:1px solid var(--${exp?'blue':'gray-200'});border-radius:8px;margin-bottom:6px;overflow:hidden;cursor:pointer;transition:border-color .15s;" onclick="toggleCatalogItem(${p.id})">
       <div style="display:flex;align-items:center;gap:10px;padding:8px;">
-        ${p.photo?`<img src="${p.photo}" style="width:52px;height:52px;object-fit:cover;border-radius:6px;flex-shrink:0;" onerror="this.parentElement.querySelector('img').style.display='none'">`:`<div style="width:52px;height:52px;border-radius:6px;background:var(--gray-100);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;">📦</div>`}
+        ${p.photo?`<img src="${pPhoto}" style="width:52px;height:52px;object-fit:cover;border-radius:6px;flex-shrink:0;" onerror="this.parentElement.querySelector('img').style.display='none'">`:`<div style="width:52px;height:52px;border-radius:6px;background:var(--gray-100);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;">📦</div>`}
         <div style="flex:1;min-width:0;">
-          <div style="font-weight:700;font-size:13px;color:var(--text);">${p.name}</div>
-          ${p.precio?`<div style="color:var(--blue);font-weight:700;font-size:12px;margin-top:2px;">${p.precio}</div>`:''}
+          <div style="font-weight:700;font-size:13px;color:var(--text);">${pName}</div>
+          ${p.precio?`<div style="color:var(--blue);font-weight:700;font-size:12px;margin-top:2px;">${pPrecio}</div>`:''}
         </div>
         <div style="font-size:13px;color:var(--gray-400);flex-shrink:0;margin-left:4px;">${exp?'▲':'▼'}</div>
       </div>
       ${exp?`<div style="padding:8px 12px 12px;border-top:1px solid var(--gray-200);background:var(--gray-50);">
-        ${p.description?`<div style="font-size:12px;color:var(--text-muted);margin-bottom:10px;white-space:pre-line;line-height:1.5;">${p.description}</div>`:''}
+        ${p.description?`<div style="font-size:12px;color:var(--text-muted);margin-bottom:10px;white-space:pre-line;line-height:1.5;">${pDescription}</div>`:''}
         <div style="display:flex;flex-wrap:wrap;gap:5px;font-size:11px;">
           <span style="background:var(--blue-lt);color:var(--blue);padding:3px 9px;border-radius:10px;font-weight:700;">📦 Disponibles: ${p.stock}</span>
-          ${p.garantia?`<span style="background:var(--gray-100);color:var(--gray-600);padding:3px 9px;border-radius:10px;">🛡️ ${p.garantia}</span>`:''}
-          ${p.comision?`<span style="background:#f0fdf4;color:var(--green);padding:3px 9px;border-radius:10px;font-weight:600;">Comisión: ${p.comision}</span>`:''}
+          ${p.garantia?`<span style="background:var(--gray-100);color:var(--gray-600);padding:3px 9px;border-radius:10px;">🛡️ ${pGarantia}</span>`:''}
+          ${p.comision?`<span style="background:#f0fdf4;color:var(--green);padding:3px 9px;border-radius:10px;font-weight:600;">Comisión: ${pComision}</span>`:''
           ${p.puntos?`<span style="background:var(--blue-lt);color:var(--blue);padding:3px 9px;border-radius:10px;">⭐ ${p.puntos} pts</span>`:''}
         </div>
       </div>`:''}
@@ -2060,6 +2114,7 @@ function saveMetaPuntos() {
   const val=parseInt(document.getElementById('cfg-meta-puntos').value);
   if(!val||val<1){showToast('Ingresa un número válido');return;}
   const cfg=getConfig();cfg.metaPuntos=val;saveConfig(cfg);
+  rankingCache=null;
   const s=document.getElementById('metaPuntosStatus');
   if(s)s.innerHTML=`<span style="color:var(--green);">✓ Meta fijada en ${val} pts</span>`;
   renderGestorRanking();
@@ -2367,15 +2422,14 @@ function toggleTheme() {
 //  INITIAL DATA LOAD
 // ══════════════════════════════════════════
 async function loadInitialData() {
-  if (getGestores().length || getProductos().length) return; // already has data
   try {
     const res = await fetch('./data.json');
     if (!res.ok) return;
     const data = await res.json();
-    if (data.gestores  && data.gestores.length)  saveGestores(data.gestores);
-    if (data.mensajeros&& data.mensajeros.length) saveMensajeros(data.mensajeros);
-    if (data.productos && data.productos.length)  saveProductos(data.productos);
-    if (data.categorias&& data.categorias.length) saveCategorias(data.categorias);
+    if (!getGestores().length   && data.gestores?.length)   saveGestores(data.gestores);
+    if (!getMensajeros().length && data.mensajeros?.length) saveMensajeros(data.mensajeros);
+    if (!getProductos().length  && data.productos?.length)  saveProductos(data.productos);
+    if (!getCategorias().length && data.categorias?.length) saveCategorias(data.categorias);
   } catch(e) {}
 }
 
