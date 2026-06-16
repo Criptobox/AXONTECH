@@ -454,18 +454,6 @@
       "catId": 80
     },
     {
-      "id": 1778546645170,
-      "name": "JUEGO DE LLANTAS R14",
-      "description": "[LLANTAS]\nJuego de llantas R14 centro 4x100 y 4x114.3 \n\nSe dan con las válvulas y los clanes",
-      "precio": "$550 USD",
-      "stock": 20,
-      "puntos": 2,
-      "garantia": "",
-      "comision": "$10 USD",
-      "photo": "https://tiendamax.org/imagenes/img_1778546645170_ext.webp",
-      "catId": 50
-    },
-    {
       "id": 1778546731028,
       "name": "JUEGO DE LLANTAS R14",
       "description": "[LLANTAS]\nJuego de llantas R14 centro 4x100 y 4x114.3\n\nSe dan con las válvulas y los clanes",
@@ -1162,5 +1150,5 @@
       "deliveredTs": "2026-06-15T20:44:09.650Z"
     }
   ],
-  "timestamp": "2026-06-16T00:40:57.628Z"
+  "timestamp": "2026-06-16T00:41:09.529Z"
 }
