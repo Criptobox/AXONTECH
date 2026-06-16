@@ -1896,12 +1896,9 @@ function renderComisionBody(g,pending,paid) {
 function renderGestorRanking() {
   const c=document.getElementById('rankingList');if(!c)return;
   const gestores=getGestores();
-  if(!gestores.length){c.innerHTML='<div class="es" style="padding:6px;"><div class="es-text" style="font-size:12px;">Sin gestores configurados</div></div>';return;}
+  if(!gestores.length){c.innerHTML='<div class="es"><div class="es-text">Sin gestores configurados</div></div>';return;}
   const meta=getConfig().metaPuntos||0;
-  // Use cache if fresh (within 15 seconds)
-  if(rankingCache&&(Date.now()-rankingCache.ts<15000)){
-    c.innerHTML=rankingCache.html;return;
-  }
+  if(rankingCache&&(Date.now()-rankingCache.ts<15000)){c.innerHTML=rankingCache.html;return;}
   const vales=getVales().filter(v=>['confirmed','pending_payment'].includes(v.status));
   const ranked=gestores.map(g=>{
     const pts=vales.filter(v=>v.gestorId===g.id).reduce((sum,v)=>
@@ -1909,49 +1906,46 @@ function renderGestorRanking() {
     return{...g,pts};
   }).sort((a,b)=>b.pts-a.pts);
   const medals=['🥇','🥈','🥉'];
-  const barColors=['#F59E0B','#94A3B8','#cd7f32','var(--blue)','#6366f1','#ec4899'];
-  const allZero=ranked.every(g=>g.pts===0);
-  // Header: show meta if set
-  const metaHeader=meta>0?`<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:4px;margin-bottom:10px;">
-    <span style="font-size:10px;font-weight:700;color:var(--gray-400);text-transform:uppercase;letter-spacing:.5px;">🎯 Meta: ${meta} pts</span>
-    <span style="font-size:10px;color:var(--gray-400);">${ranked.filter(g=>g.pts>=meta).length}/${ranked.length} alcanzaron</span>
-  </div>`:'';
-  if(allZero){
-    c.innerHTML=metaHeader+`<div style="text-align:center;padding:6px 0;">
-      <div style="font-size:11px;color:var(--gray-400);margin-bottom:10px;">Los puntos se acumulan al confirmar ventas</div>
-      <div style="display:flex;justify-content:center;gap:12px;flex-wrap:wrap;">
-        ${ranked.map(g=>`<div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
-          <div class="g-avatar" style="background:${g.color};width:30px;height:30px;font-size:10px;">${g.initials}</div>
-          <span style="font-size:10px;font-weight:600;">${g.name.split(' ')[0]}</span>
-          <span style="font-size:9px;color:var(--gray-400);">⭐ 0${meta>0?` / ${meta}`:''}</span>
-        </div>`).join('')}
-      </div>
+  const barGradients=[
+    'linear-gradient(90deg,#F59E0B,#EF4444)',
+    'linear-gradient(90deg,#94A3B8,#64748B)',
+    'linear-gradient(90deg,#cd7f32,#b36200)',
+    'linear-gradient(90deg,#00b4d8,#0284c7)',
+    'linear-gradient(90deg,#6366f1,#818cf8)',
+    'linear-gradient(90deg,#ec4899,#f472b6)',
+  ];
+  const maxRef=meta>0?meta:Math.max(ranked[0]?.pts||1,1);
+  let html='';
+  if(meta>0){
+    const reached=ranked.filter(g=>g.pts>=meta).length;
+    html+=`<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid var(--gray-200);">
+      <span style="font-size:11px;font-weight:700;color:var(--gray-400);text-transform:uppercase;letter-spacing:.5px;">🎯 Meta: ${meta} pts</span>
+      <span style="font-size:11px;font-weight:600;color:${reached>0?'var(--green)':'var(--gray-400)'};">${reached}/${ranked.length} alcanzaron</span>
     </div>`;
-    return;
   }
-  const maxRef=meta>0?meta:(ranked[0]?.pts||1);
-  const rankHtml=metaHeader+ranked.map((g,i)=>{
-    const pct=Math.min(100,maxRef>0?Math.round((g.pts/maxRef)*100):0);
+  html+=ranked.map((g,i)=>{
+    const pct=maxRef>0?Math.min(100,Math.round((g.pts/maxRef)*100)):0;
     const reached=meta>0&&g.pts>=meta;
-    const bar=reached?'var(--green)':barColors[Math.min(i,barColors.length-1)];
-    const label=meta>0?`${g.pts}/${meta} pts`:` ${g.pts} pts`;
+    const grad=reached?'linear-gradient(90deg,var(--green),#10B981)':barGradients[Math.min(i,barGradients.length-1)];
+    const pos=reached?'🏆':(medals[i]||`${i+1}.`);
+    const hint=meta>0
+      ?(reached?`<span style="color:var(--green);">¡Meta alcanzada! 🎉</span>`:`faltan <b>${meta-g.pts} pts</b> para la meta`)
+      :(g.pts>0?`${pct}% del líder`:'Aún sin puntos');
     return `<div class="rank-row">
-      <div class="rank-medal">${reached?'🏆':medals[i]||'🏅'}</div>
+      <div class="rank-pos">${pos}</div>
       <div style="flex:1;min-width:0;">
-        <div style="display:flex;align-items:center;gap:6px;">
-          <div class="g-avatar" style="background:${g.color};width:22px;height:22px;font-size:8px;flex-shrink:0;">${g.initials}</div>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <div class="g-avatar" style="background:${g.color};width:28px;height:28px;font-size:10px;flex-shrink:0;">${g.initials}</div>
           <span class="rank-name">${g.name}</span>
-          <span class="rank-pts" style="${reached?'color:var(--green);':''}">${reached?'✅ ':' ⭐'}${label}</span>
+          <span class="rank-pts" style="${reached?'color:var(--green);':''}">${g.pts} pts</span>
         </div>
-        <div class="rank-bar-wrap">
-          <div class="rank-bar" style="width:${pct}%;background:${bar};"></div>
-        </div>
-        ${meta>0?`<div style="font-size:9px;color:var(--gray-400);margin-top:1px;text-align:right;">${pct}%${reached?' · ¡Meta alcanzada!':` · faltan ${meta-g.pts} pts`}</div>`:''}
+        <div class="rank-bar-wrap"><div class="rank-bar" style="width:${pct}%;background:${grad};"></div></div>
+        <div class="rank-hint">${hint}</div>
       </div>
     </div>`;
   }).join('');
-  c.innerHTML=rankHtml;
-  rankingCache={html:rankHtml,ts:Date.now()};
+  c.innerHTML=html;
+  rankingCache={html,ts:Date.now()};
 }
 
 // ══════════════════════════════════════════
