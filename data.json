@@ -298,30 +298,6 @@
       "catId": 50
     },
     {
-      "id": 1778214089400,
-      "name": "MANNOL SPECIAL PLUS 10W - 30 7512. 5L",
-      "description": "[ACEITES Y LUBRICANTES]\nAceite de motor universal de sintesis HC, diseñado para cumplir con los requisitos de Volkswagen, Mercedes Benz. Diseñado para motores de gasolina y diésel en una amplia flota de automóviles (automóviles, vehículos utilitarios ligeros, furgonetas y camiones ligeros) de fabricantes europeos, asiáticos.\nEspecificaciones\n\nSAE 10W-30\n\nApproval\n\nRecomendación\n\nAPI SN\n\nACEA A3/B4\n\nVOLKSWAGEN 505 00\n\nVOLKSWAGEN 501 01\n\nMB 229.1\n\nISUZU\n\nKIA\n\nHYUNDAI",
-      "precio": "$30 USD",
-      "stock": 33,
-      "puntos": 1,
-      "garantia": "",
-      "comision": "",
-      "photo": "https://tiendamax.org/imagenes/img_1778214089400.webp",
-      "catId": 50
-    },
-    {
-      "id": 1778214214360,
-      "name": "MANNOL 4 - TAKT MOTORBIKE 10W - 40 7812. 1L",
-      "description": "[ACEITES Y LUBRICANTES]\nEspeciación\n\nSAE 10W-40\n\nAPI SL\n\nJASO MA/MA2\n\nApproval\n\nRecomendación\n\nHONDA\n\nHUSABERG\n\nKAWASAKI\n\nSUZUKI\n\nYAMAHA",
-      "precio": "$10 USD",
-      "stock": 43,
-      "puntos": 1,
-      "garantia": "",
-      "comision": "",
-      "photo": "https://tiendamax.org/imagenes/img_1778214214360.webp",
-      "catId": 50
-    },
-    {
       "id": 1778336613589,
       "name": "PISTOLA DE MASAJE PROFESIONAL",
       "description": "[SALUD Y BIENESTAR]\nPistola de masaje PROFESIONAL inalámbrica:\n•Diseño ergonómico con agarre triangular, que facilita el manejo y reduce la fatiga en la muñeca.\n\n•Incluye múltiples accesorios intercambiables (bola, horquilla, plano, punta, doble cabezal, etc.) para trabajar distintas zonas del cuerpo.\n•Sistema de percusión profunda, ideal para aliviar contracturas y acelerar la recuperación muscular.\n•Indicador luminoso  LED para  mostrar nivel de intensidad/ velocidad  del masaje\n•Construcción robusta y moderna, con acabado antideslizante.\n•Uso versátil, adecuada para espalda, piernas, cuello, hombros y brazos.\n•Pensada para recuperación deportiva y relajación muscular diaria.\n• Bateria de litio interna recargable por puerto usb tipo C.",
@@ -1186,5 +1162,5 @@
       "deliveredTs": "2026-06-15T20:44:09.650Z"
     }
   ],
-  "timestamp": "2026-06-16T00:40:53.690Z"
+  "timestamp": "2026-06-16T00:40:57.628Z"
 }
