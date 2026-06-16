@@ -200,6 +200,7 @@ function playSound(type) {
 let _tt;
 function showToast(msg) {
   const t=document.getElementById('toast');
+  if(!t)return;
   t.textContent=msg;t.classList.add('show');
   clearTimeout(_tt);_tt=setTimeout(()=>t.classList.remove('show'),2800);
 }
@@ -208,8 +209,8 @@ function showToast(msg) {
 //  DATE / NOTIFICATIONS
 // ══════════════════════════════════════════
 function updateDate() {
-  document.getElementById('headerDate').textContent=
-    new Date().toLocaleDateString('es-ES',{weekday:'short',day:'numeric',month:'short'});
+  const hd=document.getElementById('headerDate');
+  if(hd)hd.textContent=new Date().toLocaleDateString('es-ES',{weekday:'short',day:'numeric',month:'short'});
   const fEl=document.getElementById('vf-fecha');
   if(fEl)fEl.value=nowDateTime();
 }
@@ -1353,7 +1354,7 @@ function populateCatSelect(selectedId) {
 function openAddProductModal() {
   editingProductId=null;
   document.getElementById('productModalTitle').textContent='📦 Nuevo Producto';
-  ['pm-name','pm-desc','pm-precio','pm-foto','pm-garantia','pm-comision'].forEach(id=>{document.getElementById(id).value='';});
+  ['pm-name','pm-desc','pm-precio','pm-foto','pm-garantia','pm-comision'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
   document.getElementById('pm-comision-amount').value='';
   document.getElementById('pm-comision-currency').value='USD';
   document.getElementById('pm-stock').value='0';document.getElementById('pm-puntos').value='0';
@@ -2360,12 +2361,12 @@ function selectValeFromHistorial(id) {
 // ══════════════════════════════════════════
 function applyTheme(dark) {
   document.body.classList.toggle('dark', dark);
-  document.getElementById('btnTheme').textContent = dark ? '☀️' : '🌙';
+  const btn=document.getElementById('btnTheme');if(btn)btn.textContent=dark?'☀️':'🌙';
 }
 function toggleTheme() {
   const isDark = document.body.classList.toggle('dark');
   localStorage.setItem('axon_theme', isDark ? 'dark' : 'light');
-  document.getElementById('btnTheme').textContent = isDark ? '☀️' : '🌙';
+  const btn=document.getElementById('btnTheme');if(btn)btn.textContent=isDark?'☀️':'🌙';
 }
 
 // ══════════════════════════════════════════
