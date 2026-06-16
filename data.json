@@ -478,18 +478,6 @@
       "catId": 80
     },
     {
-      "id": 1778717147247,
-      "name": "SHORT DE NYLON",
-      "description": "[HOMBRE]\nShort ideal para el verano \nTalla M\nColores : negro , blanco ,gris y verde",
-      "precio": "$5 USD",
-      "stock": 4,
-      "puntos": 1,
-      "garantia": "",
-      "comision": "$5 USD",
-      "photo": "https://tiendamax.org/imagenes/img_1778717147247_ext.webp",
-      "catId": 60
-    },
-    {
       "id": 1778820912552,
       "name": "CASA DE CAMPAÑA LIGERA",
       "description": "[DEPORTES]\nCasa de campaña ligera\nPortatil, impermeable con mosquiteros  en las  2 puertas y las  2 ventanas. Capacidad para 3 o 4 personas. Mide 2 metros de ancho, 2 metros de largo y 1.30 metros de altura, facil de armar y desarmar. Repele el agua y los rayos del sol. \nTu compañera de aventuras perfecto para playas, campismos y excursiones!",
@@ -512,18 +500,6 @@
       "comision": "$1.8 USD",
       "photo": "https://tiendamax.org/imagenes/img_1778820983383_ext.webp",
       "catId": 40
-    },
-    {
-      "id": 1778906281677,
-      "name": "CARGADOR INTELIGENTE DE ALTA POTENCIA 84V 10A",
-      "description": "[PARTES Y PIEZAS]\nMoto Eléctrica | Carga Rápida 110V\n​📝 Descripción del Producto\n​Lleva la carga de tu vehículo eléctrico al siguiente nivel con el cargador inteligente de alta potencia de 84V y 10A. Diseñado para quienes no tienen tiempo que perder, este cargador premium reduce drásticamente el tiempo de espera gracias a su potente salida de 10 amperios, garantizando una carga rápida, eficiente y, sobre todo, segura para la batería de tu moto o scooter eléctrico.",
-      "precio": "$100 USD",
-      "stock": 5,
-      "puntos": 1,
-      "garantia": "",
-      "comision": "$5 USD",
-      "photo": "https://tiendamax.org/imagenes/img_1778906279220.webp",
-      "catId": 110
     },
     {
       "id": 1778906455757,
@@ -1042,5 +1018,5 @@
       "deliveredTs": "2026-06-15T20:44:09.650Z"
     }
   ],
-  "timestamp": "2026-06-16T00:41:26.351Z"
+  "timestamp": "2026-06-16T00:41:31.987Z"
 }
