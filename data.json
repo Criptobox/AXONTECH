@@ -838,18 +838,6 @@
       "catId": 20
     },
     {
-      "id": 1780017975657,
-      "name": "XIAOMI SOUND OUTDOOR 30W",
-      "description": "[AUDIO]\n(Nuevo en caja)\n​¡Potencia y portabilidad en un solo altavoz! Perfecto para exteriores, playa o reuniones.\n​⚡ Lo mejor de este altavoz:\n​Potencia de 30W: Sonido fuerte, nítido y con excelentes graves.\n​Batería de 12 horas: Música para todo el día.\n​Resistencia IP67: Soportar agua y polvo sin problemas.\n​Conexión TWS: Puedes conectarlo con otro igual para sonido estéreo.\n​Diseño cómodo: Incluye su correa naranja para llevarlo a todos lados.",
-      "precio": "$75 USD",
-      "stock": 3,
-      "puntos": 1,
-      "garantia": "",
-      "comision": "$5 USD",
-      "photo": "https://tiendamax.org/imagenes/img_1780017975657.webp",
-      "catId": 30
-    },
-    {
       "id": 1780079294429,
       "name": "RAQUETA ELÉCTRICA MATA MOSQUITOS",
       "description": "[HOGAR]\n​¡Diles adiós a los molestos mosquitos y moscas de forma rápida y efectiva! El accesorio infaltable para mantener tu casa tranquila.\n​🔋 Lo mejor de esta raqueta:\n​Alta potencia: Descarga fulminante que elimina mosquitos, moscas y jejenes al instante.\n​Recargable: Olvídate de gastar en baterías, se conecta directo a la corriente (trae su enchufe integrado en el mango).\n​Malla de seguridad: Triple capa de protección para evitar descargas accidentales al tocarla por los lados.\n​Indicador LED: Luz roja que te avisa cuando está activa y lista para usar.",
@@ -1270,5 +1258,5 @@
       "deliveredTs": "2026-06-15T20:44:09.650Z"
     }
   ],
-  "timestamp": "2026-06-16T00:31:56.500Z"
+  "timestamp": "2026-06-16T00:39:38.462Z"
 }
