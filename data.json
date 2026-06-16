@@ -538,18 +538,6 @@
       "catId": 80
     },
     {
-      "id": 1778384976624,
-      "name": "CARGADOR PORTÁTIL SOLAR",
-      "description": "[ACCESORIOS]\nCargador portátil solar de \n30 000mAh,  doble puerto USB para todos los teléfonos celulares y dispositivos electrónicos - Duradero. Carga inalámbrica y cables de carga usb, tipo c, lighting y v8 incluidos.",
-      "precio": "$35 USD",
-      "stock": 0,
-      "puntos": 1,
-      "garantia": "",
-      "comision": "$1.8 USD",
-      "photo": "https://tiendamax.org/imagenes/img_1778384976624_ext.webp",
-      "catId": 30
-    },
-    {
       "id": 1778546645170,
       "name": "JUEGO DE LLANTAS R14",
       "description": "[LLANTAS]\nJuego de llantas R14 centro 4x100 y 4x114.3 \n\nSe dan con las válvulas y los clanes",
@@ -1258,5 +1246,5 @@
       "deliveredTs": "2026-06-15T20:44:09.650Z"
     }
   ],
-  "timestamp": "2026-06-16T00:39:38.462Z"
+  "timestamp": "2026-06-16T00:39:44.451Z"
 }
