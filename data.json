@@ -1,26 +1,25 @@
 {
+  "version": 2,
   "gestores": [
-    {
-      "id": 1781533148554,
-      "name": "Carlos",
-      "initials": "C",
-      "color": "#2563EB",
-      "password": "DA7N96"
-    },
-    {
-      "id": 1781533153566,
-      "name": "Pedro",
-      "initials": "P",
-      "color": "#7C3AED",
-      "password": "ZVSTP4"
-    },
-    {
-      "id": 1781533160002,
-      "name": "Karla",
-      "initials": "K",
-      "color": "#059669",
-      "password": "AEP43K"
-    }
+    {"id":1781600000001,"name":"Rafael",   "initials":"RA","color":"#2563EB","password":""},
+    {"id":1781600000002,"name":"Brianna",  "initials":"BR","color":"#DC2626","password":""},
+    {"id":1781600000003,"name":"Sanjoni",  "initials":"SJ","color":"#7C3AED","password":""},
+    {"id":1781600000004,"name":"Kevin",    "initials":"KV","color":"#059669","password":""},
+    {"id":1781600000005,"name":"Betty",    "initials":"BT","color":"#D97706","password":""},
+    {"id":1781600000006,"name":"Rachelys", "initials":"RC","color":"#DB2777","password":""},
+    {"id":1781600000007,"name":"Lily",     "initials":"LI","color":"#0891B2","password":""},
+    {"id":1781600000008,"name":"Karla",    "initials":"KA","color":"#65A30D","password":""},
+    {"id":1781600000009,"name":"Hilario",  "initials":"HI","color":"#EA580C","password":""},
+    {"id":1781600000010,"name":"Thalia",   "initials":"TH","color":"#9333EA","password":""},
+    {"id":1781600000011,"name":"Nahomi",   "initials":"NH","color":"#0F766E","password":""},
+    {"id":1781600000012,"name":"Jennifer", "initials":"JN","color":"#BE185D","password":""},
+    {"id":1781600000013,"name":"Leyser",   "initials":"LS","color":"#1D4ED8","password":""},
+    {"id":1781600000014,"name":"Adrian",   "initials":"AD","color":"#15803D","password":""},
+    {"id":1781600000015,"name":"Loraine",  "initials":"LO","color":"#C2410C","password":""},
+    {"id":1781600000016,"name":"Edward",   "initials":"EW","color":"#0369A1","password":""},
+    {"id":1781600000017,"name":"Emily",    "initials":"EM","color":"#A21CAF","password":""},
+    {"id":1781600000018,"name":"Chabelis", "initials":"CH","color":"#4F46E5","password":""},
+    {"id":1781600000019,"name":"Danny",    "initials":"DN","color":"#B45309","password":""}
   ],
   "mensajeros": [
     {

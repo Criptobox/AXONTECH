@@ -2367,15 +2367,21 @@ function toggleTheme() {
 //  INITIAL DATA LOAD
 // ══════════════════════════════════════════
 async function loadInitialData() {
-  if (getGestores().length || getProductos().length) return; // already has data
   try {
     const res = await fetch('./data.json');
     if (!res.ok) return;
     const data = await res.json();
-    if (data.gestores  && data.gestores.length)  saveGestores(data.gestores);
-    if (data.mensajeros&& data.mensajeros.length) saveMensajeros(data.mensajeros);
-    if (data.productos && data.productos.length)  saveProductos(data.productos);
-    if (data.categorias&& data.categorias.length) saveCategorias(data.categorias);
+    const remoteVer = data.version || 0;
+    const localVer  = getConfig().dataVersion || 0;
+    const newVersion = remoteVer > localVer;
+    // Always overwrite gestores if remote has a newer version
+    if (newVersion || !getGestores().length) {
+      if (data.gestores && data.gestores.length) saveGestores(data.gestores);
+    }
+    if (!getMensajeros().length  && data.mensajeros  && data.mensajeros.length)  saveMensajeros(data.mensajeros);
+    if (!getProductos().length   && data.productos   && data.productos.length)   saveProductos(data.productos);
+    if (!getCategorias().length  && data.categorias  && data.categorias.length)  saveCategorias(data.categorias);
+    if (newVersion) { const cfg=getConfig(); cfg.dataVersion=remoteVer; saveConfig(cfg); }
   } catch(e) {}
 }
 
