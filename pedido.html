@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seguimiento de Pedido · TiendaMax</title>
+<meta name="theme-color" content="#0D0D0D">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#0D0D0D;color:#fff;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;}
+body.light-mode,body:has(.light){background:#FAF8F5;color:#1a1a1a;}
+.container{max-width:560px;width:100%;background:linear-gradient(160deg,rgba(255,255,255,.04),rgba(255,255,255,.02));border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:32px 24px;box-shadow:0 8px 40px rgba(0,0,0,.4);}
+body.light-mode .container{background:#fff;border:1px solid rgba(0,0,0,.08);box-shadow:0 8px 40px rgba(0,0,0,.1);}
+.header{text-align:center;margin-bottom:28px;}
+.logo{display:inline-flex;align-items:center;gap:8px;font-size:22px;font-weight:800;margin-bottom:8px;}
+.logo em{color:#E8501E;font-style:normal;}
+.logo img{width:32px;height:32px;border-radius:8px;}
+.subtitle{color:rgba(255,255,255,.5);font-size:14px;}
+body.light-mode .subtitle{color:#666;}
+.estado-card{background:rgba(232,80,30,.1);border:1px solid rgba(232,80,30,.3);border-radius:14px;padding:20px;margin-bottom:24px;text-align:center;}
+.estado-actual{font-size:18px;font-weight:700;color:#E8501E;margin-bottom:6px;}
+.estado-fecha{font-size:12px;color:rgba(255,255,255,.5);}
+body.light-mode .estado-fecha{color:#666;}
+.timeline{margin:24px 0;}
+.timeline-step{display:flex;align-items:flex-start;gap:14px;padding:12px 0;position:relative;}
+.timeline-step:not(:last-child)::before{content:'';position:absolute;left:15px;top:38px;bottom:-12px;width:2px;background:rgba(255,255,255,.1);}
+body.light-mode .timeline-step:not(:last-child)::before{background:rgba(0,0,0,.1);}
+.timeline-step.done::before{background:#2ECC71;}
+.timeline-icon{width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;border:2px solid rgba(255,255,255,.1);}
+body.light-mode .timeline-icon{background:rgba(0,0,0,.05);border-color:rgba(0,0,0,.1);}
+.timeline-step.done .timeline-icon{background:#2ECC71;border-color:#2ECC71;}
+.timeline-step.current .timeline-icon{background:#E8501E;border-color:#E8501E;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(232,80,30,.4);}50%{box-shadow:0 0 0 10px rgba(232,80,30,0);}}
+.timeline-info{flex:1;padding-top:4px;}
+.timeline-titulo{font-weight:600;font-size:15px;margin-bottom:2px;}
+.timeline-desc{font-size:12px;color:rgba(255,255,255,.5);}
+body.light-mode .timeline-desc{color:#666;}
+.items{background:rgba(255,255,255,.03);border-radius:12px;padding:16px;margin:20px 0;}
+body.light-mode .items{background:#f7f5f2;}
+.items h3{font-size:13px;text-transform:uppercase;letter-spacing:.5px;color:rgba(255,255,255,.5);margin-bottom:12px;}
+body.light-mode .items h3{color:#666;}
+.item{display:flex;justify-content:space-between;padding:6px 0;font-size:14px;}
+.item-nombre{flex:1;}
+.item-precio{color:#2ECC71;font-weight:600;}
+.total{display:flex;justify-content:space-between;padding-top:12px;margin-top:8px;border-top:1px solid rgba(255,255,255,.1);font-weight:700;font-size:16px;}
+body.light-mode .total{border-top-color:rgba(0,0,0,.1);}
+.id-pedido{text-align:center;font-size:11px;color:rgba(255,255,255,.3);margin-top:20px;font-family:monospace;}
+body.light-mode .id-pedido{color:#999;}
+.loading{text-align:center;padding:40px 20px;}
+.loading-spinner{width:40px;height:40px;border:3px solid rgba(232,80,30,.2);border-top-color:#E8501E;border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 16px;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.error{text-align:center;padding:40px 20px;color:#e74c3c;}
+.btn-wa{display:block;width:100%;background:linear-gradient(135deg,#25D366,#128C7E);color:white;text-align:center;padding:14px;border-radius:12px;text-decoration:none;font-weight:600;margin-top:16px;font-size:15px;}
+</style>
+</head>
+<body>
+<div class="container" id="container">
+    <div class="loading" id="loading">
+        <div class="loading-spinner"></div>
+        <p>Cargando tu pedido...</p>
+    </div>
+</div>
+<script>
+(function() {
+    'use strict';
+    // Aplicar tema guardado
+    try {
+        var pref = localStorage.getItem('tm_theme');
+        if (pref === 'light') document.body.classList.add('light-mode');
+    } catch(e) {}
+
+    var params = new URLSearchParams(window.location.search);
+    var pedidoId = params.get('id');
+    var container = document.getElementById('container');
+
+    if (!pedidoId) {
+        container.innerHTML = '<div class="error"><p style="font-size:48px;margin-bottom:16px;">😕</p><p>Falta el ID del pedido.</p><p style="color:rgba(255,255,255,.5);font-size:13px;margin-top:8px;">Abre el pedido desde "Mis Pedidos" en TiendaMax.</p></div>';
+        return;
+    }
+
+    // Cargar config para obtener Firebase URL
+    function getFbUrl() {
+        return localStorage.getItem('firebaseConfig') || null;
+    }
+
+    async function cargarFirebaseConfig() {
+        // Intentar de localStorage primero
+        var raw = localStorage.getItem('firebaseConfig');
+        if (raw) {
+            try {
+                var cfg = JSON.parse(raw);
+                if (cfg.databaseURL) return cfg.databaseURL;
+                if (cfg.projectId) return 'https://' + cfg.projectId + '-default-rtdb.firebaseio.com';
+            } catch(e) {}
+        }
+        // Fallback: cargar de config.json
+        try {
+            var res = await fetch('config.json', { cache: 'no-store' });
+            if (res.ok) {
+                var data = await res.json();
+                if (data.firebaseConfig) {
+                    localStorage.setItem('firebaseConfig', JSON.stringify(data.firebaseConfig));
+                    return data.firebaseConfig.databaseURL || ('https://' + data.firebaseConfig.projectId + '-default-rtdb.firebaseio.com');
+                }
+            }
+        } catch(e) {}
+        return null;
+    }
+
+    var ESTADOS = [
+        { key: 'pendiente',    icon: '⏳', titulo: 'Pedido recibido',     desc: 'Recibimos tu pedido. Te contactaremos por WhatsApp pronto.' },
+        { key: 'confirmado',   icon: '✅', titulo: 'Confirmado',          desc: 'El vendedor confirmó tu pedido y el stock disponible.' },
+        { key: 'preparando',   icon: '📦', titulo: 'Preparando',          desc: 'Estamos armando tu pedido para el envío.' },
+        { key: 'en_camino',    icon: '🚚', titulo: 'En camino',           desc: 'Tu pedido salió hacia tu dirección. ¡Prepárate!' },
+        { key: 'entregado',    icon: '🎉', titulo: 'Entregado',           desc: '¡Pedido entregado! Gracias por comprar en TiendaMax.' }
+    ];
+
+    function getEstadoIndex(estado) {
+        for (var i = 0; i < ESTADOS.length; i++) {
+            if (ESTADOS[i].key === estado) return i;
+        }
+        return 0;
+    }
+
+    function renderPedido(pedido) {
+        var estadoIdx = getEstadoIndex(pedido.estado);
+        var estadoActual = ESTADOS[estadoIdx];
+        var fechaStr = pedido.actualizado ? new Date(pedido.actualizado).toLocaleString('es-CU') : pedido.fecha;
+
+        var timelineHtml = ESTADOS.map(function(e, i) {
+            var clases = 'timeline-step';
+            if (i < estadoIdx) clases += ' done';
+            if (i === estadoIdx) clases += ' current';
+            return '<div class="' + clases + '">' +
+                '<div class="timeline-icon">' + (i < estadoIdx ? '✓' : e.icon) + '</div>' +
+                '<div class="timeline-info">' +
+                    '<div class="timeline-titulo">' + e.titulo + '</div>' +
+                    '<div class="timeline-desc">' + (i === estadoIdx ? e.desc : '') + '</div>' +
+                '</div>' +
+            '</div>';
+        }).join('');
+
+        var itemsHtml = (pedido.items || []).map(function(i) {
+            var safeNombre = String(i.nombre||'').replace(/[&<>"']/g, function(c) { return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; });
+            return '<div class="item"><span class="item-nombre">' + safeNombre + ' ×' + i.cantidad + '</span><span class="item-precio">$' + (i.precio * i.cantidad).toFixed(2) + '</span></div>';
+        }).join('');
+
+        var waLink = 'https://wa.me/5354320170?text=' + encodeURIComponent('Hola, consulto por mi pedido #' + pedidoId);
+
+        container.innerHTML =
+            '<div class="header">' +
+                '<div class="logo"><img src="/iconos/icon-192.png" alt="">Tienda<em>Max</em></div>' +
+                '<div class="subtitle">Seguimiento de pedido</div>' +
+            '</div>' +
+            '<div class="estado-card">' +
+                '<div class="estado-actual">' + estadoActual.icon + ' ' + estadoActual.titulo + '</div>' +
+                '<div class="estado-fecha">Actualizado: ' + fechaStr + '</div>' +
+            '</div>' +
+            '<div class="timeline">' + timelineHtml + '</div>' +
+            '<div class="items">' +
+                '<h3>Productos</h3>' +
+                itemsHtml +
+                '<div class="total"><span>Total</span><span>$' + (pedido.total||0).toFixed(2) + ' USD</span></div>' +
+            '</div>' +
+            '<a href="' + waLink + '" target="_blank" class="btn-wa">💬 Consultar por WhatsApp</a>' +
+            '<div class="id-pedido">ID: ' + String(pedidoId).replace(/[&<>"']/g, function(c) { return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }) + '</div>';
+    }
+
+    async function cargarPedido() {
+        var pedido = null;
+        var base = null;
+
+        // 1. Intentar Firebase (si está configurado)
+        try {
+            base = await cargarFirebaseConfig();
+            if (base) {
+                var res = await fetch(base + '/pedidos/' + pedidoId + '.json');
+                if (res.ok) {
+                    pedido = await res.json();
+                }
+            }
+        } catch(e) {
+            // Firebase falló (401, red, etc.) — continuar con fallback
+        }
+
+        // 2. Fallback: leer de localStorage
+        if (!pedido) {
+            try {
+                var local = JSON.parse(localStorage.getItem('pedidos_cliente_v1') || '[]');
+                pedido = local.find(function(p) { return String(p.id) === String(pedidoId); });
+            } catch(e) {}
+        }
+
+        // 3. Si no se encontró en ningún lado
+        if (!pedido) {
+            container.innerHTML = '<div class="error"><p style="font-size:48px;margin-bottom:16px;">🔍</p><p>Pedido no encontrado.</p><p style="color:rgba(255,255,255,.5);font-size:13px;margin-top:8px;">Verifica el enlace o consulta por WhatsApp.</p><a href="https://wa.me/5354320170" target="_blank" class="btn-wa">💬 Consultar por WhatsApp</a></div>';
+            return;
+        }
+
+        renderPedido(pedido);
+
+        // 4. Polling cada 30s para actualizaciones en tiempo real (solo si Firebase está disponible)
+        if (base) {
+            setInterval(async function() {
+                try {
+                    var r = await fetch(base + '/pedidos/' + pedidoId + '.json');
+                    if (r.ok) {
+                        var p = await r.json();
+                        if (p) renderPedido(p);
+                    }
+                } catch(e) {}
+            }, 30000);
+        }
+    }
+
+    cargarPedido();
+})();
+</script>
+</body>
+</html>

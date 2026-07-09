@@ -1,0 +1,235 @@
+{
+  "generado": "2026-07-08T10:56:19.347584+00:00",
+  "productos": 108,
+  "urgentes": 6,
+  "advertencias": 28,
+  "info": 11,
+  "resumen": "Anoche revisé tus 108 productos y encontré 6 urgente(s), 28 advertencia(s), 11 de info.",
+  "detalle": [
+    {
+      "tipo": "nombre",
+      "nombre": "Router inalámbrico gibabite de doble banda Tp-link Archer A6 AC1200",
+      "detalle": "→ Router Inalámbrico Gibabite de Doble Banda Tp-link Archer A6 AC1200"
+    },
+    {
+      "tipo": "nombre",
+      "nombre": "Router TP-Link Archer AX21",
+      "detalle": "→ Router Tp-link Archer AX21"
+    },
+    {
+      "tipo": "nombre",
+      "nombre": "Cargador tactil de bateria inteligente 12v /15A",
+      "detalle": "→ Cargador Tactil de Batería Inteligente 12V /15A"
+    },
+    {
+      "tipo": "nombre",
+      "nombre": "Cargador de 12v(20A) y 24v(10A) configurable",
+      "detalle": "→ Cargador de 12V(20A) y 24V(10A) Configurable"
+    },
+    {
+      "tipo": "nombre",
+      "nombre": "Cargador inteligente de 12v(35A) y 24v(15A)",
+      "detalle": "→ Cargador Inteligente de 12V(35A) y 24V(15A)"
+    },
+    {
+      "tipo": "nombre",
+      "nombre": "RouterBoard MikroTik hEX S RB750Gr3",
+      "detalle": "→ Routerboard Mikrotik Hex s RB750GR3"
+    },
+    {
+      "tipo": "agotado",
+      "nombre": "Batería Must Tipo LIFEPO4",
+      "detalle": "agotado (stock 0)"
+    },
+    {
+      "tipo": "agotado",
+      "nombre": "Cargador Inteligente 30A",
+      "detalle": "agotado (stock 0)"
+    },
+    {
+      "tipo": "agotado",
+      "nombre": "Router WiFi 6",
+      "detalle": "agotado (stock 0)"
+    },
+    {
+      "tipo": "agotado",
+      "nombre": "Enrutador WiFi Wavlink AC1200",
+      "detalle": "agotado (stock 0)"
+    },
+    {
+      "tipo": "agotado",
+      "nombre": "Repetidor WiFi 5",
+      "detalle": "agotado (stock 0)"
+    },
+    {
+      "tipo": "agotado",
+      "nombre": "Cargador Inteligente de 15 Amperes:",
+      "detalle": "agotado (stock 0)"
+    },
+    {
+      "tipo": "agotado",
+      "nombre": "Cargador 10 Amperes",
+      "detalle": "agotado (stock 0)"
+    },
+    {
+      "tipo": "agotado",
+      "nombre": "Inversor Solar Híbrido Inteligente MPPT de 3.6KW",
+      "detalle": "agotado (stock 0)"
+    },
+    {
+      "tipo": "agotado",
+      "nombre": "✅️controlador de Carga Solar MPPT - 100A",
+      "detalle": "agotado (stock 0)"
+    },
+    {
+      "tipo": "agotado",
+      "nombre": "Estación de Carga Portátil",
+      "detalle": "agotado (stock 0)"
+    },
+    {
+      "tipo": "agotado",
+      "nombre": "Bluetti AC 180P",
+      "detalle": "agotado (stock 0)"
+    },
+    {
+      "tipo": "agotado",
+      "nombre": "AC1200 WiFi Router",
+      "detalle": "agotado (stock 0)"
+    },
+    {
+      "tipo": "agotado",
+      "nombre": "Toldo Para Sombra",
+      "detalle": "agotado (stock 0)"
+    },
+    {
+      "tipo": "agotado",
+      "nombre": "Cámaras de Seguridad (V380 PRO )",
+      "detalle": "agotado (stock 0)"
+    },
+    {
+      "tipo": "agotado",
+      "nombre": "Linterna de Cabeza",
+      "detalle": "agotado (stock 0)"
+    },
+    {
+      "tipo": "agotado",
+      "nombre": "Adaptador POE Ubiquiti",
+      "detalle": "agotado (stock 0)"
+    },
+    {
+      "tipo": "agotado",
+      "nombre": "Cargador Portátil Solar",
+      "detalle": "agotado (stock 0)"
+    },
+    {
+      "tipo": "agotado",
+      "nombre": "Gamesir X5 LITE",
+      "detalle": "agotado (stock 0)"
+    },
+    {
+      "tipo": "agotado",
+      "nombre": "KIT de 4 Cámaras Zosi ( Con su Disco Duro )",
+      "detalle": "agotado (stock 0)"
+    },
+    {
+      "tipo": "agotado",
+      "nombre": "Linterna Marca Registrada \"Hecloud\"",
+      "detalle": "agotado (stock 0)"
+    },
+    {
+      "tipo": "agotado",
+      "nombre": "Cargadores Inteligentes de 25A",
+      "detalle": "agotado (stock 0)"
+    },
+    {
+      "tipo": "agotado",
+      "nombre": "Router Tenda RX2 PRO - WiFi 6 Dual - Band Gigabit",
+      "detalle": "agotado (stock 0)"
+    },
+    {
+      "tipo": "agotado",
+      "nombre": "Router Fenvi AX3000 WiFi 6",
+      "detalle": "agotado (stock 0)"
+    },
+    {
+      "tipo": "agotado",
+      "nombre": "Fenvi AC1200",
+      "detalle": "agotado (stock 0)"
+    },
+    {
+      "tipo": "agotado",
+      "nombre": "Repetidor WiFi de Rango Extendido tp - Link",
+      "detalle": "agotado (stock 0)"
+    },
+    {
+      "tipo": "agotado",
+      "nombre": "Router WiFi Inalámbrico d - Link Avanzado de Doble Banda",
+      "detalle": "agotado (stock 0)"
+    },
+    {
+      "tipo": "agotado",
+      "nombre": "Cargador Inteligente 30A",
+      "detalle": "agotado (stock 0)"
+    },
+    {
+      "tipo": "agotado",
+      "nombre": "​⚡ Inversor de Corriente Onda Senoidal Pura Unizuki 3000W",
+      "detalle": "agotado (stock 0)"
+    },
+    {
+      "tipo": "stock_bajo",
+      "nombre": "El Enrutador WiFi de 1.150MBPS",
+      "detalle": "quedan 1"
+    },
+    {
+      "tipo": "stock_bajo",
+      "nombre": "Inversor de Onda Sinusoidal Pura Fuera de la Red",
+      "detalle": "quedan 1"
+    },
+    {
+      "tipo": "stock_bajo",
+      "nombre": "Pistola de Masaje Profesional",
+      "detalle": "quedan 1"
+    },
+    {
+      "tipo": "stock_bajo",
+      "nombre": "Portacelulares",
+      "detalle": "quedan 1"
+    },
+    {
+      "tipo": "stock_bajo",
+      "nombre": "Cargador de Batería de Litio Bien 72V 5A (Salida 84V) | Conector us Pin",
+      "detalle": "quedan 3"
+    },
+    {
+      "tipo": "stock_bajo",
+      "nombre": "Xiaomi Sound Outdoor 30W",
+      "detalle": "quedan 3"
+    },
+    {
+      "tipo": "stock_bajo",
+      "nombre": "PC Gaming Setup Premium",
+      "detalle": "quedan 1"
+    },
+    {
+      "tipo": "stock_bajo",
+      "nombre": "Sistema de Seguridad Zosi Para el Hogar - 8 Canales",
+      "detalle": "quedan 3"
+    },
+    {
+      "tipo": "stock_bajo",
+      "nombre": "​⚡ Inversor de Corriente Onda Senoidal Pura Tataliken 4000W (24V)",
+      "detalle": "quedan 1"
+    },
+    {
+      "tipo": "stock_bajo",
+      "nombre": "Changan CS75 PLUS 2024",
+      "detalle": "quedan 1"
+    },
+    {
+      "tipo": "precio",
+      "nombre": "Changan CS75 PLUS 2024",
+      "detalle": "precio: 33000"
+    }
+  ]
+}

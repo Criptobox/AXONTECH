@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#0a0a0a">
+<title>Vale del Gestor — Tienda Max</title>
+<link rel="manifest" href="/vale-manifest.json">
+<link rel="icon" type="image/png" href="/iconos/vale-icon-192.png">
+<link rel="apple-touch-icon" href="/iconos/vale-icon-192.png">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--gold:#C9A96E;--gold-dark:#8b6914;--bg:#0D0D0D;--bg2:#141414;--bg3:#181818;--bg4:#222;--border:#2a2a2a;--border-gold:#c8a96e33;--text:#f0e6d3;--muted:#888;--dim:#555;--green-light:#52b788;--orange:#FF6B35}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh;padding-bottom:40px}
+.hdr{background:#111;border-bottom:1px solid var(--border-gold);padding:14px 18px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.logo{width:38px;height:38px;background:linear-gradient(135deg,var(--gold),var(--gold-dark));border-radius:9px;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:900;font-size:18px;color:#0a0a0a}
+.tasa-btn{background:var(--bg3);border:1px solid var(--border-gold);border-radius:20px;padding:7px 14px;font-size:12px;color:var(--gold);font-weight:600;cursor:pointer}
+.tabs{display:flex;background:var(--bg3);border-radius:12px;padding:4px;margin:14px 14px 0}
+.tab{flex:1;padding:9px;text-align:center;font-size:12px;border-radius:9px;cursor:pointer;color:var(--dim)}
+.tab.active{background:var(--bg2);color:var(--text);font-weight:600}
+.tab-panel{display:none;padding:0 14px}
+.tab-panel.active{display:block}
+.step-nav{display:flex;gap:6px;margin:14px 0 0}
+.step-btn{flex:1;padding:9px 4px;text-align:center;font-size:10px;font-weight:700;letter-spacing:.04em;border-radius:11px;cursor:pointer;background:var(--bg3);color:var(--dim);border:1px solid var(--border);transition:.18s;text-transform:uppercase}
+.step-btn.active{background:rgba(255,107,53,.16);border-color:#FF6B35;color:#FF6B35}
+.step-btn b{display:block;font-size:17px;margin-bottom:1px;font-family:'Playfair Display',serif}
+.step-panel{display:none}
+.step-panel.active{display:block;animation:fadein .18s ease}
+@keyframes fadein{from{opacity:.4}to{opacity:1}}
+.step-next{width:100%;padding:13px;margin-top:14px;border:none;border-radius:12px;background:linear-gradient(135deg,#FF6B35,#E8501E);color:#fff;font-weight:700;font-size:14px;cursor:pointer;font-family:'DM Sans',sans-serif}
+.step-back{width:100%;padding:11px;margin-top:8px;background:transparent;border:1px solid var(--border);border-radius:12px;color:var(--muted);font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif}
+.sec{background:var(--bg2);border:1px solid var(--border);border-radius:14px;margin-top:14px;overflow:hidden}
+.sec-hdr{padding:11px 14px;border-bottom:1px solid var(--border);font-size:11px;color:var(--gold);letter-spacing:2px;text-transform:uppercase;font-weight:600;display:flex;align-items:center;gap:8px}
+.dot{width:3px;height:14px;background:var(--gold);border-radius:2px}
+.sec-body{padding:14px}
+.fld{margin-bottom:12px}
+.fld:last-child{margin-bottom:0}
+.lbl{font-size:10px;color:var(--dim);letter-spacing:1px;text-transform:uppercase;margin-bottom:4px}
+.la{color:var(--gold);font-size:9px;margin-left:5px}
+.lf{color:var(--orange);font-size:9px;margin-left:5px}
+.r2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+input,textarea{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:10px;color:var(--text);font-size:14px;padding:11px 13px;outline:none;font-family:'DM Sans',sans-serif;transition:border .2s;-webkit-appearance:none}
+input:focus,textarea:focus{border-color:var(--gold)}
+.auto{background:#1a2a1a!important;border-color:#2d4a2d!important}
+.fill{border-color:#e07b3a33}
+textarea{resize:none;line-height:1.5}
+input[readonly]{color:var(--muted)}
+.paste-box{width:100%;min-height:90px;background:var(--bg3);border:1px dashed var(--border);border-radius:10px;color:var(--text);font-size:13px;padding:12px;outline:none;font-family:monospace;line-height:1.6}
+.paste-box.ok{border-color:var(--gold)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.chip{background:#1a2a1a;border:1px solid #2d4a2d;border-radius:20px;padding:4px 11px;font-size:11px;color:var(--green-light)}
+.btn-gold{width:100%;padding:14px;background:linear-gradient(135deg,var(--gold),var(--gold-dark));border:none;border-radius:12px;color:#0a0a0a;font-weight:700;font-size:15px;cursor:pointer;font-family:'Playfair Display',serif;margin-top:12px;display:flex;align-items:center;justify-content:center;gap:8px}
+.btn-ghost{width:100%;padding:12px;background:transparent;border:1px solid var(--border);border-radius:12px;color:var(--muted);font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:8px}
+.btn-act{width:100%;padding:11px;background:#1a1a1a;border:1px solid var(--border-gold);border-radius:10px;color:var(--gold);font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:10px;display:flex;align-items:center;justify-content:center;gap:8px}
+.btn-parse{width:100%;padding:12px;background:var(--bg4);border:1px solid var(--border);border-radius:10px;color:var(--muted);font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:8px}
+.btn-parse.ready{background:#1a1a10;border-color:var(--gold);color:var(--gold)}
+.tasa-box{background:var(--bg3);border:1px solid var(--border-gold);border-radius:10px;padding:12px 14px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center}
+.tasa-val{font-size:20px;font-weight:700;color:var(--gold);font-family:'Playfair Display',serif}
+.total-box{background:linear-gradient(135deg,#1a2a1a,#152015);border:1px solid #2d5a2d;border-radius:10px;padding:14px;display:flex;justify-content:space-between;align-items:center;margin-top:4px}
+.ubi-btn{width:100%;padding:11px;background:var(--bg3);border:1px dashed var(--border);border-radius:10px;color:var(--muted);font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;font-family:'DM Sans',sans-serif;margin-top:8px}
+.ubi-link{display:flex;align-items:center;gap:8px;background:#1a2a1a;border:1px solid #2d4a2d;border-radius:10px;padding:11px 14px;margin-top:8px;font-size:13px;color:var(--green-light);text-decoration:none;word-break:break-all}
+.atencion{background:#1a1410;border:1px solid var(--border-gold);border-radius:12px;padding:14px;font-size:12px;color:var(--muted);line-height:1.9;margin-top:14px}
+hr{border:none;border-top:1px solid var(--border);margin:12px 0}
+.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%);background:#1a2a1a;border:1px solid #2d5a2d;border-radius:30px;padding:11px 22px;font-size:13px;color:var(--green-light);opacity:0;transition:opacity .3s;white-space:nowrap;z-index:999;pointer-events:none}
+.toast.show{opacity:1}
+.modal-bg{position:fixed;inset:0;background:#000a;backdrop-filter:blur(4px);z-index:200;display:none;align-items:flex-end;justify-content:center}
+.modal-bg.open{display:flex}
+.modal{background:var(--bg2);border:1px solid var(--border-gold);border-radius:20px 20px 0 0;padding:22px 18px 38px;width:100%;max-width:500px;animation:up .3s ease}
+@keyframes up{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.hist-empty{text-align:center;color:var(--dim);font-size:13px;padding:24px}
+.hist-item{background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:8px}
+/* ── Vale Visual ── */
+.vale-img-sec{background:var(--bg2);border:1px solid var(--border-gold);border-radius:14px;margin-top:14px;overflow:hidden}
+.vale-img-hdr{padding:11px 14px;border-bottom:1px solid var(--border-gold);font-size:11px;color:var(--gold);letter-spacing:2px;text-transform:uppercase;font-weight:600;display:flex;align-items:center;justify-content:space-between}
+#valeImgCanvas{display:block;width:100%;max-width:420px;height:auto;margin:14px auto;border-radius:10px;cursor:pointer}
+.btn-dl-vale{width:100%;padding:13px;background:linear-gradient(135deg,#192814,#0d1a08);border:1px solid #2a4a1a;border-radius:12px;color:#52b788;font-size:14px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;font-family:'DM Sans',sans-serif;margin-top:0}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <div style="display:flex;align-items:center;gap:10px">
+    <a href="admin.html" title="Volver al admin" style="color:var(--gold);text-decoration:none;font-size:22px;line-height:1;padding:4px 8px;margin-right:2px;border:1px solid var(--border-gold);border-radius:9px">←</a>
+    <img class="logo" src="/iconos/icon-192.png" alt="TiendaMax" style="object-fit:cover">
+    <div>
+      <div style="font-family:'Playfair Display',serif;font-size:16px">Tienda Max</div>
+      <div style="font-size:10px;color:var(--gold);letter-spacing:2px">VALE DEL GESTOR</div>
+    </div>
+  </div>
+  <div class="tasa-btn" onclick="abrirTasa()">💱 <span id="tasaHdr">—</span> CUP</div>
+</div>
+
+<div class="modal-bg" id="modalTasa" onclick="if(event.target===this)cerrarTasa()">
+  <div class="modal">
+    <div style="font-family:'Playfair Display',serif;font-size:18px;margin-bottom:14px">💱 Tasa del día</div>
+    <a href="https://eltoque.com/es" target="_blank" rel="noopener"
+      style="display:flex;align-items:center;justify-content:space-between;background:#1a1a1a;border:1px solid #c8a96e33;border-radius:12px;padding:12px 14px;margin-bottom:14px;text-decoration:none">
+      <div>
+        <div style="font-size:13px;color:var(--gold);font-weight:600">📊 Ver tasa en elToque</div>
+        <div style="font-size:11px;color:var(--dim);margin-top:2px">eltoque.com · tasa informal</div>
+      </div>
+      <div style="font-size:18px;color:var(--dim)">↗</div>
+    </a>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:10px">Escribe la tasa que viste:</p>
+    <div style="display:grid;grid-template-columns:1fr auto;gap:8px">
+      <input type="number" id="tasaInput" placeholder="Ej: 380" style="font-size:20px;font-weight:700;text-align:center;color:var(--gold)">
+      <button class="btn-gold" style="margin-top:0;padding:11px 18px;font-size:14px;border-radius:10px;width:auto" onclick="guardarTasa()">✓</button>
+    </div>
+    <p style="font-size:11px;color:var(--dim);margin-top:8px">+<span id="margenTxtModal">10</span> CUP se agrega automático para pagos en MN.</p>
+    <p id="tasaAutoMsg" style="font-size:11px;color:var(--green-light);margin-top:6px;text-align:center"></p>
+    <button class="btn-ghost" style="margin-top:8px;font-size:12px" onclick="cargarTasaAuto();toast('🔄 Buscando tasa...')">🔄 Traer tasa de tiendamax.org</button>
+  </div>
+</div>
+
+<div class="tabs">
+  <div class="tab active" onclick="goTab('nuevo')">✍️ Nuevo vale</div>
+  <div class="tab" onclick="goTab('historial')">📋 Historial</div>
+</div>
+
+<div class="tab-panel active" id="tab-nuevo">
+
+  <div class="step-nav">
+    <div class="step-btn active" id="stepBtn1" onclick="goStep(1)"><b>1</b>Formulario</div>
+    <div class="step-btn" id="stepBtn2" onclick="goStep(2)"><b>2</b>Vale</div>
+    <div class="step-btn" id="stepBtn3" onclick="goStep(3)"><b>3</b>Ticket</div>
+  </div>
+
+  <div class="step-panel active" id="step-1">
+  <div class="sec">
+    <div class="sec-hdr"><div class="dot"></div>PEGAR MENSAJE DEL CLIENTE</div>
+    <div class="sec-body">
+      <div class="lbl">Mensaje de WhatsApp</div>
+      <div class="paste-box" id="pasteArea" contenteditable="true" oninput="onType()" onpaste="setTimeout(onType,60)"></div>
+      <div class="chips" id="chips"></div>
+      <button class="btn-parse" id="parseBtn" onclick="extraer()">⚡ Extraer datos automáticamente</button>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-hdr"><div class="dot"></div>DATOS DEL CLIENTE</div>
+    <div class="sec-body">
+      <div class="fld"><div class="lbl">🔸 Promotor</div><input type="text" id="vPromotor" value="JULIO"></div>
+      <div class="fld"><div class="lbl">📱 WhatsApp de la tienda <span class="la">se guarda</span></div><input type="tel" id="vWaTienda" placeholder="5354320170" oninput="guardarWaTienda()"></div>
+      <div class="fld"><div class="lbl">🔸 Nombre cliente<span class="la">✓ auto</span></div><input type="text" id="vCliente" class="auto" placeholder="—"></div>
+      <div class="r2">
+        <div class="fld"><div class="lbl">🔸 Teléfono<span class="la">✓ auto</span></div><input type="tel" id="vTelefono" class="auto" placeholder="—"></div>
+        <div class="fld"><div class="lbl">🔸 Mensajería<span class="lf">✏️</span></div><input type="text" id="vMensajeria" class="fill" placeholder="Moto / 500" oninput="recalc()"></div>
+      </div>
+      <div class="fld"><div class="lbl">🔸 Dirección<span class="la">✓ auto</span></div><input type="text" id="vDireccion" class="auto" placeholder="—" oninput="chkMapa()"></div>
+      <div id="mapaBtns" style="display:none">
+        <button class="btn-act" onclick="copiarDir()">📋 Copiar dirección para Maps.me</button>
+      </div>
+      <button class="btn-act" onclick="enviarFormularioCliente()">📲 Enviar formulario al cliente</button>
+      <button class="btn-act" style="margin-top:6px;color:var(--muted);border-color:var(--border)" onclick="copiarSolicitud()">📋 Copiar solicitud manual</button>
+      <div class="lbl" style="margin-top:12px">📍 Ubicación WhatsApp</div>
+      <button class="ubi-btn" id="ubiBtnPaste" onclick="pegarUbi()">📌 Pegar enlace de ubicación</button>
+      <a id="ubiLink" class="ubi-link" style="display:none" href="#" target="_blank" rel="noopener">📍 <span id="ubiTxt"></span></a>
+    </div>
+  </div>
+
+  <button class="step-next" onclick="goStep(2)">Siguiente: Vale ▸</button>
+  </div><!-- /step-1 -->
+
+  <div class="step-panel" id="step-2">
+  <div class="sec">
+    <div class="sec-hdr"><div class="dot"></div>ARTÍCULO</div>
+    <div class="sec-body">
+      <div class="fld"><div class="lbl">🔸 Artículo y cantidad<span class="la">✓ auto</span></div><textarea id="vArticulo" class="auto" rows="2" placeholder="—"></textarea></div>
+      <button class="btn-act" onclick="abrirCatalogo()">🛍️ Elegir del catálogo</button>
+      <div class="fld" style="margin-top:12px"><div class="lbl">🔸 Garantía<span class="lf">✏️</span></div><input type="text" id="vGarantia" class="fill" placeholder="Ej: 3 meses"></div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-hdr"><div class="dot"></div>PRECIOS Y PAGO</div>
+    <div class="sec-body">
+      <div class="tasa-box">
+        <div><div style="font-size:12px;color:var(--muted)">Tasa hoy · CUP × USD</div><div style="font-size:10px;color:var(--orange)">+<span id="margenTxtBox">10</span> CUP para pagos en MN</div></div>
+        <div class="tasa-val"><span id="tasaDisp">—</span> CUP</div>
+      </div>
+      <div class="r2">
+        <div class="fld"><div class="lbl">🔸 Precio USD/Zelle<span class="la">✓ auto</span></div><input type="number" id="vUSD" class="auto" placeholder="0.00" step="0.01" oninput="calcular()"></div>
+        <div class="fld"><div class="lbl">🔸 Precio CUP<span class="la">✓ auto</span></div><input type="number" id="vCUP" class="auto" placeholder="0" oninput="recalc()"></div>
+      </div>
+      <div class="r2">
+        <div class="fld"><div class="lbl">💵 Recibido CUP</div><input type="number" id="vRecibido" placeholder="0" oninput="calcVuelto()"></div>
+        <div class="fld"><div class="lbl">🔸 Vuelto</div><input type="text" id="vVuelto" placeholder="—"></div>
+      </div>
+      <hr>
+      <div class="total-box">
+        <div style="font-size:13px;color:var(--green-light)">🔸 Total a pagar</div>
+        <div style="font-size:26px;font-weight:700;color:var(--green-light);font-family:'Playfair Display',serif" id="vTotal">—</div>
+        <div style="font-size:13px;color:var(--muted);margin-top:2px" id="vTotalUsd"></div>
+      </div>
+      <div class="fld" style="margin-top:12px"><div class="lbl">📅 Fecha y hora</div><input type="text" id="vFecha" readonly></div>
+    </div>
+  </div>
+
+  <button class="step-next" onclick="goStep(3)">Siguiente: Ticket ▸</button>
+  <button class="step-back" onclick="goStep(1)">◂ Volver al formulario</button>
+  </div><!-- /step-2 -->
+
+  <div class="step-panel" id="step-3">
+  <!-- ══ VALE VISUAL ══ -->
+  <div class="vale-img-sec">
+    <div class="vale-img-hdr">
+      <span>🧾 VALE VISUAL</span>
+      <span style="font-size:10px;color:var(--dim)">se actualiza al llenar los datos</span>
+    </div>
+    <div style="padding:0 14px 14px">
+      <canvas id="valeImgCanvas" onclick="enviarValeImagenWA()" title="Toca para enviar por WhatsApp"></canvas>
+      <button class="btn-dl-vale" style="background:linear-gradient(135deg,#25D366,#1da851);border-color:#1da851;color:#fff" onclick="enviarValeImagenWA()">📱 Enviar imagen por WhatsApp</button>
+    </div>
+  </div>
+
+  <div class="atencion">
+    <b>🚨 ATENCIÓN 🚨</b><br>
+    • Horarios de atención: 8:00am — 8:00pm<br>
+    • Solo aceptamos hasta cinco billetes de 1 USD por compra<br>
+    • Pagos en CUP con denominación de 50 en adelante<br>
+    • Solo billetes en buen estado (ni rotos ni manchados)
+  </div>
+
+  <button class="btn-gold" onclick="copiarVale()">📋 Copiar Vale para WhatsApp</button>
+  <button class="btn-gold" style="background:linear-gradient(135deg,#25D366,#1da851);color:#fff" onclick="enviarValeWA()">📱 Enviar Vale por WhatsApp</button>
+  <button class="step-back" onclick="goStep(2)">◂ Volver al vale</button>
+  <button class="btn-ghost" onclick="resetForm()">🔄 Nuevo cliente</button>
+  </div><!-- /step-3 -->
+</div>
+
+<div class="tab-panel" id="tab-historial">
+  <div class="sec" style="margin-top:14px">
+    <div class="sec-hdr"><div class="dot"></div>VALES RECIENTES</div>
+    <input type="text" id="histBuscar" placeholder="🔍 Buscar por nombre, teléfono o producto" oninput="filtrarHist()" style="width:100%;box-sizing:border-box;background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:11px;color:#fff;font-size:13px;margin-bottom:12px">
+    <div class="sec-body" id="histBody"><div class="hist-empty">Aún no hay vales guardados</div></div>
+  </div>
+</div>
+
+<!-- MODAL FORMULARIO -->
+<div class="modal-bg" id="modalForm" onclick="if(event.target===this)document.getElementById('modalForm').classList.remove('open')">
+  <div class="modal">
+    <div style="font-family:'Playfair Display',serif;font-size:17px;margin-bottom:14px">📲 Enviar formulario</div>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:14px">Elige cómo enviarle el formulario al cliente:</p>
+    <div id="modalFormUrl" style="background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:11px;font-size:11px;color:var(--dim);word-break:break-all;margin-bottom:14px;font-family:monospace"></div>
+    <button class="btn-gold" style="margin-top:0" onclick="abrirFormWA()">📱 Enviar por WhatsApp</button>
+    <button class="btn-ghost" style="margin-top:8px" onclick="copiarEnlaceForm()">📋 Copiar enlace</button>
+    <button class="btn-ghost" style="margin-top:6px" onclick="document.getElementById('modalForm').classList.remove('open')">Cerrar</button>
+  </div>
+</div>
+
+<!-- MODAL CATÁLOGO -->
+<div class="modal-bg" id="modalCatalogo" onclick="if(event.target===this)cerrarCatalogo()">
+  <div class="modal" style="max-height:88vh;display:flex;flex-direction:column;padding-bottom:18px">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+      <div style="font-family:'Playfair Display',serif;font-size:18px">🛍️ Elegir del catálogo</div>
+      <button class="btn-act" style="width:auto;margin:0;padding:7px 14px" onclick="cerrarCatalogo()">Listo</button>
+    </div>
+    <input type="text" id="catBuscar" placeholder="🔍 Buscar producto" oninput="renderCatalogo()" style="margin-bottom:10px">
+    <div class="chips" id="catChips" style="margin-bottom:6px;overflow-x:auto;flex-wrap:nowrap;-webkit-overflow-scrolling:touch;padding-bottom:4px"></div>
+    <div id="catLista" style="overflow-y:auto;flex:1;margin-top:6px"><div class="hist-empty">Cargando catálogo…</div></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+let tasa = parseInt(localStorage.getItem('tasaMax')||'0')||0;
+// Margen sobre la tasa elToque (igual que la tienda: getTasaMN = tasaMN + margenMN).
+// Se lee de config.json (margenMN); por defecto 10, como la tienda.
+let margenMN = (function(){ const m=parseInt(localStorage.getItem('margenMN')); return isNaN(m)?10:m; })();
+let _ubi = null;
+
+// Carga la tasa base (elToque) y el margen desde tu tienda principal (config.json),
+// que ya los actualiza solos. El vale calcula tasa + margenMN, igual que la tienda.
+async function cargarTasaAuto(){
+  try{
+    const ctrl = new AbortController();
+    const t = setTimeout(()=>ctrl.abort(), 6000);
+    const r = await fetch('https://tiendamax.org/config.json?t='+Date.now(), {signal:ctrl.signal});
+    clearTimeout(t);
+    if(!r.ok) return;
+    const cfg = await r.json();
+    const mrg = parseInt(cfg.margenMN);
+    if(!isNaN(mrg) && mrg>=0){ margenMN = mrg; localStorage.setItem('margenMN', margenMN); }
+    const base = parseInt(cfg.tasaMN);
+    if(base && base>=50){
+      tasa = base;
+      localStorage.setItem('tasaMax', tasa);
+      const el = document.getElementById('tasaAutoMsg');
+      if(el) el.textContent = '✓ Tasa actualizada desde tiendamax.org';
+    }
+    renderTasa(); calcular();
+  }catch(e){ /* sin red: se queda la tasa guardada */ }
+}
+
+function renderTasa(){
+  document.getElementById('tasaDisp').textContent = tasa||'—';
+  document.getElementById('tasaHdr').textContent = tasa||'—';
+  const mb=document.getElementById('margenTxtBox'); if(mb) mb.textContent = margenMN;
+  const mm=document.getElementById('margenTxtModal'); if(mm) mm.textContent = margenMN;
+}
+function abrirTasa(){
+  document.getElementById('tasaInput').value = tasa||''
+  document.getElementById('modalTasa').classList.add('open');
+  setTimeout(()=>document.getElementById('tasaInput').focus(),300);
+}
+function cerrarTasa(){ document.getElementById('modalTasa').classList.remove('open'); }
+function guardarTasa(){
+  const v=parseInt(document.getElementById('tasaInput').value);
+  if(!v||v<50){toast('⚠️ Tasa inválida');return;}
+  tasa=v; localStorage.setItem('tasaMax',tasa);
+  cerrarTasa(); renderTasa(); calcular();
+  toast('✅ Tasa: '+tasa+' CUP');
+}
+
+function getMens(){
+  const m=document.getElementById('vMensajeria').value.match(/\d+/);
+  return m?parseInt(m[0]):0;
+}
+function calcular(){
+  const usd=parseFloat(document.getElementById('vUSD').value)||0;
+  if(usd&&tasa) document.getElementById('vCUP').value=Math.round(usd*(tasa+margenMN));
+  recalc();
+}
+function recalc(){
+  const cup=parseInt(document.getElementById('vCUP').value)||0;
+  const mens=getMens();
+  const totalCup=cup+mens;
+  document.getElementById('vTotal').textContent=cup?totalCup.toLocaleString()+' CUP':'—';
+  // Equivalente en USD de referencia (usando la tasa + margen)
+  const usdRef=document.getElementById('vTotalUsd');
+  if(cup && tasa){
+    const usdEq=(totalCup/(tasa+margenMN));
+    usdRef.textContent='≈ $'+usdEq.toFixed(2)+' USD'+(mens?' (incl. mensajería)':'');
+  } else {
+    usdRef.textContent='';
+  }
+  calcVuelto();
+  scheduleDrawVale();
+}
+function calcVuelto(){
+  const rec=parseInt(document.getElementById('vRecibido').value)||0;
+  const cup=parseInt(document.getElementById('vCUP').value)||0;
+  const total=cup+getMens();
+  // Solo calcula automático si escribiste un "Recibido CUP".
+  // Si no, respeta el vuelto que haya puesto el cliente desde el formulario.
+  if(rec && total){
+    document.getElementById('vVuelto').value=Math.max(0,rec-total)+' MN';
+  }
+}
+
+function onType(){
+  const area=document.getElementById('pasteArea');
+  const text=area.innerText.trim();
+  area.classList.toggle('ok',text.length>15);
+  document.getElementById('parseBtn').classList.toggle('ready',text.length>15);
+  if(text.length>15) renderChips(text);
+}
+function renderChips(text){
+  const ex=extract(text);
+  let h='';
+  if(ex.cliente) h+='<div class="chip">👤 '+ex.cliente+'</div>';
+  if(ex.telefono) h+='<div class="chip">📞 '+ex.telefono+'</div>';
+  if(ex.articulo) h+='<div class="chip">📦 '+ex.articulo.split('\n')[0]+'</div>';
+  if(ex.precio) h+='<div class="chip">💰 $'+ex.precio+' USD</div>';
+  document.getElementById('chips').innerHTML=h;
+}
+function extract(text){
+  const r={cliente:'',telefono:'',direccion:'',articulo:'',precio:'',mensajeria:'',vuelto:'',ubicacion:''};
+
+  // ── Formato carrito tienda (NUEVA ORDEN — TIENDAMAX) ──
+  if(/NUEVA ORDEN|TIENDAMAX/i.test(text) && text.includes('🔹')){
+    // Productos: líneas "🔹 *1.* Nombre" seguidas de "▸ Cant: *N* · $X USD c/u"
+    const lineas = text.split('\n');
+    const items = [];
+    for(let i=0;i<lineas.length;i++){
+      const pm = lineas[i].match(/🔹\s*\*?\d+\.?\*?\s*(.+)/);
+      if(pm){
+        let nombre = pm[1].replace(/\*/g,'').replace(/:\s*$/,'').trim();
+        // buscar cantidad y precio en la línea siguiente
+        let cant='', precio='';
+        if(lineas[i+1]){
+          const cm = lineas[i+1].match(/Cant:\s*\*?(\d+)\*?/i);
+          const prm = lineas[i+1].match(/\$\s*([\d.,]+)\s*USD/i);
+          if(cm) cant = cm[1];
+          if(prm) precio = prm[1];
+        }
+        items.push(nombre + (cant?(' x'+cant):'') + (precio?(' — $'+precio+' USD c/u'):''));
+      }
+    }
+    if(items.length) r.articulo = items.join('\n');
+    // Subtotal en USD
+    const sub = text.match(/Subtotal:\*?\s*\$?\s*([\d.,]+)\s*USD/i);
+    if(sub) r.precio = sub[1].replace(/,/g,'');
+    // Este formato NO trae cliente/teléfono/dirección (vienen aparte)
+    return r;
+  }
+
+  // ── Formato vale con 🔸 ──
+  if(text.includes('🔸')){
+    const get = (key) => {
+      const m = text.match(new RegExp('🔸[^:\n]*'+key+'[^:\n]*:\\s*(.+?)(?=\n|$)','i'));
+      return m ? m[1].trim() : '';
+    };
+    r.cliente   = get('Nombre') || get('Cliente');
+    r.telefono  = get('Tel') || get('Tlf') || get('Teléfono');
+    r.direccion = get('Direcci');
+    r.articulo  = get('Art') || get('cantidad');
+    r.mensajeria= get('Mensaj');
+    const pu = text.match(/🔸[^\n]*(?:USD|Zelle)[^\n]*:\s*\$?\s*(\d+[\d.,]*)/i);
+    if(pu) r.precio = pu[1].replace(/,/g,'');
+    Object.keys(r).forEach(k => { if(r[k]==='—') r[k]=''; });
+    return r;
+  }
+
+  // ── Formato formulario pedido (Nuevo pedido) ──
+  if(text.includes('Nuevo pedido')){
+    const gf = (emoji) => {
+      const m = text.match(new RegExp(emoji+'[^:]*:\\s*(.+?)(?=\n|$)'));
+      return m ? m[1].trim() : '';
+    };
+    r.cliente  = gf('👤');
+    r.telefono = gf('📞');
+    const prodLine = gf('📦');
+    const pm = prodLine.match(/^(.*?)\s*—\s*\$?\s*([\d.]+)\s*USD/i);
+    if(pm){ r.articulo = pm[1].trim(); r.precio = pm[2].trim(); }
+    else  { r.articulo = prodLine; }
+    const ent = gf('🛵');
+    if(/Mensajer/i.test(ent)){
+      const dm = ent.match(/Mensajer[íi]a a:\s*(.+)/i);
+      if(dm) r.direccion = dm[1].trim();
+      r.mensajeria = 'Mensajería';
+    } else if(ent){
+      r.mensajeria = 'Recoge en tienda';
+    }
+    // Vuelto: "🔄 Vuelto: Sí, dar 500 MN de vuelto"
+    const vt = gf('🔄');
+    const vm = vt.match(/dar\s+([\d.,]+)\s*(MN|CUP|USD)/i);
+    if(vm) r.vuelto = vm[1].replace(/[.,]/g,'') + ' ' + (vm[2].toUpperCase()==='CUP'?'MN':vm[2].toUpperCase());
+    // Ubicación GPS: preferir el enlace clicable de Google Maps; si no, el geo:
+    const gm = text.match(/https?:\/\/maps\.google\.com\/\?q=[\d.,\-]+/i);
+    const geo = text.match(/geo:[\d.,\-]+/i);
+    if(gm) r.ubicacion = gm[0].trim();
+    else if(geo) r.ubicacion = geo[0].trim();
+    return r;
+  }
+
+  // ── Formato libre del cliente ──
+  const nk=text.match(/(?:soy|me llamo)\s+([A-ZÁÉÍÓÚa-záéíóúñÑ][A-ZÁÉÍÓÚa-záéíóúñÑ\s]{2,28}?)(?=,|\.|$|\d|\n)/i);
+  if(nk){r.cliente=nk[1].trim();}
+  else{
+    for(const l of text.split('\n').map(l=>l.trim()).filter(Boolean)){
+      if(/^[A-ZÁÉÍÓÚa-záéíóúñÑ][A-ZÁÉÍÓÚa-záéíóúñÑ\s]{2,30}$/.test(l)){r.cliente=l;break;}
+    }
+  }
+  const tel=text.match(/(\+?5?[3-9]\d{7,10})/);
+  if(tel) r.telefono=tel[1].trim();
+  const dk=text.match(/(?:dirección|direccion|vivo en|dir)[:\-]?\s*(.+?)(?:\n|$)/i);
+  if(dk){r.direccion=dk[1].trim();}
+  else{
+    for(const l of text.split('\n').map(l=>l.trim()).filter(Boolean)){
+      if(/#|[Cc]alle|[Cc]alzada|[Aa]venida|[Rr]eparto|[Ee]squina|[Ee]dif|[Aa]pto/.test(l)){r.direccion=l;break;}
+    }
+  }
+  const prods=[...text.matchAll(/📦\s*(.+?)(?=\n|$)/g)].map(m=>m[1].trim());
+  if(prods.length>0){r.articulo=prods.join('\n');}
+  else{
+    const p2=text.match(/(?:quiero|pedir|llevar)\s+(?:el|la|un|una)?\s*(.+?)(?:\.|,|\?|\n|$)/i);
+    if(p2) r.articulo=p2[1].trim();
+  }
+  const tot=text.match(/Total[:\s]*\$?([\d.]+)\s*USD/i);
+  if(tot){r.precio=tot[1];}
+  else{
+    const p3=text.match(/\$\s*([\d.]+)\s*USD/i);
+    if(p3) r.precio=p3[1];
+  }
+  return r;
+}
+function extraer(){
+  const text=document.getElementById('pasteArea').innerText.trim();
+  if(!text){toast('⚠️ Pega un mensaje primero');return;}
+  const ex=extract(text);
+
+  // Acumulativo: cada campo solo se rellena si el mensaje trae ese dato.
+  // Así puedes pegar el carrito (productos) y luego el formulario (datos del
+  // cliente) y se va completando el vale sin borrar lo anterior.
+  let nuevos=0;
+  const poner=(id,val,extra)=>{
+    if(!val) return;
+    const el=document.getElementById(id);
+    // El artículo del carrito NO se pisa con el del formulario si ya hay productos
+    if(id==='vArticulo' && el.value.trim() && el.value.trim()!=='—') return;
+    // El precio del carrito NO se pisa si ya hay uno (el formulario puede no traerlo)
+    if(id==='vUSD' && el.value.trim()) return;
+    setA(id,val); nuevos++;
+    if(extra) extra();
+  };
+  poner('vCliente',ex.cliente);
+  poner('vTelefono',ex.telefono);
+  poner('vDireccion',ex.direccion,chkMapa);
+  poner('vArticulo',ex.articulo);
+  poner('vUSD',ex.precio,calcular);
+  poner('vMensajeria',ex.mensajeria);
+  poner('vVuelto',ex.vuelto);
+  if(ex.ubicacion){ mostrarUbi(ex.ubicacion); nuevos++; }
+
+  // Limpiar el área para pegar la siguiente parte cómodamente
+  document.getElementById('pasteArea').innerText='';
+  document.getElementById('chips').innerHTML='';
+  document.getElementById('parseBtn').classList.remove('ready');
+
+  toast(nuevos? '✅ '+nuevos+' dato(s) añadidos — pega la otra parte si falta' : 'ℹ️ Nada nuevo que añadir');
+  scheduleDrawVale();
+}
+function setA(id,val){
+  const el=document.getElementById(id);
+  el.value=val; el.classList.add('auto');
+}
+
+function chkMapa(){
+  const dir=document.getElementById('vDireccion').value.trim();
+  document.getElementById('mapaBtns').style.display=dir.length>3?'block':'none';
+}
+function copiarDir(){
+  copiarTexto(document.getElementById('vDireccion').value.trim()+', La Habana, Cuba','📋 Dirección copiada — pégala en Maps.me');
+}
+
+async function pegarUbi(){
+  try{
+    const text=await navigator.clipboard.readText();
+    if(text&&text.startsWith('http')){mostrarUbi(text.trim());return;}
+  }catch(e){}
+  const url=prompt('Pega el enlace de ubicación:');
+  if(url) mostrarUbi(url.trim());
+}
+function mostrarUbi(url){
+  _ubi=url;
+  document.getElementById('ubiTxt').textContent=url.length>42?url.substring(0,42)+'…':url;
+  document.getElementById('ubiLink').href=url;
+  document.getElementById('ubiLink').style.display='flex';
+  document.getElementById('ubiBtnPaste').style.display='none';
+  toast('📍 Ubicación guardada');
+}
+
+function getNumeroTienda(){
+  return (localStorage.getItem('waTienda')||'5354320170').replace(/\D/g,'');
+}
+function guardarWaTienda(){
+  const v=document.getElementById('vWaTienda').value.replace(/\D/g,'');
+  if(v.length>=8) localStorage.setItem('waTienda',v);
+}
+function construirUrlFormulario(){
+  // Link directo (abre en todos los teléfonos, sin bloqueos de acortadores).
+  // El número de la tienda va incluido para que el pedido llegue a tu WhatsApp.
+  return 'https://tiendamax.org/formulario.html?wa=' + getNumeroTienda();
+}
+function mensajeFormulario(url){
+  return '✨ *TIENDA MAX* ✨\n'
+    + '━━━━━━━━━━━━━━━\n'
+    + '¡Gracias por tu pedido! 🛒\n\n'
+    + 'Para coordinar la entrega, completa\n'
+    + 'tus datos en este formulario rápido\n'
+    + '(solo toma 1 minuto) 👇\n\n'
+    + '📝 ' + url + '\n\n'
+    + '━━━━━━━━━━━━━━━\n'
+    + '🙏 _¡Gracias por confiar en nosotros!_';
+}
+function enviarFormularioCliente(){
+  const url = construirUrlFormulario();
+  const waUrl = 'https://wa.me/?text=' + encodeURIComponent(mensajeFormulario(url));
+  // Abrir WhatsApp directo, dentro del gesto del usuario (fiable en móvil)
+  try{
+    const a=document.createElement('a');
+    a.href=waUrl; a.target='_blank'; a.rel='noopener';
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  }catch(e){ location.href = waUrl; }
+}
+function abrirModalFormulario(){
+  document.getElementById('modalFormUrl').textContent = construirUrlFormulario();
+  document.getElementById('modalForm').classList.add('open');
+}
+
+function abrirWhatsApp(url){
+  // Método fiable en móvil/PWA: navegar directo. El navegador lo entrega a WhatsApp.
+  // Se hace de inmediato dentro del gesto del usuario, sin tocar el DOM antes.
+  try{
+    var a = document.createElement('a');
+    a.href = url; a.target = '_blank'; a.rel = 'noopener';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }catch(e){
+    location.href = url;
+  }
+}
+function abrirFormWA(){
+  const url = document.getElementById('modalFormUrl').textContent;
+  // Abrir WhatsApp PRIMERO (dentro del gesto), cerrar el modal después.
+  abrirWhatsApp('https://wa.me/?text=' + encodeURIComponent(mensajeFormulario(url)));
+  setTimeout(function(){ document.getElementById('modalForm').classList.remove('open'); }, 100);
+}
+function copiarEnlaceForm(){
+  const url = document.getElementById('modalFormUrl').textContent;
+  copiarTexto(url, '📋 Enlace copiado');
+  document.getElementById('modalForm').classList.remove('open');
+}
+
+function copiarSolicitud(){
+  const art=document.getElementById('vArticulo').value.trim();
+  let pl='';
+  if(art){
+    const lista=art.split('\n').map(s=>s.trim()).filter(Boolean);
+    pl=lista.length>1?'\n\n📦 *Productos:*\n'+lista.map(p=>'• '+p).join('\n'):'\n\n📦 *'+art+'*';
+  }
+  copiarTexto('Para completar tu pedido necesito estos datos:'+pl+'\n\n👤 Nombre completo:\n📞 Teléfono:\n📍 Dirección de entrega:\n📌 Comparte tu ubicación de WhatsApp\n💵 ¿Pagas en USD/Zelle o en CUP?\n🔄 ¿Necesitas vuelto?\n🛵 ¿Necesitas mensajería o recoges tú?','✅ Copiado — pégalo en WhatsApp');
+}
+
+function g(id){return document.getElementById(id).value.trim()||'—';}
+
+// Construye el texto del vale (reutilizable para copiar y enviar)
+function construirTextoVale(){
+  const ubiLinea=_ubi?'\n📍 Ubicación: '+_ubi:'';
+  return `🔸Promotor: ${g('vPromotor')}
+
+🔸 Nombre Cliente: ${g('vCliente')}
+🔸Teléfono Cliente: ${g('vTelefono')}
+🔸Dirección Cliente: ${g('vDireccion')}${ubiLinea}
+🔸Mensajería/ costo: ${g('vMensajeria')}
+🔸 Artículo y cantidad: ${g('vArticulo').replace(/\n/g,'\n   ')}
+🔸Precio USD/ Zelle: ${g('vUSD')!=='—'?'$'+g('vUSD')+' USD':'—'}
+🔸Precio CUP: ${g('vCUP')!=='—'?parseInt(g('vCUP')).toLocaleString()+' CUP':'—'}
+🔸 Vuelto: ${g('vVuelto')!=='—'?g('vVuelto'):'—'}
+
+🔸 Total a pagar: ${document.getElementById('vTotal').textContent}
+
+*Garantía: ${g('vGarantia')}
+*Fecha y hora de Venta: ${g('vFecha')}
+
+🚨ATENCIÓN🚨
+•   Horarios de atención al cliente:
+    8:00am - 8:00pm.
+* Solo aceptamos hasta cinco billetes de 1 USD por compra.
+* Los pagos en CUP deben ser con denominación de 50 en adelante.
+* Solo se aceptan billetes en buen estado (ni rotos ni manchados)`;
+}
+
+// Valida los campos clave antes de generar el vale. Devuelve true si está completo.
+function validarVale(){
+  const faltan=[];
+  if(g('vCliente')==='—') faltan.push('nombre del cliente');
+  if(g('vTelefono')==='—') faltan.push('teléfono');
+  if(g('vArticulo')==='—') faltan.push('artículo');
+  if(g('vUSD')==='—' && g('vCUP')==='—') faltan.push('precio');
+  // Si hay mensajería (no es recoge en tienda) pero falta el costo (un número)
+  const mens=g('vMensajeria');
+  const hayMensajeria = mens!=='—' && !/recoge/i.test(mens);
+  if(hayMensajeria && !/\d/.test(mens)) faltan.push('costo de la mensajería');
+  if(faltan.length){
+    toast('⚠️ Falta: '+faltan.join(', '));
+    return false;
+  }
+  return true;
+}
+
+function copiarVale(){
+  if(!validarVale()) return;
+  copiarTexto(construirTextoVale(),'✅ Vale copiado — pégalo en WhatsApp');
+  guardarHist();
+}
+
+function enviarValeWA(){
+  if(!validarVale()) return;
+  const waUrl='https://wa.me/?text='+encodeURIComponent(construirTextoVale());
+  try{
+    const a=document.createElement('a');
+    a.href=waUrl; a.target='_blank'; a.rel='noopener';
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  }catch(e){ location.href=waUrl; }
+  guardarHist();
+}
+
+function guardarHist(){
+  const hist=JSON.parse(localStorage.getItem('valesMax')||'[]');
+  hist.unshift({cliente:g('vCliente'),telefono:g('vTelefono'),articulo:g('vArticulo').split('\n')[0],total:document.getElementById('vTotal').textContent,fecha:g('vFecha'),ts:Date.now()});
+  localStorage.setItem('valesMax',JSON.stringify(hist.slice(0,30)));
+}
+function renderHist(filtro){
+  const hist=JSON.parse(localStorage.getItem('valesMax')||'[]');
+  const body=document.getElementById('histBody');
+  if(!hist.length){body.innerHTML='<div class="hist-empty">Aún no hay vales guardados</div>';return;}
+  // Escapa datos del cliente para evitar inyección de HTML/JS al mostrar el historial
+  const _e=s=>String(s==null?'':s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+  const q=(filtro||'').trim().toLowerCase();
+  const lista=q?hist.filter(v=>
+    (v.cliente||'').toLowerCase().includes(q) ||
+    (v.telefono||'').toLowerCase().includes(q) ||
+    (v.articulo||'').toLowerCase().includes(q)
+  ):hist;
+  if(!lista.length){body.innerHTML='<div class="hist-empty">Sin resultados para "'+_e(q)+'"</div>';return;}
+  body.innerHTML=lista.map(v=>`<div class="hist-item"><div style="display:flex;justify-content:space-between;margin-bottom:3px"><div style="font-size:14px;font-weight:500">${_e(v.cliente)}</div><div style="font-size:11px;color:var(--dim)">${_e(v.fecha)}</div></div><div style="font-size:12px;color:var(--muted)">${v.telefono&&v.telefono!=='—'?'📞 '+_e(v.telefono)+' · ':''}${_e(v.articulo)} · <span style="color:var(--green-light)">${_e(v.total)}</span></div></div>`).join('');
+}
+function filtrarHist(){
+  renderHist(document.getElementById('histBuscar').value);
+}
+
+function copiarTexto(texto,msg){
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(texto).then(()=>toast(msg)).catch(()=>fb(texto,msg));
+  }else fb(texto,msg);
+}
+function fb(texto,msg){
+  const ta=document.createElement('textarea');
+  ta.value=texto; ta.style.cssText='position:fixed;top:0;left:0;opacity:0';
+  document.body.appendChild(ta); ta.focus(); ta.select();
+  try{document.execCommand('copy');toast(msg);}catch{toast('⚠️ Copia manualmente');}
+  document.body.removeChild(ta);
+}
+function toast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2800);
+}
+function goTab(name){
+  document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('active',['nuevo','historial'][i]===name));
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  if(name==='historial') renderHist();
+}
+function goStep(n){
+  [1,2,3].forEach(i=>{
+    document.getElementById('step-'+i).classList.toggle('active', i===n);
+    document.getElementById('stepBtn'+i).classList.toggle('active', i===n);
+  });
+  if(n===3) scheduleDrawVale();
+  try{ window.scrollTo({top:0,behavior:'smooth'}); }catch(e){}
+}
+function resetForm(){
+  ['vCliente','vTelefono','vDireccion','vMensajeria','vArticulo','vGarantia','vUSD','vCUP','vRecibido','vVuelto'].forEach(id=>{
+    document.getElementById(id).value='';
+    document.getElementById(id).classList.remove('auto');
+  });
+  document.getElementById('vTotal').textContent='—';
+  document.getElementById('pasteArea').innerText='';
+  document.getElementById('pasteArea').classList.remove('ok');
+  document.getElementById('chips').innerHTML='';
+  document.getElementById('parseBtn').classList.remove('ready');
+  document.getElementById('ubiLink').style.display='none';
+  document.getElementById('ubiBtnPaste').style.display='flex';
+  document.getElementById('mapaBtns').style.display='none';
+  document.getElementById('vFecha').value=fd();
+  _ubi=null;
+  _valeCodigo=_genCodigo();
+  goStep(1);
+  window.scrollTo({top:0,behavior:'smooth'});
+  scheduleDrawVale();
+}
+function fd(){return new Date().toLocaleString('es-ES',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'});}
+
+// ═══════════════════════════════════════════════
+// VALE VISUAL — canvas premium dark
+// ═══════════════════════════════════════════════
+let _valeTimer = null;
+function scheduleDrawVale(){ clearTimeout(_valeTimer); _valeTimer = setTimeout(drawValeImg, 200); }
+
+function _vRR(ctx, x, y, w, h, r) {
+  ctx.beginPath();
+  ctx.moveTo(x+r,y); ctx.lineTo(x+w-r,y); ctx.arcTo(x+w,y,x+w,y+r,r);
+  ctx.lineTo(x+w,y+h-r); ctx.arcTo(x+w,y+h,x+w-r,y+h,r);
+  ctx.lineTo(x+r,y+h); ctx.arcTo(x,y+h,x,y+h-r,r);
+  ctx.lineTo(x,y+r); ctx.arcTo(x,y,x+r,y,r); ctx.closePath();
+}
+
+function _parseItems(txt) {
+  if (!txt || txt==='—') return [];
+  return txt.split('\n').map(l=>{
+    l = l.trim(); if(!l) return null;
+    let qty=1, nombre=l;
+    // "2x Nombre", "Nombre x2", "2. Nombre"
+    const m = l.match(/^(\d+)[xX]\s+(.+)|^(.+?)\s+[xX](\d+)$|^\d+\.\s+(.+)/);
+    if(m){
+      if(m[1]){ qty=parseInt(m[1]); nombre=m[2]; }
+      else if(m[4]){ qty=parseInt(m[4]); nombre=m[3]; }
+      else if(m[5]){ nombre=m[5]; }
+    }
+    nombre = nombre.replace(/\s*—\s*\$[\d.,]+.*$/i,'').trim();
+    return { qty, nombre };
+  }).filter(Boolean);
+}
+
+function _genCodigo(){ return Math.random().toString(36).slice(2,8).toUpperCase(); }
+let _valeCodigo = _genCodigo();
+
+function drawValeImg() {
+  const canvas = document.getElementById('valeImgCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+
+  const promotor = (document.getElementById('vPromotor')?.value||'').trim() || 'JULIO';
+  const cliente  = (document.getElementById('vCliente')?.value||'').trim()  || '\u2014';
+  const artTxt   = (document.getElementById('vArticulo')?.value||'').trim();
+  let items      = _parseItems(artTxt);
+  if(!items.length) items=[{qty:'',nombre:'(Artículos aparecerán aquí)'}];
+
+  // Total en USD (precio) y su equivalente en MN con la tasa de la tienda (tasa + margen)
+  const usd = parseFloat(document.getElementById('vUSD')?.value)||0;
+  const totalMN = (usd>0 && tasa>0) ? Math.round(usd*(tasa+margenMN)).toLocaleString('es-CU') : null;
+
+  const W=1080, M=64, rowH=72, firstRow=536;
+  const dashedY = firstRow + (items.length-1)*rowH + 40;
+  const totalY  = dashedY + 84;
+  const mnExtra = totalMN ? 44 : 0;
+  const H = totalY + mnExtra + 44 + 96 + 54;
+  canvas.width=W; canvas.height=H;
+
+  // Fondo a sangre (sin esquinas blancas)
+  ctx.fillStyle='#141414'; ctx.fillRect(0,0,W,H);
+
+  // ── Header: logo real + TIENDAMAX ──
+  if(_valeLogo && _valeLogo.complete && _valeLogo.naturalWidth){
+    ctx.save(); _vRR(ctx,M,52,128,128,28); ctx.clip(); ctx.drawImage(_valeLogo,M,52,128,128); ctx.restore();
+  } else {
+    ctx.fillStyle='#FF6B35'; _vRR(ctx,M,52,128,128,28); ctx.fill();
+    ctx.fillStyle='#fff'; ctx.font='900 70px system-ui,Arial,sans-serif'; ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillText('M', M+64, 118);
+  }
+  ctx.textBaseline='alphabetic'; ctx.textAlign='left'; ctx.fillStyle='#fff'; ctx.font='800 66px system-ui,Arial,sans-serif';
+  ctx.fillText('TIENDAMAX', M+156, 150);
+
+  // Barra naranja
+  ctx.fillStyle='#FF6B35'; ctx.fillRect(M,212,W-2*M,6);
+
+  // ── Caja PROMOTOR / CLIENTE ──
+  const boxY=252, boxH=150;
+  _vRR(ctx,M,boxY,W-2*M,boxH,24); ctx.fillStyle='#1f1f1f'; ctx.fill();
+  ctx.strokeStyle='rgba(255,255,255,.05)'; ctx.lineWidth=1; ctx.stroke();
+  ctx.textAlign='left';  ctx.fillStyle='#8c8c8c'; ctx.font='700 24px system-ui,Arial,sans-serif'; ctx.fillText('PROMOTOR', M+30, boxY+52);
+  ctx.fillStyle='#FF6B35'; ctx.font='800 40px system-ui,Arial,sans-serif'; ctx.fillText(promotor.toUpperCase(), M+30, boxY+104);
+  ctx.textAlign='right'; ctx.fillStyle='#8c8c8c'; ctx.font='700 24px system-ui,Arial,sans-serif'; ctx.fillText('CLIENTE', W-M-30, boxY+52);
+  ctx.fillStyle='#FF6B35'; ctx.font='800 40px system-ui,Arial,sans-serif';
+  let cl=cliente.toUpperCase(); const maxCl=(W-2*M)/2-40; while(ctx.measureText(cl).width>maxCl && cl.length>3) cl=cl.slice(0,-1);
+  if(cl!==cliente.toUpperCase()) cl=cl.replace(/\s+$/,'')+'…';
+  ctx.fillText(cl, W-M-30, boxY+104);
+
+  // ── Productos ──
+  ctx.textAlign='left'; ctx.fillStyle='#8c8c8c'; ctx.font='700 26px system-ui,Arial,sans-serif'; ctx.fillText('PRODUCTOS A ENTREGAR', M, 472);
+  let y=firstRow;
+  items.forEach(it=>{
+    if(it.qty!==''){
+      const qty=it.qty+'x';
+      ctx.font='800 30px system-ui,Arial,sans-serif'; const qw=ctx.measureText(qty).width;
+      _vRR(ctx,M,y-38,qw+44,56,12); ctx.fillStyle='#2a2a2a'; ctx.fill();
+      ctx.fillStyle='#fff'; ctx.textAlign='left'; ctx.textBaseline='alphabetic'; ctx.fillText(qty, M+22, y);
+      ctx.textAlign='right'; ctx.fillStyle='#f3f0ec'; ctx.font='600 34px system-ui,Arial,sans-serif';
+      let nm=String(it.nombre||''); const maxNW=(W-M)-(M+qw+44+30);
+      while(ctx.measureText(nm).width>maxNW && nm.length>3) nm=nm.slice(0,-1);
+      if(nm!==it.nombre) nm=nm.replace(/\s+$/,'')+'…';
+      ctx.fillText(nm, W-M, y);
+    } else {
+      ctx.fillStyle='rgba(255,255,255,.2)'; ctx.font='30px system-ui,Arial,sans-serif'; ctx.textAlign='center'; ctx.textBaseline='alphabetic'; ctx.fillText(it.nombre, W/2, y);
+    }
+    y+=rowH;
+  });
+
+  // Línea punteada
+  ctx.strokeStyle='rgba(255,255,255,.14)'; ctx.lineWidth=2; ctx.setLineDash([8,8]); ctx.beginPath(); ctx.moveTo(M,dashedY); ctx.lineTo(W-M,dashedY); ctx.stroke(); ctx.setLineDash([]);
+
+  // ── Total ──
+  ctx.textAlign='left';  ctx.fillStyle='#8c8c8c'; ctx.font='700 34px system-ui,Arial,sans-serif'; ctx.fillText('TOTAL A PAGAR', M, totalY);
+  ctx.textAlign='right'; ctx.fillStyle='#fff'; ctx.font='800 64px system-ui,Arial,sans-serif'; ctx.fillText('$'+usd.toFixed(2), W-M, totalY+6);
+  if(totalMN){ ctx.fillStyle='#8c8c8c'; ctx.font='600 26px system-ui,Arial,sans-serif'; ctx.textAlign='right'; ctx.fillText('≈ '+totalMN+' MN', W-M, totalY+mnExtra); }
+
+  // ── Sello dorado verificado ──
+  const sy=H-150;
+  _vRR(ctx,M,sy,W-2*M,96,18); ctx.fillStyle='rgba(201,169,110,.10)'; ctx.fill(); ctx.strokeStyle='rgba(201,169,110,.3)'; ctx.lineWidth=2; ctx.stroke();
+  ctx.beginPath(); ctx.arc(M+46,sy+48,24,0,Math.PI*2); ctx.fillStyle='#C9A96E'; ctx.fill();
+  ctx.fillStyle='#1a1006'; ctx.font='900 26px system-ui,Arial,sans-serif'; ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillText('✓', M+46, sy+49);
+  ctx.textBaseline='alphabetic'; ctx.textAlign='left'; ctx.fillStyle='#C9A96E'; ctx.font='800 26px system-ui,Arial,sans-serif'; ctx.fillText('Vale verificado · TiendaMax', M+88, sy+42);
+  ctx.fillStyle='#8c8c8c'; ctx.font='400 22px system-ui,Arial,sans-serif'; ctx.fillText('Pago contra entrega · muestra al llegar a la tienda', M+88, sy+72);
+  ctx.textAlign='right'; ctx.fillStyle='#cdbfa6'; ctx.font='700 24px ui-monospace,Menlo,monospace'; ctx.fillText('#TM-'+_valeCodigo, W-M-20, sy+58);
+}
+
+let _valeLogo = null;
+function _precargarLogoVale(){
+  _valeLogo = new Image();
+  _valeLogo.onload = () => { try{ drawValeImg(); }catch(e){} };
+  _valeLogo.onerror = () => { _valeLogo = null; };
+  _valeLogo.src = '/iconos/icon-512.png';
+}
+
+function descargarValeImg(){
+  drawValeImg(); // redibujar con datos finales
+  const c=document.getElementById('valeImgCanvas');
+  if(!c) return;
+  const a=document.createElement('a');
+  a.download='vale-tiendamax-'+Date.now()+'.jpg';
+  a.href=c.toDataURL('image/jpeg',0.95);
+  a.click();
+}
+
+// Enviar la imagen del vale directo por WhatsApp (el cliente la muestra al llegar).
+async function enviarValeImagenWA(){
+  const c=document.getElementById('valeImgCanvas');
+  if(!c) return;
+  drawValeImg(); // datos finales
+  const cliente=(document.getElementById('vCliente')?.value||'').trim();
+  const texto='🧾 Vale TiendaMax'+(cliente?(' — '+cliente):'')+'\n📍 Muestra este vale al llegar a la tienda.';
+  const blob=await new Promise(res=>c.toBlob(res,'image/png',0.95));
+  if(blob){
+    const file=new File([blob],'vale-tiendamax-'+Date.now()+'.png',{type:'image/png'});
+    if(navigator.canShare && navigator.canShare({files:[file]}) && navigator.share){
+      try{ await navigator.share({files:[file], text:texto, title:'Vale TiendaMax'}); toast('📤 Vale listo para enviar'); return; }
+      catch(e){ if(/abort/i.test(e.message||'')) return; }
+    }
+    // Respaldo: descargar la imagen y abrir WhatsApp con el texto para adjuntarla
+    const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=file.name; a.click();
+    setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+  }
+  window.open('https://wa.me/?text='+encodeURIComponent(texto),'_blank','noopener,noreferrer');
+  toast('📥 Imagen descargada · adjúntala en WhatsApp');
+}
+
+// ═══════════════════════════════════════════════
+// CATÁLOGO — elegir productos (por categoría, sin agotados)
+// ═══════════════════════════════════════════════
+let _catProductos = null;     // cache del productos.json
+let _catCategoria = '';       // categoría activa ('' = todas)
+
+async function abrirCatalogo(){
+  document.getElementById('modalCatalogo').classList.add('open');
+  if(_catProductos){ renderCatChips(); renderCatalogo(); return; }
+  document.getElementById('catLista').innerHTML='<div class="hist-empty">Cargando catálogo…</div>';
+  try{
+    const ctrl=new AbortController(); const t=setTimeout(()=>ctrl.abort(),8000);
+    const r=await fetch('/productos.json?t='+Date.now(),{signal:ctrl.signal});
+    clearTimeout(t);
+    if(!r.ok) throw new Error('http '+r.status);
+    const data=await r.json();
+    const arr=Array.isArray(data)?data:(data.productos||[]);
+    // Solo productos con stock disponible
+    _catProductos=arr.filter(p=>Number(p.stock)>0);
+    renderCatChips(); renderCatalogo();
+  }catch(e){
+    document.getElementById('catLista').innerHTML='<div class="hist-empty">No se pudo cargar el catálogo. Revisa la conexión.</div>';
+  }
+}
+function cerrarCatalogo(){ document.getElementById('modalCatalogo').classList.remove('open'); }
+
+function renderCatChips(){
+  const cats=[...new Set((_catProductos||[]).map(p=>p.categoria).filter(Boolean))].sort();
+  const box=document.getElementById('catChips');
+  const chip=(val,txt)=>`<span class="chip" style="cursor:pointer;background:${_catCategoria===val?'#FF6B35':'#1a2a1a'};border-color:${_catCategoria===val?'#FF6B35':'#2d4a2d'};color:${_catCategoria===val?'#fff':'var(--green-light)'};white-space:nowrap" onclick="setCatCategoria('${val.replace(/'/g,"\\'")}')">${txt}</span>`;
+  box.innerHTML=chip('','Todas')+cats.map(c=>chip(c,c)).join('');
+}
+function setCatCategoria(c){ _catCategoria=c; renderCatChips(); renderCatalogo(); }
+
+function renderCatalogo(){
+  const q=(document.getElementById('catBuscar').value||'').trim().toLowerCase();
+  let lista=(_catProductos||[]);
+  if(_catCategoria) lista=lista.filter(p=>p.categoria===_catCategoria);
+  if(q) lista=lista.filter(p=>String(p.nombre||'').toLowerCase().includes(q));
+  const cont=document.getElementById('catLista');
+  if(!lista.length){ cont.innerHTML='<div class="hist-empty">Sin productos disponibles.</div>'; return; }
+  cont.innerHTML=lista.slice(0,200).map(p=>{
+    const precio=Number(p.precioActual||0);
+    const nm=String(p.nombre||'').replace(/"/g,'&quot;');
+    return `<div class="hist-item" style="display:flex;align-items:center;gap:10px">
+      <div style="flex:1;min-width:0"><div style="font-size:13px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${nm}</div>
+      <div style="font-size:12px;color:var(--green-light)">$${precio.toFixed(2)} USD</div></div>
+      <button class="btn-act" style="width:auto;margin:0;padding:8px 14px;font-size:18px" onclick="agregarProductoVale('${nm.replace(/'/g,"\\'")}',${precio})">+</button>
+    </div>`;
+  }).join('');
+}
+
+// Agrega/incrementa un producto en el vArticulo y recalcula el precio total USD.
+function agregarProductoVale(nombre, precio){
+  const ta=document.getElementById('vArticulo');
+  let lineas=(ta.value||'').split('\n').map(s=>s.trim()).filter(l=>l && l!=='—');
+  const idx=lineas.findIndex(l=>l.replace(/\s*—\s*\$[\d.,]+.*$/i,'').replace(/^\d+x\s+/i,'').trim().toLowerCase()===nombre.toLowerCase());
+  let qty=1;
+  if(idx>=0){
+    const m=lineas[idx].match(/^(\d+)x\s+/i); qty=(m?parseInt(m[1]):1)+1;
+    lineas[idx]=qty+'x '+nombre+' — $'+precio.toFixed(2)+' USD c/u';
+  } else {
+    lineas.push('1x '+nombre+' — $'+precio.toFixed(2)+' USD c/u');
+  }
+  ta.value=lineas.join('\n'); ta.classList.add('auto');
+  // Recalcular precio USD total a partir de las líneas (qty × precio c/u)
+  let totalUsd=0;
+  lineas.forEach(l=>{
+    const mq=l.match(/^(\d+)x\s+/i); const q=mq?parseInt(mq[1]):1;
+    const mp=l.match(/\$\s*([\d.,]+)\s*USD/i); if(mp) totalUsd+=q*parseFloat(mp[1].replace(/,/g,''));
+  });
+  const usdEl=document.getElementById('vUSD');
+  usdEl.value=totalUsd?Number(totalUsd.toFixed(2)):''; usdEl.classList.add('auto');
+  calcular();
+  toast('✅ '+nombre+' agregado'+(qty>1?(' (x'+qty+')'):''));
+}
+// ═══════════════════════════════════════════════
+
+renderTasa();
+document.getElementById('vWaTienda').value = localStorage.getItem('waTienda') || '';
+document.getElementById('vFecha').value=fd();
+
+// Redibuja el vale cuando el promotor edita manualmente
+['vPromotor','vCliente','vArticulo','vGarantia'].forEach(id=>{
+  const el=document.getElementById(id);
+  if(el) el.addEventListener('input', scheduleDrawVale);
+});
+
+// Intentar cargar la tasa sola desde tiendamax.org; si no había ninguna y falla, pedirla.
+cargarTasaAuto().finally(()=>{ if(!tasa) setTimeout(abrirTasa,800); });
+
+// Precargar el logo de la tienda para el vale visual
+_precargarLogoVale();
+
+// Dibujo inicial del vale (en blanco)
+setTimeout(drawValeImg, 300);
+
+// Service worker: lo gestiona el sw.js raíz de tiendamax.org (mismo origen).
+</script>
+</body>
+</html>
