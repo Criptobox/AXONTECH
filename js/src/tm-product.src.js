@@ -132,38 +132,107 @@ function renderizarProductos(isLoadMore = false) {
 
     productosAMostrar.forEach(producto => {
         const card = document.createElement('div');
-        card.className = 'producto-card';
+        card.className = 'producto-card tm-card-premium';
         card.onclick = () => abrirDetalleProducto(producto.id);
+        card.dataset.productId = String(producto.id);
+        card.style.position = 'relative';
         const _nombre = escapeHtml(producto.nombre);
         const _desc   = escapeHtml(producto.descripcion);
         const _img    = escapeAttr(producto.imagen);
         const _id     = safeNum(producto.id);
         const _stock  = safeNum(producto.stock);
         const _esAgotado = _stock === 0;
-        card.innerHTML = `
-            ${producto.masVendido ? '<div class="badge-vendido">🔥 Más Vendido</div>' : ''}
-            ${(producto.precioOriginal > 0 && producto.precioOriginal > producto.precioActual) ? '<div class="badge-precio-especial">⭐ Precio Especial</div>' : ''}
-            <div class="producto-image">
-                <img src="${_img}" alt="${_nombre}" loading="lazy" onerror="this.src='/iconos/favicon-192.png';this.style.opacity='0.3'">
-                ${(producto.precioOriginal > 0 && producto.precioOriginal > producto.precioActual) ? `<div class="badge">-${Math.round((1 - producto.precioActual/producto.precioOriginal) * 100)}%</div>` : ''}
-            </div>
-            <h3>${_nombre}</h3>
-            <p class="producto-description">${_desc}</p>
-            <p class="precio">
-                    <span class="precio-actual" data-usd="${safeNum(producto.precioActual)}">${typeof formatPrecio === 'function' ? formatPrecio(producto.precioActual) : '$'+producto.precioActual.toFixed(2)+' USD'}</span>
-                   </p>
-            ${_esAgotado
-                ? '<div class="stock" style="color:#e74c3c;font-weight:700;">❌ Agotado</div>'
-                : `<div class="stock-count"><span>📦 Solo quedan ${_stock} unidades</span></div><div class="stock-bar"><div class="stock-bar-fill" style="width:${Math.min(100,((_stock)/20)*100)}%"></div></div>`}
-            ${typeof renderCountdownHtml === 'function' ? renderCountdownHtml(_id) : ''}
-            ${_esAgotado
-                ? '<button class="btn-pedir-card" disabled style="opacity:0.5;cursor:not-allowed;" type="button">No disponible</button>'
-                : `<button class="btn-pedir-card" onclick="event.stopPropagation();tmComprar(event,${_id},this.dataset.nombre)" data-nombre="${_nombre}" type="button"><span class="btn-pedir-wa-icon-sm"><svg viewBox="0 0 24 24" width="14" height="14" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></span> Pedir</button>`}
-            <div class="tm-trust-badges" style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;font-size:10px;color:#6B6B7A;align-items:center;">
-                <span style="display:inline-flex;align-items:center;gap:3px;background:rgba(46,204,113,0.10);color:#2ECC71;padding:3px 8px;border-radius:8px;font-weight:600;">🔒 Pago contra entrega</span>
-                <span style="display:inline-flex;align-items:center;gap:3px;background:rgba(232,80,30,0.10);color:#E8501E;padding:3px 8px;border-radius:8px;font-weight:600;">✓ Garantía 7 días</span>
-            </div>
-        `;
+        const _cat = escapeHtml(producto.categoria || '');
+        const _hasDescuento = producto.precioOriginal > 0 && producto.precioOriginal > producto.precioActual;
+        const _specs = Array.isArray(producto.specs) ? producto.specs.filter(s => s && String(s).trim()).slice(0, 3) : [];
+
+        // Badges en FILA (no apilados)
+        let _badgesHtml = '<div class="tm-card-badges">';
+        if (_esAgotado) {
+            _badgesHtml += '<span class="tm-card-badge tm-badge-agotado">AGOTADO</span>';
+        } else {
+            if (_hasDescuento) {
+                const _descPct = Math.round((1 - parseFloat(producto.precioActual) / parseFloat(producto.precioOriginal)) * 100);
+                _badgesHtml += '<span class="tm-card-badge tm-badge-desc">-' + _descPct + '%</span>';
+            }
+            if (producto.masVendido) {
+                _badgesHtml += '<span class="tm-card-badge tm-badge-top">🔥 Top</span>';
+            }
+            if (_stock === 1) {
+                _badgesHtml += '<span class="tm-card-badge tm-badge-ultima tm-pulse">⏰ Última</span>';
+            }
+            if (producto.fechaAgregado) {
+                try {
+                    const _fecha = new Date(producto.fechaAgregado);
+                    if ((Date.now() - _fecha.getTime()) < 7 * 86400000) {
+                        _badgesHtml += '<span class="tm-card-badge tm-badge-nuevo">🆕</span>';
+                    }
+                } catch(e) {}
+            }
+        }
+        _badgesHtml += '</div>';
+
+        // Spec pills
+        let _specsHtml = '';
+        if (_specs.length && !_esAgotado) {
+            _specsHtml = '<div class="tm-card-specs">';
+            _specs.forEach(function(s) {
+                _specsHtml += '<span class="tm-card-spec">' + escapeHtml(String(s)) + '</span>';
+            });
+            _specsHtml += '</div>';
+        }
+
+        // Stock bar visual
+        let _stockBarHtml = '';
+        if (!_esAgotado) {
+            const _stockPct = Math.min(100, (_stock / 15) * 100);
+            const _stockColor = _stock <= 2 ? 'linear-gradient(90deg,#ff5252,#ff8a3d)' : 'linear-gradient(90deg,#FF6B35,#FF9F43)';
+            _stockBarHtml = '<div class="tm-card-stockbar">' +
+                '<div class="tm-card-stockbar-label"><span>Stock</span><span>' + _stock + ' uds</span></div>' +
+                '<div class="tm-card-stockbar-track"><div class="tm-card-stockbar-fill" style="width:' + _stockPct + '%;background:' + _stockColor + '"></div></div>' +
+            '</div>';
+        }
+
+        // Precio MN + USD
+        const _precioUsd = parseFloat(producto.precioActual) || 0;
+        const _tasa = (typeof window !== 'undefined' && window._tmTasaMN) ? window._tmTasaMN : 675;
+        const _precioMn = Math.round(_precioUsd * _tasa);
+        const _precioOrigUsd = parseFloat(producto.precioOriginal) || 0;
+
+        // Trust icons
+        const _tieneGarantia = producto.garantia && String(producto.garantia).trim();
+        const _tieneDevolucion = producto.devolucion === true;
+        let _trustHtml = '<div class="tm-card-trust">';
+        _trustHtml += '<span class="tm-trust-icon" title="Pago contra entrega">🔒</span>';
+        if (_tieneGarantia) _trustHtml += '<span class="tm-trust-icon" title="Garantía: ' + escapeAttr(String(_tieneGarantia)) + '">🛡️</span>';
+        if (_tieneDevolucion) _trustHtml += '<span class="tm-trust-icon" title="Devolución aceptada">↩️</span>';
+        _trustHtml += '</div>';
+
+        card.innerHTML =
+            _badgesHtml +
+            '<div class="producto-image">' +
+                (typeof getMeGustaHTML === 'function' ? getMeGustaHTML(_id) : '') +
+                '<img src="' + _img + '" alt="' + _nombre + '" loading="lazy" decoding="async" onerror="this.src=\'/iconos/favicon-192.png\';this.style.opacity=\'0.3\'">' +
+                _specsHtml +
+            '</div>' +
+            '<div class="tm-card-body">' +
+                (_cat ? '<div class="tm-card-cat">' + _cat + '</div>' : '') +
+                '<h3>' + _nombre + '</h3>' +
+                '<p class="producto-description">' + _desc + '</p>' +
+                '<div class="tm-card-precio">' +
+                    '<div class="tm-card-precio-mn">' + _precioMn.toLocaleString('es-CU') + ' <span class="tm-card-precio-mn-label">MN</span></div>' +
+                    '<div class="tm-card-precio-usd">' +
+                        '<span class="precio-actual" data-usd="' + safeNum(producto.precioActual) + '">$' + Number(producto.precioActual).toFixed(2) + ' USD</span>' +
+                        (_hasDescuento ? ' <span class="tm-card-precio-orig">$' + _precioOrigUsd.toFixed(0) + '</span>' : '') +
+                    '</div>' +
+                '</div>' +
+                (_esAgotado
+                    ? '<div class="stock" style="color:#e74c3c;font-weight:700;">❌ Agotado</div><button class="btn btn-small" disabled style="background:#555;color:#aaa;cursor:not-allowed;box-shadow:none;">🚫 No disponible</button>'
+                    : _stockBarHtml +
+                      (typeof renderCountdownHtml === 'function' ? renderCountdownHtml(_id) : '') +
+                      '<button class="btn-pedir-card tm-card-cta" data-nombre="' + _nombre + '" onclick="event.stopPropagation(); tmComprar(event, ' + _id + ', this.dataset.nombre)" type="button"><span class="btn-pedir-wa-icon-sm"><svg viewBox="0 0 24 24" width="14" height="14" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></span> Pedir</button>') +
+                _trustHtml +
+            '</div>';
         productosGrid.appendChild(card);
         if (window._tmAnimObs) window._tmAnimObs.observe(card);
     });

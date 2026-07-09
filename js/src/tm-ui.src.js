@@ -1793,14 +1793,12 @@ renderizarProductos = function() {
         }
         _trustHtml += '</div>';
 
-        // === Stock bar visual ===
+        // === Stock como stats sutiles (estilo followers) ===
         let _stockBarHtml = '';
         if (!esAgotado) {
-            const _stockPct = Math.min(100, (_stk / 15) * 100);
-            const _stockColor = _stk <= 2 ? 'linear-gradient(90deg,#ff5252,#ff8a3d)' : 'linear-gradient(90deg,#FF6B35,#FF9F43)';
-            _stockBarHtml = '<div class="tm-card-stockbar">' +
-                '<div class="tm-card-stockbar-label"><span>Stock</span><span>' + _stk + ' uds</span></div>' +
-                '<div class="tm-card-stockbar-track"><div class="tm-card-stockbar-fill" style="width:' + _stockPct + '%;background:' + _stockColor + '"></div></div>' +
+            _stockBarHtml = '<div class="tm-card-stats">' +
+                '<span class="tm-stat"><span class="tm-stat-icon">📦</span> ' + _stk + ' disp.</span>' +
+                '<span class="tm-stat"><span class="tm-stat-icon">👁️</span> Stock real</span>' +
             '</div>';
         }
 
