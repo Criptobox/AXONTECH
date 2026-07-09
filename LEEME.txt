@@ -1,0 +1,142 @@
+═══════════════════════════════════════════════════════════════
+  TIENDAMAX — PACK COMPLETO (fixes + mejoras visuales premium)
+═══════════════════════════════════════════════════════════════
+
+Copia cada archivo a la ruta correspondiente en tu repo (respetando
+las subcarpetas js/src/, scripts/, .github/workflows/, css/).
+
+─────────────────────────────────────────────────────────────────
+A) FIXES DE BUGS (de sesiones anteriores, ya aplicados)
+─────────────────────────────────────────────────────────────────
+
+1. admin.html — Texto notificación cliente ("¡Hola! 🎉 El producto
+   'X' que esperabas ya está disponible en TiendaMax")
+
+2. admin.html — Editor de fotos funcional:
+   - Click en ✕ elimina la foto
+   - Click en thumbnail lo hace principal
+   - Borde dorado + badge "⭐ PRAL" en la principal
+
+3. admin.html — Compartir categoría por Facebook CON imagen:
+   - Móvil: navigator.share({files:[imagen]}) → hoja nativa → Facebook
+   - Desktop: descarga imagen + copia texto + abre Facebook
+
+4. admin.html — Limpieza de fotos al guardar producto nuevo
+   (labels vuelven a "Elegir foto principal *", clase has-file quitada)
+
+5. scripts/precio_radar.py — Solo vigila productos con stock>0
+   (igual que el admin UI). El push dirá "4 vigilados" no "5".
+
+6. scripts/update_rate_from_eltoque.py — Fallback a Wayback Machine
+   si elTOQUE devuelve 403 (Cloudflare). Verificado: extrae tasa OK.
+
+7. js/src/tm-config.src.js — Reseñas cargan desde Cuba:
+   - Firebase con timeout 4-5s
+   - Fallback a resenas-cache.json (estático, mismo origen)
+   - Funciona aunque *.firebaseio.com esté bloqueado
+
+8. scripts/sync_resenas.py + .github/workflows/sync-resenas.yml —
+   NUEVO: descarga reseñas de Firebase cada hora y las commitea a
+   resenas-cache.json para que los clientes en Cuba las vean.
+
+9. firebase-rules.json — Fix almacenes:
+   - .read y .write movidos al nivel del nodo (no dentro de $almId)
+   - Antes: fetch('/almacenes.json') → 401 Permission denied
+   - Después: funciona correctamente
+
+─────────────────────────────────────────────────────────────────
+B) MEJORAS VISUALES PREMIUM (nuevas)
+─────────────────────────────────────────────────────────────────
+
+10. css/nuevo-diseno.css — Hero refinado:
+    - letter-spacing: -2px → -0.03em (no aplastado, estilo Linear/Apple)
+    - line-height: 1.08 → 1.05 (más compacto, premium)
+    - Subtitle: 17px fijo → clamp(17px,2vw,20px), opacity 0.75 → 0.85
+    - text-wrap: balance en h1
+
+11. css/nuevo-diseno.css — Cards con hover spring:
+    - transition: cubic-bezier(0.16,1,0.3,1) (spring easing)
+    - Hover: translateY(-8px) scale(1.02) con sombra XL
+    - :active: scale(0.99) (press state táctil)
+
+12. css/nuevo-diseno.css — Botón primario con shimmer sweep:
+    - ::before con gradiente que cruza el botón en hover
+    - :active: scale(0.97) (sensación táctil)
+
+13. css/animations.css — Skeleton shimmer estilo Stripe:
+    - Antes: opacity 0.55→1 (parpadeo)
+    - Después: linear-gradient 200% con background-position animado
+    - Clase .tm-skeleton-shimmer lista para usar
+
+14. css/premium-theme.css — Mejoras globales:
+    - Quitada 'Inter' del font-stack (no estaba cargada)
+    - Agregado color-scheme: dark light (scrollbars nativos se adaptan)
+    - text-wrap: balance en todos los h1/h2/h3
+    - scroll-margin-top en secciones ancla (header sticky no tapa)
+    - :active press state en botones y cards
+    - Section titles fluidos: clamp(28px,3.4vw,40px)
+    - Eyebrow: letter-spacing 0.18em, uppercase, font-weight 600
+    - Footer con divider gradient (transparent → naranja → transparent)
+    - Categoría card: hover con translateY(-4px) scale(1.02) spring
+
+15. css/styles.css — Tokens premium añadidos al :root:
+    - Tipografía: --text-xs a --text-5xl (9 niveles)
+    - Espaciado: --space-1 a --space-10 (10 niveles)
+    - Radios: --radius-sm/md/lg/xl/full (5 niveles)
+    - Sombras: --shadow-xs/sm/md/lg/xl (5 niveles + glow)
+    - Motion: --ease-spring, --ease-standard, --dur-fast/base/slow
+
+─────────────────────────────────────────────────────────────────
+CÓMO APLICAR
+─────────────────────────────────────────────────────────────────
+
+1. Copia cada archivo a la ruta correspondiente en tu repo Tiendamax
+   (respetando las subcarpetas).
+
+2. git add .
+3. git commit -m "Mejoras visuales premium + fixes de bugs"
+4. git push origin main
+
+Al pushear:
+- El workflow "Desplegar reglas Firebase RTDB" actualiza los permisos
+  de almacenes automáticamente.
+- El workflow "Sincronizar cache de reseñas" corre cada hora y
+  commitea resenas-cache.json.
+- El workflow "Actualizar tasa desde elTOQUE" ya no falla (usa Wayback).
+- GitHub Pages se actualiza en 1-2 min con los cambios visuales.
+
+─────────────────────────────────────────────────────────────────
+VERIFICACIÓN POST-DEPLOY
+─────────────────────────────────────────────────────────────────
+
+Visual:
+- Abre la tienda → el hero se ve más legible (no aplastado)
+- Hover en cards de producto → elevación suave con spring
+- Hover en botón "Ver productos" → barra de luz cruza el botón
+- Scrollbars → se adaptan al tema oscuro
+- Click en nav → la sección aparece abajo del header (no tapada)
+
+Funcional:
+- Admin → Editar producto → sección "📸 Fotos del producto" funciona:
+  click en ✕ elimina, click en thumbnail hace principal
+- Admin → 📣 Publicar → 🏷️ Categoría → "📘 Facebook + 📷" envía imagen
+- Admin → 🏭 Almacenes → cargan correctamente (ya sin 401)
+- Tienda desde Cuba → reseñas cargan vía resenas-cache.json
+- GitHub Actions → "Actualizar tasa" ya no falla con 403
+
+─────────────────────────────────────────────────────────────────
+NOTAS
+─────────────────────────────────────────────────────────────────
+
+- resenas-cache.json es un snapshot inicial. El workflow lo actualizará
+  cada hora con las reseñas reales de Firebase.
+
+- Los tokens CSS (tipografía, espaciado, sombras, etc.) están
+  disponibles pero NO se aplican automáticamente a todos los elementos.
+  Son para usar en futuras mejoras: reemplazar literals por var(--token).
+
+- Las mejoras visuales son incrementales (no rompen nada existente).
+  Si algo se ve raro, siempre puedes revertir un archivo individual.
+
+- Para que el WhatsApp del carrito apunte a tu número, cambia la
+  variable WA en js/combos.js línea 5.
