@@ -1726,7 +1726,7 @@ renderizarProductos = function() {
         const esAgotado = producto.stock === 0;
         const esOfertaDia = String(producto.id) === String(ofertaId);
         const card = document.createElement('div');
-        card.className = 'producto-card' + (esAgotado ? ' card-agotado' : '');
+        card.className = 'producto-card tm-card-premium' + (esAgotado ? ' card-agotado' : '');
         card.onclick = () => abrirDetalleProducto(producto.id);
         card.dataset.productId = String(producto.id);
         card.style.position = 'relative';
@@ -1740,33 +1740,101 @@ renderizarProductos = function() {
         const _hasDescuento = producto.precioOriginal > 0 && producto.precioOriginal > producto.precioActual;
         const _tieneGarantia = producto.garantia && String(producto.garantia).trim();
         const _tieneDevolucion = producto.devolucion === true;
-        let _trustBadgesHtml = '<div class="tm-trust-badges" style="display:flex;gap:6px;margin-top:8px;align-items:center;">';
-        _trustBadgesHtml += '<span class="tm-ti tm-ti-pago" title="Pago contra entrega">🔒</span>';
+        const _cat = escapeHtml(producto.categoria || '');
+
+        // === Badges glass apilados arriba izquierda ===
+        let _badgesHtml = '<div class="tm-card-badges">';
+        if (esOfertaDia) {
+            _badgesHtml += '<span class="tm-card-badge tm-badge-oferta">' + _txt + '</span>';
+        }
+        if (esAgotado) {
+            _badgesHtml += '<span class="tm-card-badge tm-badge-agotado">AGOTADO</span>';
+        } else {
+            if (_hasDescuento) {
+                const _descPct = Math.round((1 - parseFloat(producto.precioActual) / parseFloat(producto.precioOriginal)) * 100);
+                _badgesHtml += '<span class="tm-card-badge tm-badge-desc">-' + _descPct + '%</span>';
+            }
+            if (producto.masVendido) {
+                _badgesHtml += '<span class="tm-card-badge tm-badge-top">🔥 Top</span>';
+            }
+            if (_stk === 1) {
+                _badgesHtml += '<span class="tm-card-badge tm-badge-ultima tm-pulse">⏰ Última</span>';
+            }
+            // Badge "Nuevo" si se agregó en los últimos 7 días
+            if (producto.fechaAgregado) {
+                try {
+                    const _fecha = new Date(producto.fechaAgregado);
+                    if ((Date.now() - _fecha.getTime()) < 7 * 86400000) {
+                        _badgesHtml += '<span class="tm-card-badge tm-badge-nuevo">🆕</span>';
+                    }
+                } catch(e) {}
+            }
+        }
+        _badgesHtml += '</div>';
+
+        // === Spec pills flotantes sobre la imagen ===
+        let _specsHtml = '';
+        if (_specs.length && !esAgotado) {
+            _specsHtml = '<div class="tm-card-specs">';
+            _specs.slice(0, 3).forEach(function(s) {
+                _specsHtml += '<span class="tm-card-spec">' + escapeHtml(String(s)) + '</span>';
+            });
+            _specsHtml += '</div>';
+        }
+
+        // === Trust icons (pago, garantía, devolución) ===
+        let _trustHtml = '<div class="tm-card-trust">';
+        _trustHtml += '<span class="tm-trust-icon" title="Pago contra entrega">🔒</span>';
         if (_tieneGarantia) {
-            _trustBadgesHtml += '<span class="tm-ti tm-ti-gar" title="Garantía: ' + escapeAttr(String(_tieneGarantia)) + '">🛡️</span>';
+            _trustHtml += '<span class="tm-trust-icon" title="Garantía: ' + escapeAttr(String(_tieneGarantia)) + '">🛡️</span>';
         }
         if (_tieneDevolucion) {
-            _trustBadgesHtml += '<span class="tm-ti tm-ti-dev" title="Devolución aceptada">↩️</span>';
+            _trustHtml += '<span class="tm-trust-icon" title="Devolución aceptada">↩️</span>';
         }
-        _trustBadgesHtml += '</div>';
+        _trustHtml += '</div>';
+
+        // === Stock bar visual ===
+        let _stockBarHtml = '';
+        if (!esAgotado) {
+            const _stockPct = Math.min(100, (_stk / 15) * 100);
+            const _stockColor = _stk <= 2 ? 'linear-gradient(90deg,#ff5252,#ff8a3d)' : 'linear-gradient(90deg,#FF6B35,#FF9F43)';
+            _stockBarHtml = '<div class="tm-card-stockbar">' +
+                '<div class="tm-card-stockbar-label"><span>Stock</span><span>' + _stk + ' uds</span></div>' +
+                '<div class="tm-card-stockbar-track"><div class="tm-card-stockbar-fill" style="width:' + _stockPct + '%;background:' + _stockColor + '"></div></div>' +
+            '</div>';
+        }
+
+        // === Precio MN (calculado con tasa) ===
+        const _precioUsd = parseFloat(producto.precioActual) || 0;
+        const _tasa = (typeof window !== 'undefined' && window._tmTasaMN) ? window._tmTasaMN : 675;
+        const _precioMn = Math.round(_precioUsd * _tasa);
+        const _precioOrigUsd = parseFloat(producto.precioOriginal) || 0;
+
         card.innerHTML =
-            (esOfertaDia ? '<div class="badge-oferta-dia">' + _txt + '</div>' :
-             esAgotado ? '<div class="badge-agotado">AGOTADO</div>' :
-             producto.masVendido ? '<div class="badge-vendido">🔥 Más Vendido</div>' : '') +
-            (_hasDescuento ? '<div class="badge-ahorro-card">💰 Ahorra $' + (parseFloat(producto.precioOriginal) - parseFloat(producto.precioActual)).toFixed(0) + '</div>' : '') +
+            _badgesHtml +
             '<div class="producto-image">' +
                 getMeGustaHTML(_id) +
                 '<img src="' + _img + '" alt="' + _nom + '" loading="lazy" decoding="async" onerror="this.src=\'/iconos/favicon-192.png\';this.style.opacity=\'0.3\'">' +
+                _specsHtml +
             '</div>' +
-            '<h3>' + _nom + '</h3>' +
-            '<p class="producto-description">' + _des + '</p>' +
-            '<p class="precio"><span class="precio-actual" data-usd="' + safeNum(producto.precioActual) + '">$' + Number(producto.precioActual).toFixed(2) + ' USD</span></p>' +
-            (esAgotado
-                ? '<div class="stock" style="color:#e74c3c;font-weight:700;">❌ Agotado</div><button class="btn btn-small" disabled style="background:#555;color:#aaa;cursor:not-allowed;box-shadow:none;">🚫 No disponible</button>'
-                : ('<div class="stock">📦 Stock: ' + _stk + ' unidades</div>') +
-                  (typeof renderCountdownHtml === 'function' ? renderCountdownHtml(_id) : '') +
-                  '<button class="btn-pedir-card" data-nombre="' + _nom + '" onclick="event.stopPropagation(); tmComprar(event, ' + _id + ', this.dataset.nombre)" type="button"><span class="btn-pedir-wa-icon-sm"><svg viewBox="0 0 24 24" width="14" height="14" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></span> Pedir</button>' +
-            _trustBadgesHtml);
+            '<div class="tm-card-body">' +
+                (_cat ? '<div class="tm-card-cat">' + _cat + '</div>' : '') +
+                '<h3>' + _nom + '</h3>' +
+                '<p class="producto-description">' + _des + '</p>' +
+                '<div class="tm-card-precio">' +
+                    '<div class="tm-card-precio-mn">' + _precioMn.toLocaleString('es-CU') + ' <span class="tm-card-precio-mn-label">MN</span></div>' +
+                    '<div class="tm-card-precio-usd">' +
+                        '<span class="precio-actual" data-usd="' + safeNum(producto.precioActual) + '">$' + Number(producto.precioActual).toFixed(2) + ' USD</span>' +
+                        (_hasDescuento ? ' <span class="tm-card-precio-orig">$' + _precioOrigUsd.toFixed(0) + '</span>' : '') +
+                    '</div>' +
+                '</div>' +
+                (esAgotado
+                    ? '<div class="stock" style="color:#e74c3c;font-weight:700;">❌ Agotado</div><button class="btn btn-small" disabled style="background:#555;color:#aaa;cursor:not-allowed;box-shadow:none;">🚫 No disponible</button>'
+                    : _stockBarHtml +
+                      (typeof renderCountdownHtml === 'function' ? renderCountdownHtml(_id) : '') +
+                      '<button class="btn-pedir-card tm-card-cta" data-nombre="' + _nom + '" onclick="event.stopPropagation(); tmComprar(event, ' + _id + ', this.dataset.nombre)" type="button"><span class="btn-pedir-wa-icon-sm"><svg viewBox="0 0 24 24" width="14" height="14" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></span> Pedir</button>') +
+                _trustHtml +
+            '</div>';
         return card;
     }
 
