@@ -327,7 +327,6 @@ html body .section-title{font-size:clamp(28px,3.4vw,40px) !important;letter-spac
 html body .section-eyebrow{letter-spacing:0.18em !important;font-size:11px !important;text-transform:uppercase !important;font-weight:600 !important}
 /* Footer divider gradient */
 html body .footer-premium{border-top:1px solid transparent !important;border-image:linear-gradient(90deg,transparent,rgba(255,107,53,0.3),transparent) 1 !important}
-.tm-card-badge{display:inline-flex !important;align-items:center !important;font-size:10px !important;font-weight:800 !important;padding:4px 9px !important;border-radius:999px !important;backdrop-filter:blur(10px) !important;-webkit-backdrop-filter:blur(10px) !important;box-shadow:0 4px 14px rgba(0,0,0,0.3) !important;border:1px solid rgba(255,255,255,0.15) !important;letter-spacing:0.02em !important;line-height:1 !important}
 .tm-badge-desc{background:rgba(255,82,82,0.9) !important;color:#fff !important}
 .tm-badge-top{background:rgba(255,107,53,0.9) !important;color:#fff !important}
 .tm-badge-ultima{background:rgba(255,215,0,0.9) !important;color:#000 !important}
@@ -336,81 +335,9 @@ html body .footer-premium{border-top:1px solid transparent !important;border-ima
 .tm-badge-agotado{background:rgba(231,76,60,0.9) !important;color:#fff !important}
 .tm-pulse{animation:tmPulse 1.6s ease-in-out infinite !important}
 @keyframes tmPulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.05);opacity:0.92}}
-
-/* Spec pills flotantes sobre la imagen */
-.tm-card-specs{position:absolute !important;bottom:8px !important;left:8px !important;right:8px !important;z-index:10 !important;display:flex !important;flex-wrap:wrap !important;gap:4px !important;pointer-events:none !important}
-.tm-card-spec{font-size:9px !important;font-weight:600 !important;padding:3px 7px !important;border-radius:6px !important;background:rgba(0,0,0,0.7) !important;color:#fff !important;backdrop-filter:blur(8px) !important;-webkit-backdrop-filter:blur(8px) !important;border:1px solid rgba(255,255,255,0.1) !important;letter-spacing:0.02em !important}
-
-/* Body de la card */
-.tm-card-body{padding:14px 16px 16px !important}
-.tm-card-cat{font-size:10px !important;font-weight:600 !important;text-transform:uppercase !important;letter-spacing:0.15em !important;color:#FF6B35 !important;margin-bottom:4px !important}
-html body .producto-card.tm-card-premium h3{font-size:14px !important;font-weight:700 !important;line-height:1.3 !important;padding:0 !important;margin-bottom:6px !important;color:#f5f5f7 !important;display:-webkit-box !important;-webkit-line-clamp:2 !important;-webkit-box-orient:vertical !important;overflow:hidden !important;min-height:2.4em !important}
-html body .producto-card.tm-card-premium .producto-description{font-size:11.5px !important;line-height:1.5 !important;color:rgba(245,245,247,0.5) !important;padding:0 !important;margin-bottom:10px !important;display:-webkit-box !important;-webkit-line-clamp:2 !important;-webkit-box-orient:vertical !important;overflow:hidden !important}
-
-/* Precio MN grande + USD chiquito */
-.tm-card-precio{margin-bottom:8px !important}
-.tm-card-precio-mn{font-size:20px !important;font-weight:900 !important;line-height:1 !important;background:linear-gradient(135deg,#FF6B35 0%,#FF9F43 100%) !important;-webkit-background-clip:text !important;-webkit-text-fill-color:transparent !important;background-clip:text !important;color:transparent !important;margin-bottom:2px !important}
-.tm-card-precio-mn-label{font-size:11px !important;font-weight:600 !important;-webkit-text-fill-color:rgba(245,245,247,0.5) !important;color:rgba(245,245,247,0.5) !important}
-.tm-card-precio-usd{display:flex !important;align-items:baseline !important;gap:6px !important}
-html body .tm-card-precio-usd .precio-actual{font-size:12px !important;font-weight:500 !important;color:rgba(245,245,247,0.45) !important;background:none !important;-webkit-text-fill-color:rgba(245,245,247,0.45) !important;background-clip:unset !important;font-family:var(--font-body) !important}
-.tm-card-precio-orig{font-size:11px !important;color:rgba(245,245,247,0.3) !important;text-decoration:line-through !important}
-
-/* Stock bar visual */
-.tm-card-stockbar{margin-bottom:10px !important}
-.tm-card-stockbar-label{display:flex !important;justify-content:space-between !important;font-size:9px !important;color:rgba(245,245,247,0.4) !important;margin-bottom:3px !important;letter-spacing:0.02em !important}
-.tm-card-stockbar-track{height:3px !important;background:rgba(255,255,255,0.06) !important;border-radius:999px !important;overflow:hidden !important}
-.tm-card-stockbar-fill{height:100% !important;border-radius:999px !important;transition:width 0.5s cubic-bezier(0.16,1,0.3,1) !important}
-
-/* Trust icons */
-.tm-card-trust{display:flex !important;gap:8px !important;margin-top:10px !important;align-items:center !important;padding-top:8px !important;border-top:1px solid rgba(255,255,255,0.05) !important}
 .tm-trust-icon{font-size:13px !important;opacity:0.7 !important;cursor:help !important;transition:opacity 0.2s !important}
 .tm-trust-icon:hover{opacity:1 !important}
-
-/* Botón CTA con shimmer sweep */
-html body .producto-card.tm-card-premium .btn-pedir-card.tm-card-cta{position:relative !important;overflow:hidden !important;background:linear-gradient(135deg,#FF6B35 0%,#FF9F43 50%,#E8501E 100%) !important;color:#fff !important;border:none !important;border-radius:10px !important;padding:11px 14px !important;font-size:13px !important;font-weight:800 !important;letter-spacing:0.02em !important;box-shadow:0 4px 14px rgba(255,107,53,0.3) !important;transition:transform 0.25s cubic-bezier(0.16,1,0.3,1),box-shadow 0.25s cubic-bezier(0.4,0,0.2,1) !important;min-height:42px !important;width:calc(100% - 32px) !important;margin:0 16px 12px !important}
-html body .producto-card.tm-card-premium .btn-pedir-card.tm-card-cta::before{content:'' !important;position:absolute !important;inset:0 !important;background:linear-gradient(120deg,transparent 30%,rgba(255,255,255,0.25) 50%,transparent 70%) !important;transform:translateX(-100%) !important;transition:transform 0.6s cubic-bezier(0.4,0,0.2,1) !important;pointer-events:none !important}
-html body .producto-card.tm-card-premium .btn-pedir-card.tm-card-cta:hover{transform:translateY(-2px) !important;box-shadow:0 8px 24px rgba(255,107,53,0.5) !important}
-html body .producto-card.tm-card-premium .btn-pedir-card.tm-card-cta:hover::before{transform:translateX(100%) !important}
-html body .producto-card.tm-card-premium .btn-pedir-card.tm-card-cta:active{transform:scale(0.97) !important}
-
-/* Zoom sutil en imagen al hover */
-html body .producto-card.tm-card-premium .producto-image{position:relative !important;overflow:hidden !important;aspect-ratio:1/1 !important;height:auto !important}
-html body .producto-card.tm-card-premium .producto-image img{transition:transform 0.7s cubic-bezier(0.16,1,0.3,1) !important;object-fit:cover !important}
-html body .producto-card.tm-card-premium:hover .producto-image img{transform:scale(1.08) !important}
-
-/* Glassmorphism en la card */
-html body .producto-card.tm-card-premium{background:rgba(22,22,31,0.85) !important;backdrop-filter:blur(14px) !important;-webkit-backdrop-filter:blur(14px) !important;border:1px solid rgba(255,255,255,0.07) !important;border-top-color:rgba(255,255,255,0.12) !important;border-radius:18px !important;overflow:hidden !important;transition:transform 0.4s cubic-bezier(0.16,1,0.3,1),box-shadow 0.25s cubic-bezier(0.4,0,0.2,1),border-color 0.25s cubic-bezier(0.4,0,0.2,1) !important}
-html body .producto-card.tm-card-premium:hover{transform:translateY(-8px) !important;box-shadow:0 24px 48px rgba(0,0,0,0.5),0 0 0 1px rgba(255,107,53,0.2) !important;border-color:rgba(255,107,53,0.35) !important}
-html body .producto-card.tm-card-premium:active{transform:translateY(-4px) scale(0.99) !important}
-
-/* El stock texto ya no se muestra (usamos stock bar) */
-html body .producto-card.tm-card-premium > .stock{display:none !important}
-
-/* Botón me gusta reposicionado */
-html body .producto-card.tm-card-premium .me-gusta-btn{position:absolute !important;top:10px !important;right:10px !important;z-index:20 !important;width:32px !important;height:32px !important;border-radius:50% !important;background:rgba(0,0,0,0.6) !important;backdrop-filter:blur(10px) !important;-webkit-backdrop-filter:blur(10px) !important;border:1px solid rgba(255,255,255,0.12) !important;display:flex !important;align-items:center !important;justify-content:center !important;cursor:pointer !important;transition:transform 0.2s cubic-bezier(0.16,1,0.3,1) !important}
-html body .producto-card.tm-card-premium .me-gusta-btn:hover{transform:scale(1.12) !important}
-
-/* Modo claro */
-html body.light-mode .producto-card.tm-card-premium{background:rgba(255,255,255,0.95) !important;border:1px solid rgba(0,0,0,0.08) !important;border-top-color:rgba(0,0,0,0.12) !important}
-html body.light-mode .producto-card.tm-card-premium h3{color:#1a1a1a !important}
-html body.light-mode .producto-card.tm-card-premium .producto-description{color:rgba(0,0,0,0.5) !important}
-html body.light-mode .tm-card-precio-mn-label{-webkit-text-fill-color:rgba(0,0,0,0.5) !important;color:rgba(0,0,0,0.5) !important}
-html body.light-mode .tm-card-precio-usd .precio-actual{color:rgba(0,0,0,0.45) !important;-webkit-text-fill-color:rgba(0,0,0,0.45) !important}
-html body.light-mode .tm-card-precio-orig{color:rgba(0,0,0,0.3) !important}
-html body.light-mode .tm-card-stockbar-track{background:rgba(0,0,0,0.06) !important}
-html body.light-mode .tm-card-stockbar-label{color:rgba(0,0,0,0.4) !important}
-html body.light-mode .tm-card-trust{border-top-color:rgba(0,0,0,0.05) !important}
-html body.light-mode .tm-card-spec{background:rgba(0,0,0,0.6) !important}
 html body.light-mode .me-gusta-btn{background:rgba(255,255,255,0.8) !important;border:1px solid rgba(0,0,0,0.1) !important}
-
-/* Móvil: ajustes */
-@media (max-width:768px){
-  html body .producto-card.tm-card-premium .btn-pedir-card.tm-card-cta{font-size:12px !important;padding:10px 12px !important;min-height:40px !important;width:calc(100% - 24px) !important;margin:0 12px 10px !important}
-  html body .producto-card.tm-card-premium .tm-card-body{padding:12px 12px 12px !important}
-  html body .producto-card.tm-card-premium h3{font-size:13px !important}
-  .tm-card-precio-mn{font-size:18px !important}
-  .tm-card-badge{font-size:9px !important;padding:3px 7px !important}
-  .tm-card-spec{font-size:8px !important;padding:2px 6px !important}
 }
 
 /* ============================================================
@@ -645,516 +572,96 @@ html body.light-mode .testimonio-card{background:rgba(255,255,255,0.95) !importa
 html body.light-mode .testimonio-card p{color:rgba(0,0,0,0.7) !important}
 html body.light-mode .nd-deal-section#ofertaDelDia{background:linear-gradient(135deg,rgba(255,107,53,0.06),rgba(232,80,30,0.03)) !important;border-color:rgba(232,80,30,0.2) !important}
 html body.light-mode .cta-final .container{background:linear-gradient(135deg,rgba(255,107,53,0.08),rgba(232,80,30,0.04)) !important;border-color:rgba(232,80,30,0.2) !important}
+}
+}
+}
 
 /* ============================================================
-   AJUSTES MINIMALISTAS PREMIUM
-   - Más whitespace interno
-   - Botón CTA más grande y prominente
-   - Badges más sutiles (semi-transparentes)
-   - Bordes hairline más suaves
-   - Jerarquía visual más clara
+   CARD PREMIUM — estilo referencia (imagen cuadrada + gradiente + precio amarillo + botón verde)
    ============================================================ */
 
-/* === Más whitespace interno en la card === */
-html body .producto-card.tm-card-premium .tm-card-body{padding:18px 20px 20px !important}
-
-/* === Badges más sutiles (semi-transparentes, no tan saturados) === */
-html body .producto-card.tm-card-premium .tm-card-badge{
-  background:rgba(0,0,0,0.55) !important;
-  backdrop-filter:blur(10px) saturate(140%) !important;
-  -webkit-backdrop-filter:blur(10px) saturate(140%) !important;
-  border:1px solid rgba(255,255,255,0.1) !important;
-  color:#fff !important;
-  font-weight:600 !important;
-  letter-spacing:0.03em !important;
-  box-shadow:0 2px 8px rgba(0,0,0,0.2) !important;
-}
-/* Solo el texto del badge tiene color, no el fondo */
-html body .producto-card.tm-card-premium .tm-badge-desc{background:rgba(0,0,0,0.55) !important;color:#ff7a7a !important}
-html body .producto-card.tm-card-premium .tm-badge-top{background:rgba(0,0,0,0.55) !important;color:#ff9d63 !important}
-html body .producto-card.tm-card-premium .tm-badge-ultima{background:rgba(0,0,0,0.55) !important;color:#ffd700 !important}
-html body .producto-card.tm-card-premium .tm-badge-nuevo{background:rgba(0,0,0,0.55) !important;color:#6ddc6d !important}
-html body .producto-card.tm-card-premium .tm-badge-agotado{background:rgba(0,0,0,0.7) !important;color:rgba(255,255,255,0.6) !important}
-html body .producto-card.tm-card-premium .tm-badge-oferta{background:rgba(0,0,0,0.55) !important;color:#ff9d63 !important}
-
-/* === Botón CTA más grande y prominente === */
-html body .producto-card.tm-card-premium .btn-pedir-card.tm-card-cta{
-  width:calc(100% - 40px) !important;
-  margin:14px 20px 16px !important;
-  padding:14px 16px !important;
-  font-size:14px !important;
-  font-weight:800 !important;
-  letter-spacing:0.04em !important;
-  text-transform:uppercase !important;
-  border-radius:12px !important;
-  min-height:48px !important;
-  display:flex !important;
-  align-items:center !important;
-  justify-content:center !important;
-  gap:8px !important;
-}
-html body .producto-card.tm-card-premium .btn-pedir-card.tm-card-cta svg{width:16px !important;height:16px !important}
-
-/* === Bordes hairline más suaves === */
+/* === Card completa === */
 html body .producto-card.tm-card-premium{
-  border:1px solid rgba(255,255,255,0.05) !important;
-  border-top-color:rgba(255,255,255,0.1) !important;
-}
-
-/* === Más respiro entre elementos internos === */
-html body .producto-card.tm-card-premium h3{margin-bottom:8px !important;letter-spacing:-0.01em !important}
-html body .producto-card.tm-card-premium .producto-description{margin-bottom:14px !important}
-html body .producto-card.tm-card-premium .tm-card-precio{margin-bottom:12px !important}
-html body .producto-card.tm-card-premium .tm-card-stockbar{margin-bottom:14px !important}
-html body .producto-card.tm-card-premium .tm-card-trust{margin-top:14px !important;padding-top:12px !important}
-
-/* === Imagen con borde redondeado interno sutil === */
-html body .producto-card.tm-card-premium .producto-image{
-  border-bottom-left-radius:0 !important;
-  border-bottom-right-radius:0 !important;
-}
-
-/* === Trust icons más sutiles === */
-html body .producto-card.tm-card-premium .tm-trust-icon{font-size:12px !important;opacity:0.55 !important}
-html body .producto-card.tm-card-premium .tm-trust-icon:hover{opacity:0.85 !important}
-
-/* === Spec pills más sutiles === */
-html body .producto-card.tm-card-premium .tm-card-spec{
-  background:rgba(0,0,0,0.55) !important;
+  background:linear-gradient(180deg,#1c1c28 0%,#0d0d12 100%) !important;
   border:1px solid rgba(255,255,255,0.08) !important;
-  font-weight:500 !important;
-  letter-spacing:0.02em !important;
-}
-
-/* === Móvil: ajustes de espaciado === */
-@media (max-width:768px){
-  html body .producto-card.tm-card-premium .tm-card-body{padding:14px 14px 14px !important}
-  html body .producto-card.tm-card-premium .btn-pedir-card.tm-card-cta{
-    width:calc(100% - 28px) !important;
-    margin:12px 14px 14px !important;
-    padding:12px 14px !important;
-    font-size:13px !important;
-    min-height:44px !important;
-  }
-  html body .producto-card.tm-card-premium h3{font-size:13px !important;margin-bottom:6px !important}
-  html body .producto-card.tm-card-premium .producto-description{margin-bottom:10px !important;font-size:11px !important}
-  html body .producto-card.tm-card-premium .tm-card-precio{margin-bottom:10px !important}
-  html body .producto-card.tm-card-premium .tm-card-stockbar{margin-bottom:10px !important}
-  html body .producto-card.tm-card-premium .tm-card-precio-mn{font-size:18px !important}
-}
-
-/* === Modo claro: badges sutiles también === */
-html body.light-mode .producto-card.tm-card-premium .tm-card-badge{background:rgba(255,255,255,0.75) !important;border:1px solid rgba(0,0,0,0.08) !important;backdrop-filter:blur(10px) !important}
-html body.light-mode .producto-card.tm-card-premium .tm-badge-desc{background:rgba(255,255,255,0.75) !important;color:#e74c3c !important}
-html body.light-mode .producto-card.tm-card-premium .tm-badge-top{background:rgba(255,255,255,0.75) !important;color:#e8501e !important}
-html body.light-mode .producto-card.tm-card-premium .tm-badge-ultima{background:rgba(255,255,255,0.75) !important;color:#c89600 !important}
-html body.light-mode .producto-card.tm-card-premium .tm-badge-nuevo{background:rgba(255,255,255,0.75) !important;color:#2ecc71 !important}
-html body.light-mode .producto-card.tm-card-premium .tm-badge-agotado{background:rgba(255,255,255,0.85) !important;color:rgba(0,0,0,0.4) !important}
-html body.light-mode .producto-card.tm-card-premium .tm-card-spec{background:rgba(255,255,255,0.75) !important;color:#1a1a1a !important;border:1px solid rgba(0,0,0,0.06) !important}
-
-/* ============================================================
-   ESTILO PROFILE CARD — imagen circular + botón outline
-   Inspirado en cards de perfil premium (Sophie Bennett style)
-   ============================================================ */
-
-/* === Card con bordes MUY redondeados === */
-html body .producto-card.tm-card-premium{
-  border-radius:24px !important;
-  padding:20px !important;
-  display:flex !important;
-  flex-direction:column !important;
-  align-items:center !important;
-  text-align:center !important;
-}
-
-/* === Imagen del producto CIRCULAR (estilo foto de perfil) === */
-html body .producto-card.tm-card-premium .producto-image{
-  width:140px !important;
-  height:140px !important;
-  border-radius:50% !important;
-  aspect-ratio:unset !important;
-  margin:8px auto 16px !important;
+  border-top-color:rgba(255,255,255,0.15) !important;
+  border-radius:20px !important;
   overflow:hidden !important;
-  border:3px solid rgba(255,255,255,0.08) !important;
-  box-shadow:0 8px 24px rgba(0,0,0,0.3), 0 0 0 1px rgba(255,107,53,0.1) inset !important;
-  position:relative !important;
-  flex-shrink:0 !important;
+  box-shadow:0 4px 12px rgba(0,0,0,0.3) !important;
+  transition:transform 0.4s cubic-bezier(0.16,1,0.3,1),box-shadow 0.25s cubic-bezier(0.4,0,0.2,1),border-color 0.25s cubic-bezier(0.4,0,0.2,1) !important;
 }
-html body .producto-card.tm-card-premium .producto-image img{
-  width:100% !important;
-  height:100% !important;
-  object-fit:cover !important;
-  transition:transform 0.7s cubic-bezier(0.16,1,0.3,1) !important;
+html body .producto-card.tm-card-premium:hover{
+  transform:translateY(-6px) !important;
+  box-shadow:0 12px 28px rgba(0,0,0,0.4) !important;
+  border-color:rgba(255,107,53,0.35) !important;
 }
-html body .producto-card.tm-card-premium:hover .producto-image img{
-  transform:scale(1.1) !important;
-}
+html body .producto-card.tm-card-premium:active{transform:translateY(-3px) scale(0.99) !important}
 
-/* === Botón me gusta reposicionado (arriba izquierda) === */
-html body .producto-card.tm-card-premium .me-gusta-btn{
-  top:14px !important;
-  left:14px !important;
-  right:auto !important;
-  width:32px !important;
-  height:32px !important;
-}
-
-/* === Spec pills: ocultas en este estilo (limpiamos) === */
-html body .producto-card.tm-card-premium .tm-card-specs{display:none !important}
-
-/* === Body centrado === */
-html body .producto-card.tm-card-premium .tm-card-body{
-  padding:0 !important;
-  text-align:center !important;
-  width:100% !important;
-  display:flex !important;
-  flex-direction:column !important;
-  align-items:center !important;
-}
-html body .producto-card.tm-card-premium .tm-card-cat{
-  text-align:center !important;
-  margin-bottom:6px !important;
-}
-html body .producto-card.tm-card-premium h3{
-  text-align:center !important;
-  font-size:15px !important;
-  line-height:1.3 !important;
-  margin-bottom:6px !important;
-  -webkit-line-clamp:2 !important;
-}
-html body .producto-card.tm-card-premium .producto-description{
-  text-align:center !important;
-  font-size:12px !important;
-  margin-bottom:12px !important;
-  -webkit-line-clamp:2 !important;
-}
-
-/* === Precio centrado === */
-html body .producto-card.tm-card-premium .tm-card-precio{
-  text-align:center !important;
-  margin-bottom:10px !important;
-}
-html body .producto-card.tm-card-premium .tm-card-precio-mn{
-  font-size:22px !important;
-  justify-content:center !important;
-  display:flex !important;
-  align-items:baseline !important;
-  gap:4px !important;
-}
-html body .producto-card.tm-card-premium .tm-card-precio-usd{
-  justify-content:center !important;
-  margin-top:2px !important;
-}
-
-/* === Stock bar reemplazado por stats sutiles (estilo followers) === */
-html body .producto-card.tm-card-premium .tm-card-stockbar{display:none !important}
-html body .producto-card.tm-card-premium .tm-card-stats{
-  display:flex !important;
-  justify-content:center !important;
-  gap:16px !important;
-  margin:8px 0 14px !important;
-  font-size:11px !important;
-  color:rgba(245,245,247,0.5) !important;
-}
-html body .producto-card.tm-card-premium .tm-card-stats .tm-stat{
-  display:flex !important;
-  align-items:center !important;
-  gap:4px !important;
-}
-html body .producto-card.tm-card-premium .tm-card-stats .tm-stat-icon{font-size:13px !important}
-
-/* === Trust icons centrados y sutiles === */
-html body .producto-card.tm-card-premium .tm-card-trust{
-  justify-content:center !important;
-  border-top:1px solid rgba(255,255,255,0.05) !important;
-  padding-top:12px !important;
-  margin-top:auto !important;
-  margin-bottom:12px !important;
-}
-
-/* === Botón "Pedir +" estilo Follow (outline, no lleno) === */
-html body .producto-card.tm-card-premium .btn-pedir-card.tm-card-cta{
-  background:transparent !important;
-  color:#FF6B35 !important;
-  border:1.5px solid rgba(255,107,53,0.4) !important;
-  border-radius:14px !important;
-  padding:12px 20px !important;
-  font-size:13px !important;
-  font-weight:700 !important;
-  letter-spacing:0.03em !important;
-  text-transform:none !important;
-  box-shadow:none !important;
-  width:100% !important;
-  margin:0 !important;
-  min-height:44px !important;
-  display:flex !important;
-  align-items:center !important;
-  justify-content:center !important;
-  gap:6px !important;
-  transition:all 0.25s cubic-bezier(0.16,1,0.3,1) !important;
-}
-html body .producto-card.tm-card-premium .btn-pedir-card.tm-card-cta::before{display:none !important}
-html body .producto-card.tm-card-premium .btn-pedir-card.tm-card-cta:hover{
-  background:rgba(255,107,53,0.1) !important;
-  border-color:#FF6B35 !important;
-  transform:translateY(-1px) !important;
-  box-shadow:0 4px 14px rgba(255,107,53,0.2) !important;
-}
-html body .producto-card.tm-card-premium .btn-pedir-card.tm-card-cta:active{transform:scale(0.97) !important}
-html body .producto-card.tm-card-premium .btn-pedir-card.tm-card-cta svg{display:none !important}
-/* Agregar icono + antes del texto */
-html body .producto-card.tm-card-premium .btn-pedir-card.tm-card-cta .btn-pedir-wa-icon-sm{
-  display:inline-flex !important;
-  align-items:center !important;
-  justify-content:center !important;
-  width:16px !important;
-  height:16px !important;
-  border-radius:50% !important;
-  background:#FF6B35 !important;
-  color:#fff !important;
-  font-size:14px !important;
-  font-weight:900 !important;
-  line-height:1 !important;
-  flex-shrink:0 !important;
-}
-html body .producto-card.tm-card-premium .btn-pedir-card.tm-card-cta .btn-pedir-wa-icon-sm::before{
-  content:'+' !important;
-}
-html body .producto-card.tm-card-premium .btn-pedir-card.tm-card-cta .btn-pedir-wa-icon-sm svg{display:none !important}
-
-/* === Móvil === */
-@media (max-width:768px){
-  html body .producto-card.tm-card-premium{padding:14px !important;border-radius:18px !important}
-  html body .producto-card.tm-card-premium .producto-image{width:110px !important;height:110px !important;margin:4px auto 12px !important;border-width:2px !important}
-  html body .producto-card.tm-card-premium h3{font-size:13px !important}
-  html body .producto-card.tm-card-premium .tm-card-precio-mn{font-size:18px !important}
-  html body .producto-card.tm-card-premium .btn-pedir-card.tm-card-cta{padding:10px 16px !important;font-size:12px !important;min-height:40px !important}
-}
-
-/* === Modo claro === */
-html body.light-mode .producto-card.tm-card-premium .producto-image{border-color:rgba(0,0,0,0.08) !important;box-shadow:0 8px 24px rgba(0,0,0,0.1), 0 0 0 1px rgba(232,80,30,0.1) inset !important}
-html body.light-mode .producto-card.tm-card-premium .btn-pedir-card.tm-card-cta{color:#e8501e !important;border-color:rgba(232,80,30,0.4) !important}
-html body.light-mode .producto-card.tm-card-premium .btn-pedir-card.tm-card-cta:hover{background:rgba(232,80,30,0.08) !important;border-color:#e8501e !important}
-html body.light-mode .producto-card.tm-card-premium .btn-pedir-card.tm-card-cta .btn-pedir-wa-icon-sm{background:#e8501e !important}
-
-/* ============================================================
-   AJUSTES FINALES
-   1. Precio MN grande + USD chiquito en TODAS las cards (no solo modal)
-   2. Badges en fila horizontal (no apilados verticalmente)
-   3. Limitar a 2 badges visibles para que no se llenen
-   ============================================================ */
-
-/* === 1. Precio MN grande + USD chiquito (ya está en tm-card-precio, 
-      pero aseguramos que se vea bien en todas las cards) === */
-html body .producto-card.tm-card-premium .tm-card-precio-mn{
-  font-size:22px !important;
-  font-weight:900 !important;
-  line-height:1 !important;
-  background:linear-gradient(135deg,#FF6B35 0%,#FF9F43 100%) !important;
-  -webkit-background-clip:text !important;
-  -webkit-text-fill-color:transparent !important;
-  background-clip:text !important;
-  color:transparent !important;
-  margin-bottom:2px !important;
-  display:block !important;
-}
-html body .producto-card.tm-card-premium .tm-card-precio-mn-label{
-  font-size:11px !important;
-  font-weight:600 !important;
-  -webkit-text-fill-color:rgba(245,245,247,0.5) !important;
-  color:rgba(245,245,247,0.5) !important;
-}
-html body .producto-card.tm-card-premium .tm-card-precio-usd{
-  display:flex !important;
-  align-items:baseline !important;
-  gap:6px !important;
-  margin-top:2px !important;
-}
-html body .producto-card.tm-card-premium .tm-card-precio-usd .precio-actual{
-  font-size:12px !important;
-  font-weight:500 !important;
-  color:rgba(245,245,247,0.45) !important;
-  -webkit-text-fill-color:rgba(245,245,247,0.45) !important;
-  background:none !important;
-  background-clip:unset !important;
-  font-family:var(--font-body) !important;
-}
-
-/* Badges más compactos para que quepan en fila */
-html body .producto-card.tm-card-premium .tm-card-badge{
-  font-size:9px !important;
-  padding:3px 7px !important;
-  line-height:1 !important;
-  letter-spacing:0.02em !important;
-}
-
-/* === 3. Estilo cuadrado con bordes redondeados (estilo profile card) === */
-/* Imagen con padding interior para que "flote" */
+/* === Imagen cuadrada SIN padding, llena === */
 html body .producto-card.tm-card-premium .producto-image{
-  padding:10px !important;
   aspect-ratio:1/1 !important;
   height:auto !important;
-  background:transparent !important;
+  background:#fff !important;
   border-bottom:none !important;
+  padding:0 !important;
+  position:relative !important;
+  overflow:hidden !important;
 }
 html body .producto-card.tm-card-premium .producto-image img{
-  border-radius:20px !important;
-  border:1px solid rgba(255,255,255,0.08) !important;
-  box-shadow:0 8px 24px rgba(0,0,0,0.3) !important;
-  object-fit:cover !important;
   width:100% !important;
   height:100% !important;
+  object-fit:cover !important;
+  border-radius:0 !important;
+  border:none !important;
+  box-shadow:none !important;
+  transition:transform 0.7s cubic-bezier(0.16,1,0.3,1) !important;
 }
+html body .producto-card.tm-card-premium:hover .producto-image img{transform:scale(1.05) !important}
 
-/* Card completa con bordes muy redondeados */
-html body .producto-card.tm-card-premium{
-  border-radius:24px !important;
-}
-
-/* Botón me gusta reposicionado sobre la imagen */
-html body .producto-card.tm-card-premium .me-gusta-btn{
-  top:18px !important;
-  right:18px !important;
-}
-
-/* === Modo claro === */
-html body.light-mode .producto-card.tm-card-premium .producto-image img{
-  border:1px solid rgba(0,0,0,0.06) !important;
-  box-shadow:0 8px 24px rgba(0,0,0,0.08) !important;
-}
-
-/* ============================================================
-   REGLA DEFINITIVA — BADGES Y CARD PREMIUM (consolidado)
-   Esta es la ÚNICA regla que aplica. Está al final para ganar.
-   ============================================================ */
-
-/* === Badges en FILA HORIZONTAL (no apilados) === */
+/* === Badges en FILA arriba === */
 html body .producto-card.tm-card-premium .tm-card-badges{
   position:absolute !important;
-  top:18px !important;
-  left:18px !important;
+  top:10px !important;
+  left:10px !important;
   z-index:20 !important;
   display:flex !important;
   flex-direction:row !important;
   flex-wrap:wrap !important;
   gap:5px !important;
-  max-width:calc(100% - 60px) !important;
+  max-width:calc(100% - 50px) !important;
   pointer-events:none !important;
 }
-
-/* Badges glass sutiles, compactos */
 html body .producto-card.tm-card-premium .tm-card-badge{
   display:inline-flex !important;
   align-items:center !important;
   font-size:9px !important;
   font-weight:700 !important;
-  padding:4px 8px !important;
-  border-radius:999px !important;
-  backdrop-filter:blur(10px) saturate(140%) !important;
-  -webkit-backdrop-filter:blur(10px) saturate(140%) !important;
-  background:rgba(0,0,0,0.55) !important;
+  padding:4px 9px !important;
+  border-radius:6px !important;
+  backdrop-filter:blur(8px) !important;
+  -webkit-backdrop-filter:blur(8px) !important;
+  background:rgba(0,0,0,0.65) !important;
   border:1px solid rgba(255,255,255,0.1) !important;
   color:#fff !important;
   letter-spacing:0.02em !important;
   line-height:1 !important;
-  box-shadow:0 2px 8px rgba(0,0,0,0.2) !important;
   white-space:nowrap !important;
 }
-html body .producto-card.tm-card-premium .tm-badge-desc{background:rgba(0,0,0,0.55) !important;color:#ff7a7a !important}
-html body .producto-card.tm-card-premium .tm-badge-top{background:rgba(0,0,0,0.55) !important;color:#ff9d63 !important}
-html body .producto-card.tm-card-premium .tm-badge-ultima{background:rgba(0,0,0,0.55) !important;color:#ffd700 !important}
-html body .producto-card.tm-card-premium .tm-badge-nuevo{background:rgba(0,0,0,0.55) !important;color:#6ddc6d !important}
-html body .producto-card.tm-card-premium .tm-badge-agotado{background:rgba(0,0,0,0.7) !important;color:rgba(255,255,255,0.6) !important}
-html body .producto-card.tm-card-premium .tm-badge-oferta{background:rgba(0,0,0,0.55) !important;color:#ff9d63 !important}
-
-/* === Imagen cuadrada con bordes redondeados (estilo profile card) === */
-html body .producto-card.tm-card-premium .producto-image{
-  padding:10px !important;
-  aspect-ratio:1/1 !important;
-  height:auto !important;
-  background:transparent !important;
-  border-bottom:none !important;
-  position:relative !important;
-  overflow:visible !important;
-}
-html body .producto-card.tm-card-premium .producto-image img{
-  border-radius:20px !important;
-  border:1px solid rgba(255,255,255,0.08) !important;
-  box-shadow:0 8px 24px rgba(0,0,0,0.3) !important;
-  object-fit:cover !important;
-  width:100% !important;
-  height:100% !important;
-}
-
-/* Card completa con bordes muy redondeados */
-html body .producto-card.tm-card-premium{
-  border-radius:24px !important;
-  overflow:hidden !important;
-}
-
-/* Botón me gusta reposicionado sobre la imagen */
-html body .producto-card.tm-card-premium .me-gusta-btn{
-  top:18px !important;
-  right:18px !important;
-}
-
-/* === Precio MN grande + USD chiquito === */
-html body .producto-card.tm-card-premium .tm-card-precio-mn{
-  font-size:22px !important;
-  font-weight:900 !important;
-  line-height:1 !important;
-  background:linear-gradient(135deg,#FF6B35 0%,#FF9F43 100%) !important;
-  -webkit-background-clip:text !important;
-  -webkit-text-fill-color:transparent !important;
-  background-clip:text !important;
-  color:transparent !important;
-  margin-bottom:2px !important;
-  display:block !important;
-}
-html body .producto-card.tm-card-premium .tm-card-precio-mn-label{
-  font-size:11px !important;
-  font-weight:600 !important;
-  -webkit-text-fill-color:rgba(245,245,247,0.5) !important;
-  color:rgba(245,245,247,0.5) !important;
-}
-html body .producto-card.tm-card-premium .tm-card-precio-usd{
-  display:flex !important;
-  align-items:baseline !important;
-  gap:6px !important;
-  margin-top:2px !important;
-}
-html body .producto-card.tm-card-premium .tm-card-precio-usd .precio-actual{
-  font-size:12px !important;
-  font-weight:500 !important;
-  color:rgba(245,245,247,0.45) !important;
-  -webkit-text-fill-color:rgba(245,245,247,0.45) !important;
-  background:none !important;
-  background-clip:unset !important;
-  font-family:var(--font-body) !important;
-}
-
-/* === Botón CTA === */
-html body .producto-card.tm-card-premium .btn-pedir-card.tm-card-cta{
-  width:calc(100% - 40px) !important;
-  margin:14px 20px 16px !important;
-  padding:14px 16px !important;
-  font-size:13px !important;
-  font-weight:800 !important;
-  letter-spacing:0.04em !important;
-  border-radius:12px !important;
-  min-height:48px !important;
-  display:flex !important;
-  align-items:center !important;
-  justify-content:center !important;
-  gap:8px !important;
-}
+html body .producto-card.tm-card-premium .tm-badge-desc{background:#FF6B35 !important;color:#fff !important;border:none !important}
+html body .producto-card.tm-card-premium .tm-badge-top{background:rgba(0,0,0,0.75) !important;color:#ff9d63 !important;border:1px solid rgba(255,107,53,0.3) !important}
+html body .producto-card.tm-card-premium .tm-badge-ultima{background:#ffd700 !important;color:#000 !important;border:none !important}
+html body .producto-card.tm-card-premium .tm-badge-nuevo{background:#4caf50 !important;color:#fff !important;border:none !important}
+html body .producto-card.tm-card-premium .tm-badge-agotado{background:rgba(231,76,60,0.9) !important;color:#fff !important}
+html body .producto-card.tm-card-premium .tm-badge-oferta{background:#FF6B35 !important;color:#fff !important}
+html body .producto-card.tm-card-premium .tm-pulse{animation:tmPulseBadge 1.6s ease-in-out infinite !important}
+@keyframes tmPulseBadge{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.05);opacity:0.92}}
 
 /* === Spec pills === */
 html body .producto-card.tm-card-premium .tm-card-specs{
   position:absolute !important;
-  bottom:18px !important;
-  left:18px !important;
-  right:18px !important;
+  bottom:8px !important;
+  left:8px !important;
+  right:8px !important;
   z-index:10 !important;
   display:flex !important;
   flex-wrap:wrap !important;
@@ -1163,55 +670,172 @@ html body .producto-card.tm-card-premium .tm-card-specs{
 }
 html body .producto-card.tm-card-premium .tm-card-spec{
   font-size:9px !important;
-  font-weight:500 !important;
+  font-weight:600 !important;
   padding:3px 7px !important;
-  border-radius:6px !important;
-  background:rgba(0,0,0,0.55) !important;
+  border-radius:5px !important;
+  background:rgba(0,0,0,0.7) !important;
   color:#fff !important;
-  backdrop-filter:blur(8px) !important;
-  -webkit-backdrop-filter:blur(8px) !important;
+  backdrop-filter:blur(6px) !important;
   border:1px solid rgba(255,255,255,0.08) !important;
-  letter-spacing:0.02em !important;
+}
+
+/* === Body de la card (sección oscura) === */
+html body .producto-card.tm-card-premium .tm-card-body{
+  padding:14px 16px 16px !important;
+}
+
+/* Categoría eyebrow (naranja, como badge) */
+html body .producto-card.tm-card-premium .tm-card-cat{
+  display:inline-block !important;
+  font-size:10px !important;
+  font-weight:700 !important;
+  text-transform:uppercase !important;
+  letter-spacing:0.08em !important;
+  color:#fff !important;
+  background:#FF6B35 !important;
+  padding:3px 9px !important;
+  border-radius:5px !important;
+  margin-bottom:8px !important;
+}
+
+/* Nombre del producto */
+html body .producto-card.tm-card-premium h3{
+  font-size:14px !important;
+  font-weight:700 !important;
+  line-height:1.3 !important;
+  color:#fff !important;
+  padding:0 !important;
+  margin-bottom:6px !important;
+  display:-webkit-box !important;
+  -webkit-line-clamp:2 !important;
+  -webkit-box-orient:vertical !important;
+  overflow:hidden !important;
+  min-height:2.4em !important;
+}
+
+/* Descripción */
+html body .producto-card.tm-card-premium .producto-description{
+  font-size:11.5px !important;
+  line-height:1.5 !important;
+  color:rgba(255,255,255,0.55) !important;
+  padding:0 !important;
+  margin-bottom:10px !important;
+  display:-webkit-box !important;
+  -webkit-line-clamp:2 !important;
+  -webkit-box-orient:vertical !important;
+  overflow:hidden !important;
+}
+
+/* === Precio AMARILLO (estilo referencia) === */
+html body .producto-card.tm-card-premium .tm-card-precio{margin-bottom:10px !important}
+html body .producto-card.tm-card-premium .tm-card-precio-mn{
+  font-size:22px !important;
+  font-weight:900 !important;
+  line-height:1 !important;
+  color:#ffd700 !important;
+  background:none !important;
+  -webkit-text-fill-color:#ffd700 !important;
+  margin-bottom:2px !important;
+  display:block !important;
+  text-shadow:0 1px 2px rgba(0,0,0,0.3) !important;
+}
+html body .producto-card.tm-card-premium .tm-card-precio-mn-label{
+  font-size:11px !important;
+  font-weight:600 !important;
+  color:rgba(255,255,255,0.6) !important;
+  -webkit-text-fill-color:rgba(255,255,255,0.6) !important;
+}
+html body .producto-card.tm-card-premium .tm-card-precio-usd{
+  display:flex !important;
+  align-items:baseline !important;
+  gap:6px !important;
+  margin-top:2px !important;
+}
+html body .producto-card.tm-card-premium .tm-card-precio-usd .precio-actual{
+  font-size:12px !important;
+  font-weight:500 !important;
+  color:rgba(255,255,255,0.6) !important;
+  -webkit-text-fill-color:rgba(255,255,255,0.6) !important;
+  background:none !important;
+  background-clip:unset !important;
+  font-family:var(--font-body) !important;
+}
+html body .producto-card.tm-card-premium .tm-card-precio-orig{
+  font-size:11px !important;
+  color:rgba(255,255,255,0.4) !important;
+  text-decoration:line-through !important;
 }
 
 /* === Stock bar === */
-html body .producto-card.tm-card-premium .tm-card-stockbar{margin-bottom:14px !important}
-html body .producto-card.tm-card-premium .tm-card-stockbar-label{display:flex !important;justify-content:space-between !important;font-size:9px !important;color:rgba(245,245,247,0.4) !important;margin-bottom:3px !important}
-html body .producto-card.tm-card-premium .tm-card-stockbar-track{height:3px !important;background:rgba(255,255,255,0.06) !important;border-radius:999px !important;overflow:hidden !important}
+html body .producto-card.tm-card-premium .tm-card-stockbar{margin-bottom:12px !important}
+html body .producto-card.tm-card-premium .tm-card-stockbar-label{display:flex !important;justify-content:space-between !important;font-size:9px !important;color:rgba(255,255,255,0.5) !important;margin-bottom:3px !important}
+html body .producto-card.tm-card-premium .tm-card-stockbar-track{height:3px !important;background:rgba(255,255,255,0.1) !important;border-radius:999px !important;overflow:hidden !important}
 html body .producto-card.tm-card-premium .tm-card-stockbar-fill{height:100% !important;border-radius:999px !important;transition:width 0.5s cubic-bezier(0.16,1,0.3,1) !important}
 
 /* === Trust icons === */
-html body .producto-card.tm-card-premium .tm-card-trust{display:flex !important;gap:8px !important;margin-top:14px !important;align-items:center !important;padding-top:12px !important;border-top:1px solid rgba(255,255,255,0.05) !important}
-html body .producto-card.tm-card-premium .tm-trust-icon{font-size:12px !important;opacity:0.55 !important}
+html body .producto-card.tm-card-premium .tm-card-trust{display:flex !important;gap:8px !important;margin-top:12px !important;align-items:center !important;padding-top:10px !important;border-top:1px solid rgba(255,255,255,0.08) !important}
+html body .producto-card.tm-card-premium .tm-trust-icon{font-size:12px !important;opacity:0.6 !important}
 
-/* === Body === */
-html body .producto-card.tm-card-premium .tm-card-body{padding:14px 20px 20px !important}
-html body .producto-card.tm-card-premium .tm-card-cat{font-size:10px !important;font-weight:600 !important;text-transform:uppercase !important;letter-spacing:0.15em !important;color:#FF6B35 !important;margin-bottom:4px !important}
-html body .producto-card.tm-card-premium h3{font-size:14px !important;font-weight:700 !important;line-height:1.3 !important;padding:0 !important;margin-bottom:6px !important;color:#f5f5f7 !important;display:-webkit-box !important;-webkit-line-clamp:2 !important;-webkit-box-orient:vertical !important;overflow:hidden !important;min-height:2.4em !important}
-html body .producto-card.tm-card-premium .producto-description{font-size:11.5px !important;line-height:1.5 !important;color:rgba(245,245,247,0.5) !important;padding:0 !important;margin-bottom:10px !important;display:-webkit-box !important;-webkit-line-clamp:2 !important;-webkit-box-orient:vertical !important;overflow:hidden !important}
-
-/* === Glassmorphism y hover === */
-html body .producto-card.tm-card-premium{
-  background:rgba(22,22,31,0.85) !important;
-  backdrop-filter:blur(14px) !important;
-  -webkit-backdrop-filter:blur(14px) !important;
-  border:1px solid rgba(255,255,255,0.05) !important;
-  border-top-color:rgba(255,255,255,0.1) !important;
-  box-shadow:0 4px 12px rgba(0,0,0,0.25),0 1px 3px rgba(0,0,0,0.15) !important;
-  transition:transform 0.4s cubic-bezier(0.16,1,0.3,1),box-shadow 0.25s cubic-bezier(0.4,0,0.2,1),border-color 0.25s cubic-bezier(0.4,0,0.2,1) !important;
+/* === Botón "Pedir" VERDE (estilo referencia) === */
+html body .producto-card.tm-card-premium .btn-pedir-card.tm-card-cta{
+  width:calc(100% - 32px) !important;
+  margin:12px 16px 14px !important;
+  padding:13px 16px !important;
+  font-size:14px !important;
+  font-weight:800 !important;
+  letter-spacing:0.03em !important;
+  border-radius:10px !important;
+  min-height:46px !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  gap:8px !important;
+  background:linear-gradient(135deg,#00A885,#008a6e) !important;
+  color:#fff !important;
+  border:none !important;
+  box-shadow:0 4px 14px rgba(0,168,133,0.35) !important;
+  transition:transform 0.25s cubic-bezier(0.16,1,0.3,1),box-shadow 0.25s cubic-bezier(0.4,0,0.2,1) !important;
+  position:relative !important;
+  overflow:hidden !important;
 }
-html body .producto-card.tm-card-premium:hover{
-  transform:translateY(-6px) !important;
-  box-shadow:0 12px 28px rgba(0,0,0,0.35),0 4px 8px rgba(0,0,0,0.2) !important;
-  border-color:rgba(255,107,53,0.35) !important;
+html body .producto-card.tm-card-premium .btn-pedir-card.tm-card-cta::before{
+  content:'' !important;
+  position:absolute !important;
+  inset:0 !important;
+  background:linear-gradient(120deg,transparent 30%,rgba(255,255,255,0.2) 50%,transparent 70%) !important;
+  transform:translateX(-100%) !important;
+  transition:transform 0.6s cubic-bezier(0.4,0,0.2,1) !important;
+  pointer-events:none !important;
 }
-html body .producto-card.tm-card-premium:active{transform:translateY(-3px) scale(0.99) !important}
+html body .producto-card.tm-card-premium .btn-pedir-card.tm-card-cta:hover{
+  transform:translateY(-2px) !important;
+  box-shadow:0 8px 22px rgba(0,168,133,0.5) !important;
+}
+html body .producto-card.tm-card-premium .btn-pedir-card.tm-card-cta:hover::before{transform:translateX(100%) !important}
+html body .producto-card.tm-card-premium .btn-pedir-card.tm-card-cta:active{transform:scale(0.97) !important}
 
-/* Zoom sutil en imagen al hover */
-html body .producto-card.tm-card-premium .producto-image img{transition:transform 0.7s cubic-bezier(0.16,1,0.3,1) !important}
-html body .producto-card.tm-card-premium:hover .producto-image img{transform:scale(1.05) !important}
+/* === Botón me gusta === */
+html body .producto-card.tm-card-premium .me-gusta-btn{
+  position:absolute !important;
+  top:10px !important;
+  right:10px !important;
+  z-index:20 !important;
+  width:32px !important;
+  height:32px !important;
+  border-radius:50% !important;
+  background:rgba(0,0,0,0.65) !important;
+  backdrop-filter:blur(8px) !important;
+  -webkit-backdrop-filter:blur(8px) !important;
+  border:1px solid rgba(255,255,255,0.12) !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  cursor:pointer !important;
+  transition:transform 0.2s cubic-bezier(0.16,1,0.3,1) !important;
+}
+html body .producto-card.tm-card-premium .me-gusta-btn:hover{transform:scale(1.12) !important}
 
-/* Quitar el badge viejo */
+/* Quitar badges viejos */
 html body .producto-card.tm-card-premium > .badge-vendido,
 html body .producto-card.tm-card-premium > .badge-agotado,
 html body .producto-card.tm-card-premium > .badge-oferta-dia,
@@ -1220,25 +844,27 @@ html body .producto-card.tm-card-premium > .stock{display:none !important}
 
 /* === Móvil === */
 @media (max-width:768px){
-  html body .producto-card.tm-card-premium .tm-card-body{padding:12px 14px 14px !important}
-  html body .producto-card.tm-card-premium .btn-pedir-card.tm-card-cta{width:calc(100% - 28px) !important;margin:12px 14px 14px !important;padding:12px 14px !important;font-size:12px !important;min-height:44px !important}
-  html body .producto-card.tm-card-premium .tm-card-badges{top:14px !important;left:14px !important;gap:4px !important}
-  html body .producto-card.tm-card-premium .me-gusta-btn{top:14px !important;right:14px !important}
-  html body .producto-card.tm-card-premium .tm-card-precio-mn{font-size:18px !important}
-  html body .producto-card.tm-card-premium .producto-image{padding:8px !important}
-  html body .producto-card.tm-card-premium .producto-image img{border-radius:16px !important}
+  html body .producto-card.tm-card-premium .tm-card-body{padding:12px 12px 12px !important}
+  html body .producto-card.tm-card-premium .btn-pedir-card.tm-card-cta{width:calc(100% - 24px) !important;margin:10px 12px 12px !important;padding:11px 14px !important;font-size:13px !important;min-height:42px !important}
+  html body .producto-card.tm-card-premium .tm-card-badges{top:8px !important;left:8px !important;gap:4px !important}
+  html body .producto-card.tm-card-premium .me-gusta-btn{top:8px !important;right:8px !important}
+  html body .producto-card.tm-card-premium .tm-card-precio-mn{font-size:19px !important}
+  html body .producto-card.tm-card-premium h3{font-size:13px !important}
+  html body .producto-card.tm-card-premium .tm-card-cat{font-size:9px !important;padding:2px 7px !important}
 }
 
 /* === Modo claro === */
-html body.light-mode .producto-card.tm-card-premium{background:rgba(255,255,255,0.95) !important;border:1px solid rgba(0,0,0,0.08) !important;border-top-color:rgba(0,0,0,0.12) !important}
+html body.light-mode .producto-card.tm-card-premium{background:linear-gradient(180deg,#ffffff 0%,#f5f5f7 100%) !important;border:1px solid rgba(0,0,0,0.08) !important;border-top-color:rgba(0,0,0,0.15) !important}
 html body.light-mode .producto-card.tm-card-premium h3{color:#1a1a1a !important}
-html body.light-mode .producto-card.tm-card-premium .producto-description{color:rgba(0,0,0,0.5) !important}
-html body.light-mode .producto-card.tm-card-premium .tm-card-precio-mn-label{-webkit-text-fill-color:rgba(0,0,0,0.5) !important;color:rgba(0,0,0,0.5) !important}
-html body.light-mode .producto-card.tm-card-premium .tm-card-precio-usd .precio-actual{color:rgba(0,0,0,0.45) !important;-webkit-text-fill-color:rgba(0,0,0,0.45) !important}
-html body.light-mode .producto-card.tm-card-premium .producto-image img{border:1px solid rgba(0,0,0,0.06) !important;box-shadow:0 8px 24px rgba(0,0,0,0.08) !important}
-html body.light-mode .producto-card.tm-card-premium .tm-card-badge{background:rgba(255,255,255,0.75) !important;border:1px solid rgba(0,0,0,0.08) !important}
-html body.light-mode .producto-card.tm-card-premium .tm-badge-desc{background:rgba(255,255,255,0.75) !important;color:#e74c3c !important}
-html body.light-mode .producto-card.tm-card-premium .tm-badge-top{background:rgba(255,255,255,0.75) !important;color:#e8501e !important}
-html body.light-mode .producto-card.tm-card-premium .tm-badge-ultima{background:rgba(255,255,255,0.75) !important;color:#c89600 !important}
-html body.light-mode .producto-card.tm-card-premium .tm-badge-nuevo{background:rgba(255,255,255,0.75) !important;color:#2ecc71 !important}
-html body.light-mode .producto-card.tm-card-premium .tm-card-spec{background:rgba(255,255,255,0.75) !important;color:#1a1a1a !important;border:1px solid rgba(0,0,0,0.06) !important}
+html body.light-mode .producto-card.tm-card-premium .producto-description{color:rgba(0,0,0,0.55) !important}
+html body.light-mode .producto-card.tm-card-premium .tm-card-precio-mn{color:#c89600 !important;-webkit-text-fill-color:#c89600 !important;text-shadow:none !important}
+html body.light-mode .producto-card.tm-card-premium .tm-card-precio-mn-label{color:rgba(0,0,0,0.6) !important;-webkit-text-fill-color:rgba(0,0,0,0.6) !important}
+html body.light-mode .producto-card.tm-card-premium .tm-card-precio-usd .precio-actual{color:rgba(0,0,0,0.6) !important;-webkit-text-fill-color:rgba(0,0,0,0.6) !important}
+html body.light-mode .producto-card.tm-card-premium .tm-card-precio-orig{color:rgba(0,0,0,0.3) !important}
+html body.light-mode .producto-card.tm-card-premium .tm-card-stockbar-track{background:rgba(0,0,0,0.08) !important}
+html body.light-mode .producto-card.tm-card-premium .tm-card-stockbar-label{color:rgba(0,0,0,0.5) !important}
+html body.light-mode .producto-card.tm-card-premium .tm-card-trust{border-top-color:rgba(0,0,0,0.08) !important}
+html body.light-mode .producto-card.tm-card-premium .tm-card-badge{background:rgba(255,255,255,0.85) !important;border:1px solid rgba(0,0,0,0.1) !important;color:#1a1a1a !important}
+html body.light-mode .producto-card.tm-card-premium .tm-badge-top{background:rgba(255,255,255,0.85) !important;color:#e8501e !important;border:1px solid rgba(232,80,30,0.3) !important}
+html body.light-mode .producto-card.tm-card-premium .tm-card-spec{background:rgba(0,0,0,0.6) !important;color:#fff !important}
+html body.light-mode .producto-card.tm-card-premium .me-gusta-btn{background:rgba(255,255,255,0.85) !important;border:1px solid rgba(0,0,0,0.1) !important}
